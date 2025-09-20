@@ -547,14 +547,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Web accessibility guidelines for inclusive design
 - Open source community for inspiration
 
-## 📞 Support
-
-If you have any questions or need help, please:
-
-1. Check the [documentation](#-api-reference)
-2. Look at the [examples](index.html)
-3. Open an [issue](https://github.com/your-username/ga-toasts/issues)
-
 ---
 
 Made with ❤️ by the GA Toasts team
