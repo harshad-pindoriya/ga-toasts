@@ -621,15 +621,53 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 4px;
+    height: 3px;
+    width: 100%;
     background: linear-gradient(90deg, 
         var(--ga-primary), 
-        var(--ga-primary-hover)
+        var(--ga-primary-hover),
+        var(--ga-primary-light)
     );
     border-radius: 0 0 var(--ga-radius-xl) var(--ga-radius-xl);
-    transition: width linear;
+    transform: scaleX(1);
+    transform-origin: left center;
+    transition: transform linear;
     z-index: 1;
-    box-shadow: 0 0 10px rgba(0, 115, 170, 0.5);
+    box-shadow: 
+        0 0 8px rgba(0, 115, 170, 0.4),
+        0 0 4px rgba(0, 115, 170, 0.2);
+    overflow: hidden;
+}
+
+.ga-toast-progress::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        transparent 100%
+    );
+    animation: ga-progress-shimmer 2s infinite;
+    border-radius: inherit;
+}
+
+.ga-toast-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border-radius: inherit;
 }
 
 /* Toast Background Fill - New Feature */
@@ -675,6 +713,7 @@
 .ga-toast-paused .ga-toast-progress {
     animation-play-state: paused;
     transition: none;
+    transform: scaleX(var(--current-progress, 1)) !important;
 }
 
 .ga-toast-paused {
@@ -683,6 +722,10 @@
         var(--ga-shadow-lg),
         0 0 0 1px rgba(255, 255, 255, 0.15) inset,
         0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+
+.ga-toast-paused .ga-toast-progress::before {
+    animation-play-state: paused;
 }
 
 /* Modern Toast Enhancements */
@@ -705,33 +748,45 @@
 }
 
 .ga-toast-progress.ga-toast-progress-primary {
-    background: linear-gradient(90deg, var(--ga-primary), var(--ga-primary-hover));
-    box-shadow: 0 0 10px rgba(0, 115, 170, 0.5);
+    background: linear-gradient(90deg, var(--ga-primary), var(--ga-primary-hover), var(--ga-primary-light));
+    box-shadow: 
+        0 0 8px rgba(0, 115, 170, 0.4),
+        0 0 4px rgba(0, 115, 170, 0.2);
 }
 
 .ga-toast-progress.ga-toast-progress-success {
-    background: linear-gradient(90deg, var(--ga-success), var(--ga-success-hover));
-    box-shadow: 0 0 10px rgba(0, 163, 42, 0.5);
+    background: linear-gradient(90deg, var(--ga-success), var(--ga-success-hover), var(--ga-success-light));
+    box-shadow: 
+        0 0 8px rgba(0, 163, 42, 0.4),
+        0 0 4px rgba(0, 163, 42, 0.2);
 }
 
 .ga-toast-progress.ga-toast-progress-error {
-    background: linear-gradient(90deg, var(--ga-error), var(--ga-error-hover));
-    box-shadow: 0 0 10px rgba(214, 54, 56, 0.5);
+    background: linear-gradient(90deg, var(--ga-error), var(--ga-error-hover), var(--ga-error-light));
+    box-shadow: 
+        0 0 8px rgba(214, 54, 56, 0.4),
+        0 0 4px rgba(214, 54, 56, 0.2);
 }
 
 .ga-toast-progress.ga-toast-progress-warning {
-    background: linear-gradient(90deg, var(--ga-warning), var(--ga-warning-hover));
-    box-shadow: 0 0 10px rgba(219, 166, 23, 0.5);
+    background: linear-gradient(90deg, var(--ga-warning), var(--ga-warning-hover), var(--ga-warning-light));
+    box-shadow: 
+        0 0 8px rgba(219, 166, 23, 0.4),
+        0 0 4px rgba(219, 166, 23, 0.2);
 }
 
 .ga-toast-progress.ga-toast-progress-info {
-    background: linear-gradient(90deg, var(--ga-info), var(--ga-info-hover));
-    box-shadow: 0 0 10px rgba(114, 174, 230, 0.5);
+    background: linear-gradient(90deg, var(--ga-info), var(--ga-info-hover), var(--ga-info-light));
+    box-shadow: 
+        0 0 8px rgba(114, 174, 230, 0.4),
+        0 0 4px rgba(114, 174, 230, 0.2);
 }
 
 .ga-toast-progress.ga-toast-progress-secondary {
-    background: linear-gradient(90deg, var(--ga-secondary), var(--ga-secondary-hover));
-    box-shadow: 0 0 10px rgba(108, 117, 125, 0.5);
+    background: linear-gradient(90deg, var(--ga-secondary), var(--ga-secondary-hover), var(--ga-secondary-light));
+    box-shadow: 
+        0 0 8px rgba(108, 117, 125, 0.4),
+        0 0 4px rgba(108, 117, 125, 0.2);
 }
 
 /* Toast Actions - Enhanced */
@@ -1470,4 +1525,13 @@
 @keyframes ga-gradient-rotate {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@keyframes ga-progress-shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }

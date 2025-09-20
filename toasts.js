@@ -38,16 +38,20 @@
                 var $toast = $(this);
                 var autoClose = $toast.data('ga-auto-close');
                 var pauseOnHover = $toast.data('ga-pause-on-hover');
+                var $progress = $toast.find('.ga-toast-progress');
                 
                 if (autoClose && autoClose > 0) {
                     var timeoutId;
+                    var startTime = Date.now();
+                    var remainingTime = autoClose;
                     
                     var startCountdown = function() {
+                        startTime = Date.now();
                         timeoutId = setTimeout(function () {
                             if ($toast.length && !$toast.hasClass('hide')) {
                                 self.close($toast);
                             }
-                        }, autoClose);
+                        }, remainingTime);
                     };
                     
                     // Start initial countdown
@@ -56,12 +60,28 @@
                     // Pause on hover if enabled
                     if (pauseOnHover) {
                         $toast.on('mouseenter', function() {
+                            var elapsed = Date.now() - startTime;
+                            remainingTime = Math.max(0, remainingTime - elapsed);
                             clearTimeout(timeoutId);
                             $toast.addClass('ga-toast-paused');
+                            
+                            // Pause progress bar animation
+                            if ($progress.length) {
+                                var currentTransform = $progress.css('transform');
+                                $progress.css('transition', 'none');
+                                $progress.attr('data-paused-transform', currentTransform);
+                            }
                         });
                         
                         $toast.on('mouseleave', function() {
                             $toast.removeClass('ga-toast-paused');
+                            
+                            // Resume progress bar animation
+                            if ($progress.length) {
+                                $progress.css('transition', 'transform ' + remainingTime + 'ms linear');
+                                $progress.css('transform', 'scaleX(0)');
+                            }
+                            
                             startCountdown();
                         });
                     }
@@ -104,7 +124,7 @@
                 variant: '', // '', 'filled', 'light'
                 animation: 'slide', // 'fade', 'slide', 'bounce', 'scale'
                 clickToClose: false,
-                progress: false,
+                progress: true, // New: Enable progress bar by default
                 progressBackground: true, // New: Enable background fill with opacity
                 pauseOnHover: true // New: Pause countdown on hover
             };
@@ -236,14 +256,18 @@
             // Add progress bar if enabled
             if (options.progress && options.duration > 0) {
                 var $progress = $('<div class="ga-toast-progress ga-toast-progress-' + options.type + '"></div>');
-                $progress.css('width', '100%');
+                $progress.css({
+                    'width': '100%',
+                    'transform': 'scaleX(1)',
+                    'transform-origin': 'left center'
+                });
                 $toast.append($progress);
 
-                // Animate progress bar
+                // Animate progress bar with smooth countdown
                 setTimeout(function () {
                     $progress.css({
-                        'transition': 'width ' + options.duration + 'ms linear',
-                        'width': '0%'
+                        'transition': 'transform ' + options.duration + 'ms linear',
+                        'transform': 'scaleX(0)'
                     });
                 }, 10);
             }
@@ -566,6 +590,7 @@
         modern: function (message, options) {
             var defaults = {
                 message: message,
+                progress: true,
                 progressBackground: true,
                 pauseOnHover: true,
                 glassmorphism: true,
@@ -586,6 +611,7 @@
                 title: title,
                 message: message,
                 type: 'info',
+                progress: true,
                 progressBackground: true,
                 pauseOnHover: true,
                 glassmorphism: true,
