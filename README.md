@@ -1,11 +1,11 @@
 # 🍞 GA Toasts
 
-A modern, accessible, and feature-rich toast notification library for web applications. Built with vanilla JavaScript and jQuery, GA Toasts provides beautiful, customizable notifications with smooth animations and excellent user experience.
+A modern, accessible, and feature-rich toast notification library for web applications. Built with pure vanilla JavaScript (no dependencies), GA Toasts provides beautiful, customizable notifications with smooth animations and excellent user experience.
 
 ![GA Toasts Demo](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
-![jQuery](https://img.shields.io/badge/jQuery-3.7.1-blue)
+![Vanilla JS](https://img.shields.io/badge/JavaScript-Vanilla%20JS-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Size](https://img.shields.io/badge/Size-~15KB-orange)
+![Size](https://img.shields.io/badge/Size-~12KB-orange)
 
 ## ✨ Features
 
@@ -13,7 +13,7 @@ A modern, accessible, and feature-rich toast notification library for web applic
 - ♿ **Accessible** - Built with accessibility in mind, supporting screen readers and keyboard navigation
 - 📱 **Responsive** - Fully responsive design that works on all device sizes
 - 🎭 **Multiple Variants** - Support for filled, light, and default variants
-- ⚡ **Performance** - Lightweight and optimized for performance
+- ⚡ **Performance** - Lightweight and optimized for performance (no jQuery dependency)
 - 🔧 **Customizable** - Highly customizable with CSS variables and themes
 - 🎯 **Multiple Positions** - 9 different positioning options
 - 🎪 **Animation Effects** - Fade, slide, bounce, and scale animations
@@ -21,6 +21,7 @@ A modern, accessible, and feature-rich toast notification library for web applic
 - 📊 **Progress Indicators** - Visual progress bars and background fills
 - 🎨 **Theme Support** - Light, dark, and system theme modes
 - 🔄 **Toast Management** - Update, close, and manage multiple toasts
+- 🚀 **Zero Dependencies** - Pure vanilla JavaScript with no external libraries required
 
 ## 🚀 Quick Start
 
@@ -33,20 +34,17 @@ A modern, accessible, and feature-rich toast notification library for web applic
    cd ga-toasts
    ```
 
-2. **Include dependencies:**
+2. **Include the library:**
    ```html
-   <!-- jQuery (required) -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-   
    <!-- GA Toasts CSS -->
    <link rel="stylesheet" href="src/variables.css">
    <link rel="stylesheet" href="src/toasts.css">
    
-   <!-- GA Toasts JavaScript -->
+   <!-- GA Toasts JavaScript (Pure Vanilla JS - No Dependencies) -->
    <script src="src/toasts.js"></script>
    ```
 
-   **Note:** jQuery is required for GA Toasts to function. The library will automatically initialize the `GenieAI` global object if it doesn't exist.
+   **Note:** No external dependencies required! The library will automatically initialize the `GenieAI` global object if it doesn't exist.
 
 3. **Initialize (optional):**
    ```javascript
@@ -513,7 +511,9 @@ for (let i = 1; i <= 5; i++) {
 - **Firefox** 55+
 - **Safari** 12+
 - **Edge** 79+
-- **IE** 11+ (with polyfills)
+- **IE** 11+ (with polyfills for modern features)
+
+**Note:** Since we removed jQuery dependency, the library is now lighter and faster while maintaining the same browser support.
 
 ## 📦 File Structure
 
@@ -543,10 +543,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- jQuery team for the excellent library
 - Modern CSS features for beautiful styling
 - Web accessibility guidelines for inclusive design
-- Open source community for inspiration
+- Vanilla JavaScript community for inspiration
+- Open source community for continuous improvement
 
 ---
 
