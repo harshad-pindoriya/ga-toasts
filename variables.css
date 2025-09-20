@@ -1,0 +1,480 @@
+/**
+ * CSS Variables for Genie AI Plugin
+ * Contains all color schemes, spacing, typography, and other design tokens
+ */
+
+ :root {
+    /* Color Palette */
+    --ga-primary: #0073aa;
+    --ga-primary-hover: #005a87;
+    --ga-primary-light: #f0f6fc;
+    --ga-primary-border: #9ec5e8;
+    --ga-primary-dark: #004a6b;
+    
+    /* Color aliases for compatibility */
+    --ga-color-primary: var(--ga-primary);
+    --ga-color-primary-light: var(--ga-primary-light);
+    --ga-color-success: var(--ga-success);
+    --ga-color-error: var(--ga-error);
+    --ga-color-warning: var(--ga-warning);
+    --ga-color-info: var(--ga-info);
+    
+    --ga-success: #00a32a;
+    --ga-success-hover: #007a1f;
+    --ga-success-light: #f0f8f1;
+    --ga-success-border: #7ec88a;
+    --ga-success-dark: #005a15;
+    
+    --ga-error: #d63638;
+    --ga-error-hover: #b32729;
+    --ga-error-light: #fcf0f1;
+    --ga-error-border: #f0b7b8;
+    --ga-error-dark: #901a1c;
+    
+    --ga-warning: #dba617;
+    --ga-warning-hover: #b8890d;
+    --ga-warning-light: #fcf9e8;
+    --ga-warning-border: #f0d0a3;
+    --ga-warning-dark: #956c0a;
+    
+    --ga-info: #72aee6;
+    --ga-info-hover: #4f94d4;
+    --ga-info-light: #f0f6fc;
+    --ga-info-border: #9ec5e8;
+    --ga-info-dark: #2271b1;
+    
+    /* Secondary Colors */
+    --ga-secondary: #6c757d;
+    --ga-secondary-hover: #565e64;
+    --ga-secondary-light: #f8f9fa;
+    --ga-secondary-border: #ced4da;
+    
+    /* Neutral Colors */
+    --ga-white: #ffffff;
+    --ga-black: #000000;
+    --ga-gray-50: #f9f9f9;
+    --ga-gray-100: #f3f3f3;
+    --ga-gray-150: #ebebeb;
+    --ga-gray-200: #e0e0e0;
+    --ga-gray-250: #d8d8d8;
+    --ga-gray-300: #d0d0d0;
+    --ga-gray-350: #c8c8c8;
+    --ga-gray-400: #a0a0a0;
+    --ga-gray-450: #909090;
+    --ga-gray-500: #808080;
+    --ga-gray-550: #707070;
+    --ga-gray-600: #606060;
+    --ga-gray-650: #505050;
+    --ga-gray-700: #404040;
+    --ga-gray-750: #323232;
+    --ga-gray-800: #23282d;
+    --ga-gray-850: #1e1e1e;
+    --ga-gray-900: #1a1a1a;
+    --ga-gray-950: #0f0f0f;
+    
+    /* Background Colors */
+    --ga-bg-primary: var(--ga-white);
+    --ga-bg-secondary: var(--ga-gray-50);
+    --ga-bg-tertiary: var(--ga-gray-100);
+    --ga-bg-quaternary: var(--ga-gray-150);
+    --ga-bg-surface: var(--ga-white);
+    --ga-bg-subtle: var(--ga-gray-50);
+    --ga-bg-overlay: rgba(0, 0, 0, 0.5);
+    --ga-bg-overlay-light: rgba(0, 0, 0, 0.25);
+    --ga-bg-overlay-dark: rgba(0, 0, 0, 0.75);
+    --ga-bg-glass: rgba(255, 255, 255, 0.8);
+    --ga-bg-blur: backdrop-blur(10px);
+    
+    /* Border Colors */
+    --ga-border-light: #ccd0d4;
+    --ga-border-medium: var(--ga-gray-300);
+    --ga-border-dark: var(--ga-gray-400);
+    --ga-border-focus: var(--ga-primary);
+    --ga-border-error: var(--ga-error);
+    --ga-border-success: var(--ga-success);
+    --ga-border-warning: var(--ga-warning);
+    
+    /* Text Colors */
+    --ga-text-primary: var(--ga-gray-800);
+    --ga-text-secondary: var(--ga-gray-600);
+    --ga-text-tertiary: var(--ga-gray-500);
+    --ga-text-muted: var(--ga-gray-400);
+    --ga-text-disabled: var(--ga-gray-350);
+    --ga-text-inverse: var(--ga-white);
+    --ga-text-link: var(--ga-primary);
+    --ga-text-link-hover: var(--ga-primary-hover);
+    
+    /* Spacing Scale */
+    --ga-space-0: 0px;
+    --ga-space-px: 1px;
+    --ga-space-0-5: 2px;
+    --ga-space-1: 4px;
+    --ga-space-1-5: 6px;
+    --ga-space-2: 8px;
+    --ga-space-2-5: 10px;
+    --ga-space-3: 12px;
+    --ga-space-3-5: 14px;
+    --ga-space-4: 16px;
+    --ga-space-5: 20px;
+    --ga-space-6: 24px;
+    --ga-space-7: 28px;
+    --ga-space-8: 32px;
+    --ga-space-9: 36px;
+    --ga-space-10: 40px;
+    --ga-space-11: 44px;
+    --ga-space-12: 48px;
+    --ga-space-14: 56px;
+    --ga-space-16: 64px;
+    --ga-space-20: 80px;
+    --ga-space-24: 96px;
+    --ga-space-28: 112px;
+    --ga-space-32: 128px;
+    --ga-space-36: 144px;
+    --ga-space-40: 160px;
+    --ga-space-44: 176px;
+    --ga-space-48: 192px;
+    --ga-space-52: 208px;
+    --ga-space-56: 224px;
+    --ga-space-60: 240px;
+    --ga-space-64: 256px;
+    --ga-space-72: 288px;
+    --ga-space-80: 320px;
+    --ga-space-96: 384px;
+    
+    /* Legacy spacing for backward compatibility */
+    --ga-space-xs: var(--ga-space-1);
+    --ga-space-sm: var(--ga-space-2);
+    --ga-space-md: var(--ga-space-3);
+    --ga-space-lg: var(--ga-space-4);
+    --ga-space-xl: var(--ga-space-5);
+    --ga-space-2xl: var(--ga-space-6);
+    --ga-space-3xl: var(--ga-space-8);
+    --ga-space-4xl: var(--ga-space-10);
+    --ga-space-5xl: var(--ga-space-12);
+    
+    /* Font Families */
+    --ga-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --ga-font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+    --ga-font-mono: "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace;
+    
+    /* Font Sizes */
+    --ga-text-2xs: 10px;
+    --ga-text-xs: 12px;
+    --ga-text-sm: 14px;
+    --ga-text-base: 16px;
+    --ga-text-lg: 18px;
+    --ga-text-xl: 20px;
+    --ga-text-2xl: 24px;
+    --ga-text-3xl: 30px;
+    --ga-text-4xl: 36px;
+    --ga-text-5xl: 48px;
+    --ga-text-6xl: 60px;
+    --ga-text-7xl: 72px;
+    --ga-text-8xl: 96px;
+    --ga-text-9xl: 128px;
+    
+    /* Font Weights */
+    --ga-font-thin: 100;
+    --ga-font-extralight: 200;
+    --ga-font-light: 300;
+    --ga-font-normal: 400;
+    --ga-font-medium: 500;
+    --ga-font-semibold: 600;
+    --ga-font-bold: 700;
+    --ga-font-extrabold: 800;
+    --ga-font-black: 900;
+    
+    /* Line Heights */
+    --ga-leading-none: 1;
+    --ga-leading-tight: 1.25;
+    --ga-leading-snug: 1.375;
+    --ga-leading-normal: 1.5;
+    --ga-leading-relaxed: 1.625;
+    --ga-leading-loose: 2;
+    
+    /* Letter Spacing */
+    --ga-tracking-tighter: -0.05em;
+    --ga-tracking-tight: -0.025em;
+    --ga-tracking-normal: 0em;
+    --ga-tracking-wide: 0.025em;
+    --ga-tracking-wider: 0.05em;
+    --ga-tracking-widest: 0.1em;
+    
+    /* Border Radius */
+    --ga-radius-none: 0px;
+    --ga-radius-xs: 2px;
+    --ga-radius-sm: 4px;
+    --ga-radius-md: 6px;
+    --ga-radius-lg: 8px;
+    --ga-radius-xl: 12px;
+    --ga-radius-2xl: 16px;
+    --ga-radius-3xl: 24px;
+    --ga-radius-full: 9999px;
+    
+    /* Border Widths */
+    --ga-border-0: 0px;
+    --ga-border-1: 1px;
+    --ga-border-2: 2px;
+    --ga-border-4: 4px;
+    --ga-border-8: 8px;
+    
+    /* Shadows */
+    --ga-shadow-none: none;
+    --ga-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --ga-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --ga-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --ga-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --ga-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 8px 10px rgba(0, 0, 0, 0.04);
+    --ga-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+    --ga-shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    --ga-shadow-focus: 0 0 0 3px rgba(0, 115, 170, 0.1);
+    
+    /* Component Shadows */
+    --ga-shadow-card: var(--ga-shadow-sm);
+    --ga-shadow-dropdown: var(--ga-shadow-lg);
+    --ga-shadow-modal: var(--ga-shadow-2xl);
+    --ga-shadow-toast: var(--ga-shadow-lg);
+    --ga-shadow-tooltip: var(--ga-shadow-md);
+    
+    /* Transitions */
+    --ga-transition-none: none;
+    --ga-transition-fast: 150ms ease-in-out;
+    --ga-transition-normal: 250ms ease-in-out;
+    --ga-transition-slow: 350ms ease-in-out;
+    --ga-transition-all-fast: all 150ms ease-in-out;
+    --ga-transition-all-normal: all 250ms ease-in-out;
+    --ga-transition-all-slow: all 350ms ease-in-out;
+    
+    /* Animation Durations */
+    --ga-duration-75: 75ms;
+    --ga-duration-100: 100ms;
+    --ga-duration-150: 150ms;
+    --ga-duration-200: 200ms;
+    --ga-duration-300: 300ms;
+    --ga-duration-500: 500ms;
+    --ga-duration-700: 700ms;
+    --ga-duration-1000: 1000ms;
+    
+    /* Animation Timing Functions */
+    --ga-ease-linear: linear;
+    --ga-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ga-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ga-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ga-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Z-Index Scale */
+    --ga-z-auto: auto;
+    --ga-z-0: 0;
+    --ga-z-10: 10;
+    --ga-z-20: 20;
+    --ga-z-30: 30;
+    --ga-z-40: 40;
+    --ga-z-50: 50;
+    --ga-z-dropdown: 1000;
+    --ga-z-sticky: 1020;
+    --ga-z-fixed: 1030;
+    --ga-z-modal-backdrop: 1040;
+    --ga-z-modal: 1050;
+    --ga-z-popover: 1060;
+    --ga-z-tooltip: 1070;
+    --ga-z-toast: 1080;
+    --ga-z-loading: 1090;
+    --ga-z-max: 2147483647;
+    
+    /* Breakpoints (for reference in JavaScript) */
+    --ga-bp-xs: 0px;
+    --ga-bp-sm: 576px;
+    --ga-bp-md: 768px;
+    --ga-bp-lg: 992px;
+    --ga-bp-xl: 1200px;
+    --ga-bp-2xl: 1400px;
+    --ga-bp-3xl: 1600px;
+    
+    /* Container Max Widths */
+    --ga-container-sm: 540px;
+    --ga-container-md: 720px;
+    --ga-container-lg: 960px;
+    --ga-container-xl: 1140px;
+    --ga-container-2xl: 1320px;
+    
+    /* Form Element Heights */
+    --ga-input-height-sm: 32px;
+    --ga-input-height-md: 40px;
+    --ga-input-height-lg: 48px;
+    
+    /* Button Heights */
+    --ga-btn-height-sm: 32px;
+    --ga-btn-height-md: 40px;
+    --ga-btn-height-lg: 48px;
+    
+    /* Icon Sizes */
+    --ga-icon-xs: 12px;
+    --ga-icon-sm: 16px;
+    --ga-icon-md: 20px;
+    --ga-icon-lg: 24px;
+    --ga-icon-xl: 32px;
+    --ga-icon-2xl: 40px;
+    
+    /* Avatar Sizes */
+    --ga-avatar-xs: 24px;
+    --ga-avatar-sm: 32px;
+    --ga-avatar-md: 40px;
+    --ga-avatar-lg: 48px;
+    --ga-avatar-xl: 64px;
+    --ga-avatar-2xl: 80px;
+    
+    /* Loading Spinner Sizes */
+    --ga-spinner-sm: 16px;
+    --ga-spinner-md: 24px;
+    --ga-spinner-lg: 32px;
+    --ga-spinner-xl: 40px;
+    
+    /* WordPress Admin Compatibility */
+    --ga-wp-admin-bar-height: 32px;
+    --ga-wp-sidebar-width: 160px;
+    --ga-wp-sidebar-collapsed-width: 36px;
+}
+
+/* Dark mode variables */
+[data-ga-theme="dark"], 
+[data-hp-theme-mode="dark"],
+.ga-theme-dark {
+    /* Background Colors */
+    --ga-bg-primary: var(--ga-gray-900);
+    --ga-bg-secondary: var(--ga-gray-800);
+    --ga-bg-tertiary: var(--ga-gray-750);
+    --ga-bg-quaternary: var(--ga-gray-700);
+    --ga-bg-surface: var(--ga-gray-800);
+    --ga-bg-subtle: var(--ga-gray-750);
+    --ga-bg-overlay: rgba(255, 255, 255, 0.1);
+    --ga-bg-overlay-light: rgba(255, 255, 255, 0.05);
+    --ga-bg-overlay-dark: rgba(255, 255, 255, 0.2);
+    --ga-bg-glass: rgba(0, 0, 0, 0.8);
+    
+    /* Text Colors */
+    --ga-text-primary: var(--ga-white);
+    --ga-text-secondary: var(--ga-gray-300);
+    --ga-text-tertiary: var(--ga-gray-400);
+    --ga-text-muted: var(--ga-gray-500);
+    --ga-text-disabled: var(--ga-gray-600);
+    --ga-text-inverse: var(--ga-gray-900);
+    
+    /* Border Colors */
+    --ga-border-light: var(--ga-gray-700);
+    --ga-border-medium: var(--ga-gray-600);
+    --ga-border-dark: var(--ga-gray-500);
+    
+    /* Shadows (adjusted for dark mode) */
+    --ga-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --ga-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --ga-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+    --ga-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.3);
+    --ga-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5), 0 8px 10px rgba(0, 0, 0, 0.3);
+    --ga-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.7);
+    --ga-shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* System theme mode */
+[data-ga-theme="system"],
+[data-hp-theme-mode="system"] {
+    /* Uses system preference - CSS custom properties will be overridden by media queries */
+    /* No specific variables needed here as they are handled by media queries */
+}
+
+/* System dark mode preference */
+@media (prefers-color-scheme: dark) {
+    [data-ga-theme="system"],
+    [data-hp-theme-mode="system"] {
+        /* Apply dark mode variables when system preference is dark */
+        --ga-bg-primary: var(--ga-gray-900);
+        --ga-bg-secondary: var(--ga-gray-800);
+        --ga-bg-tertiary: var(--ga-gray-750);
+        --ga-bg-quaternary: var(--ga-gray-700);
+        --ga-bg-surface: var(--ga-gray-800);
+        --ga-bg-subtle: var(--ga-gray-750);
+        
+        --ga-text-primary: var(--ga-white);
+        --ga-text-secondary: var(--ga-gray-300);
+        --ga-text-tertiary: var(--ga-gray-400);
+        --ga-text-muted: var(--ga-gray-500);
+        --ga-text-disabled: var(--ga-gray-600);
+        --ga-text-inverse: var(--ga-gray-900);
+        
+        --ga-border-light: var(--ga-gray-700);
+        --ga-border-medium: var(--ga-gray-600);
+        --ga-border-dark: var(--ga-gray-500);
+        
+        --ga-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+        --ga-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+        --ga-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+        --ga-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.3);
+        --ga-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5), 0 8px 10px rgba(0, 0, 0, 0.3);
+        --ga-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.7);
+        --ga-shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* High contrast mode */
+[data-ga-theme="high-contrast"] {
+    --ga-primary: #0066cc;
+    --ga-success: #00aa00;
+    --ga-error: #cc0000;
+    --ga-warning: #cc8800;
+    --ga-info: #0099cc;
+    
+    --ga-text-primary: var(--ga-black);
+    --ga-text-secondary: var(--ga-gray-800);
+    --ga-text-muted: var(--ga-gray-700);
+    
+    --ga-border-light: var(--ga-gray-800);
+    --ga-border-medium: var(--ga-gray-700);
+    --ga-border-dark: var(--ga-gray-600);
+    
+    --ga-shadow-xs: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --ga-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+    --ga-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+    --ga-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --ga-transition-fast: none;
+        --ga-transition-normal: none;
+        --ga-transition-slow: none;
+        --ga-transition-all-fast: none;
+        --ga-transition-all-normal: none;
+        --ga-transition-all-slow: none;
+        
+        --ga-duration-75: 0ms;
+        --ga-duration-100: 0ms;
+        --ga-duration-150: 0ms;
+        --ga-duration-200: 0ms;
+        --ga-duration-300: 0ms;
+        --ga-duration-500: 0ms;
+        --ga-duration-700: 0ms;
+        --ga-duration-1000: 0ms;
+    }
+}
+
+/* Print styles */
+@media print {
+    :root {
+        --ga-bg-primary: white;
+        --ga-bg-secondary: white;
+        --ga-bg-tertiary: white;
+        --ga-bg-quaternary: white;
+        
+        --ga-text-primary: black;
+        --ga-text-secondary: black;
+        --ga-text-tertiary: black;
+        --ga-text-muted: #666666;
+        
+        --ga-shadow-xs: none;
+        --ga-shadow-sm: none;
+        --ga-shadow-md: none;
+        --ga-shadow-lg: none;
+        --ga-shadow-xl: none;
+        --ga-shadow-2xl: none;
+    }
+}
