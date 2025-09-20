@@ -39,11 +39,11 @@ A modern, accessible, and feature-rich toast notification library for web applic
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
    
    <!-- GA Toasts CSS -->
-   <link rel="stylesheet" href="variables.css">
-   <link rel="stylesheet" href="toasts.css">
+   <link rel="stylesheet" href="src/variables.css">
+   <link rel="stylesheet" href="src/toasts.css">
    
    <!-- GA Toasts JavaScript -->
-   <script src="toasts.js"></script>
+   <script src="src/toasts.js"></script>
    ```
 
    **Note:** jQuery is required for GA Toasts to function. The library will automatically initialize the `GenieAI` global object if it doesn't exist.
@@ -519,11 +519,12 @@ for (let i = 1; i <= 5; i++) {
 
 ```
 ga-toasts/
-├── index.html          # Interactive demo page
-├── README.md           # This documentation
-├── variables.css       # CSS custom properties
-├── toasts.css         # Main toast styles
-└── toasts.js          # JavaScript functionality
+├── src/
+│   ├── toasts.js          # JavaScript functionality
+│   ├── toasts.css         # Main toast styles
+│   └── variables.css      # CSS custom properties
+├── index.html             # Interactive demo page
+└── README.md              # This documentation
 ```
 
 ## 🤝 Contributing

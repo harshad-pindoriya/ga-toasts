@@ -203,14 +203,14 @@
     </script>
 
     <!-- CSS Dependencies -->
-    <link rel="stylesheet" href="variables.css">
-    <link rel="stylesheet" href="toasts.css">
-
+    <link rel="stylesheet" href="src/variables.css">
+    <link rel="stylesheet" href="src/toasts.css">
+    
     <!-- jQuery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+    
     <!-- GA Toasts JavaScript -->
-    <script src="toasts.js"></script>
+    <script src="src/toasts.js"></script>
 
 
     <!-- Fallback for jQuery -->
@@ -276,13 +276,7 @@
 
         .demo-section {
             margin-bottom: 50px;
-            padding: 35px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow:
-                0 8px 32px rgba(0, 0, 0, 0.08),
-                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
             backdrop-filter: blur(10px);
         }
 
@@ -581,61 +575,65 @@ GenieAI.Toast.show({
     message: 'Secondary notification' 
 });</pre>
             </div>
-    </div>
 
-    <!-- Advanced Features -->
-    <section class="demo-section" aria-labelledby="advanced-features">
-        <h2 id="advanced-features">Advanced Features</h2>
-        <div class="button-grid">
-            <button class="demo-btn btn-primary" onclick="showWithTitle()">With Title</button>
-            <button class="demo-btn btn-success" onclick="showWithActions()">With Actions</button>
-            <button class="demo-btn btn-info" onclick="showConfirmation()">Confirmation</button>
-            <button class="demo-btn btn-warning" onclick="showLoading()">Loading Toast</button>
-            <button class="demo-btn btn-error" onclick="showCustomIcon()">Custom Icon</button>
-            <button class="demo-btn btn-primary" onclick="showModern()">Modern Style</button>
-        </div>
 
-        <div class="code-block">
-            <pre>// Advanced features (title is required)
-GenieAI.Toast.show({
-    title: 'New Message',
-    message: 'You have received a new message from John Doe',
-    type: 'info',
-    duration: 5000
-});
 
-GenieAI.Toast.show({
-    title: 'File Upload',
-    message: 'File uploaded successfully',
-    type: 'success',
-    actions: [
-        { text: 'View', click: () => console.log('View clicked') },
-        { text: 'Dismiss', click: (e, toast) => GenieAI.Toast.close(toast) }
-    ]
-});
+            <!-- Advanced Features -->
+            <section class="demo-section" aria-labelledby="advanced-features">
+                <h2 id="advanced-features">Advanced Features</h2>
+                <div class="button-grid">
+                    <button class="demo-btn btn-primary" onclick="showWithTitle()">With Title</button>
+                    <button class="demo-btn btn-success" onclick="showWithActions()">With Actions</button>
+                    <button class="demo-btn btn-info" onclick="showConfirmation()">Confirmation</button>
+                    <button class="demo-btn btn-warning" onclick="showLoading()">Loading Toast</button>
+                    <button class="demo-btn btn-error" onclick="showCustomIcon()">Custom Icon</button>
+                    <button class="demo-btn btn-primary" onclick="showModern()">Modern Style</button>
+                </div>
 
-GenieAI.Toast.confirm('Are you sure you want to delete this item?', {
-    title: 'Confirm Deletion',
-    onConfirm: () => console.log('Confirmed'),
-    onCancel: () => console.log('Cancelled')
-});</pre>
-        </div>
-        </div>
+                <div class="code-block">
+                    <pre>
+                        // Advanced features (title is required)
+                        GenieAI.Toast.show({
+                            title: 'New Message',
+                            message: 'You have received a new message from John Doe',
+                            type: 'info',
+                            duration: 5000
+                        });
 
-        <!-- Toast Variants -->
-        <div class="demo-section">
-            <h2>Toast Variants & Sizes</h2>
-            <div class="button-grid">
-                <button class="demo-btn btn-primary" onclick="showFilled()">Filled Variant</button>
-                <button class="demo-btn btn-success" onclick="showLight()">Light Variant</button>
-                <button class="demo-btn btn-info" onclick="showSmall()">Small Size</button>
-                <button class="demo-btn btn-warning" onclick="showLarge()">Large Size</button>
-                <button class="demo-btn btn-error" onclick="showGlassmorphism()">Glassmorphism</button>
-                <button class="demo-btn btn-secondary" onclick="showGradient()">Gradient Border</button>
-            </div>
+                        GenieAI.Toast.show({
+                            title: 'File Upload',
+                            message: 'File uploaded successfully',
+                            type: 'success',
+                            actions: [
+                                { text: 'View', click: () => console.log('View clicked') },
+                                { text: 'Dismiss', click: (e, toast) => GenieAI.Toast.close(toast) }
+                            ]
+                        });
 
-            <div class="code-block">
-                <pre>// Variants and sizes (title is required)
+                        GenieAI.Toast.confirm('Are you sure you want to delete this item?', {
+                            title: 'Confirm Deletion',
+                            onConfirm: () => console.log('Confirmed'),
+                            onCancel: () => console.log('Cancelled')
+                        });
+                    </pre>
+                </div>
+            </section>
+
+
+            <!-- Toast Variants -->
+            <div class="demo-section">
+                <h2>Toast Variants & Sizes</h2>
+                <div class="button-grid">
+                    <button class="demo-btn btn-primary" onclick="showFilled()">Filled Variant</button>
+                    <button class="demo-btn btn-success" onclick="showLight()">Light Variant</button>
+                    <button class="demo-btn btn-info" onclick="showSmall()">Small Size</button>
+                    <button class="demo-btn btn-warning" onclick="showLarge()">Large Size</button>
+                    <button class="demo-btn btn-error" onclick="showGlassmorphism()">Glassmorphism</button>
+                    <button class="demo-btn btn-secondary" onclick="showGradient()">Gradient Border</button>
+                </div>
+
+                <div class="code-block">
+                    <pre>// Variants and sizes (title is required)
 GenieAI.Toast.show({
     title: 'Filled Variant',
     message: 'Filled variant toast',
@@ -663,23 +661,23 @@ GenieAI.Toast.show({
     type: 'primary',
     size: 'lg'
 });</pre>
-            </div>
-        </div>
-
-        <!-- Animations -->
-        <div class="demo-section">
-            <h2>Animation Effects</h2>
-            <div class="button-grid">
-                <button class="demo-btn btn-primary" onclick="showFade()">Fade Animation</button>
-                <button class="demo-btn btn-success" onclick="showSlide()">Slide Animation</button>
-                <button class="demo-btn btn-warning" onclick="showBounce()">Bounce Animation</button>
-                <button class="demo-btn btn-info" onclick="showScale()">Scale Animation</button>
-                <button class="demo-btn btn-error" onclick="showShake()">Shake Effect</button>
-                <button class="demo-btn btn-secondary" onclick="showHeartbeat()">Heartbeat Effect</button>
+                </div>
             </div>
 
-            <div class="code-block">
-                <pre>// Animation effects (title is required)
+            <!-- Animations -->
+            <div class="demo-section">
+                <h2>Animation Effects</h2>
+                <div class="button-grid">
+                    <button class="demo-btn btn-primary" onclick="showFade()">Fade Animation</button>
+                    <button class="demo-btn btn-success" onclick="showSlide()">Slide Animation</button>
+                    <button class="demo-btn btn-warning" onclick="showBounce()">Bounce Animation</button>
+                    <button class="demo-btn btn-info" onclick="showScale()">Scale Animation</button>
+                    <button class="demo-btn btn-error" onclick="showShake()">Shake Effect</button>
+                    <button class="demo-btn btn-secondary" onclick="showHeartbeat()">Heartbeat Effect</button>
+                </div>
+
+                <div class="code-block">
+                    <pre>// Animation effects (title is required)
 GenieAI.Toast.show({
     title: 'Fade Animation',
     message: 'Fade animation',
@@ -708,27 +706,27 @@ const toast = GenieAI.Toast.show({
     type: 'info' 
 });
 toast.addClass('ga-toast-shake');</pre>
+                </div>
             </div>
-        </div>
 
-        <!-- Position Control -->
-        <div class="demo-section">
-            <h2>Position Control</h2>
-            <div class="position-controls">
-                <button class="position-btn active" onclick="setPosition('top-start')">Top Start</button>
-                <button class="position-btn" onclick="setPosition('top-center')">Top Center</button>
-                <button class="position-btn" onclick="setPosition('top-end')">Top End</button>
-                <button class="position-btn" onclick="setPosition('middle-start')">Middle Start</button>
-                <button class="position-btn" onclick="setPosition('middle-center')">Middle Center</button>
-                <button class="position-btn" onclick="setPosition('middle-end')">Middle End</button>
-                <button class="position-btn" onclick="setPosition('bottom-start')">Bottom Start</button>
-                <button class="position-btn" onclick="setPosition('bottom-center')">Bottom Center</button>
-                <button class="position-btn" onclick="setPosition('bottom-end')">Bottom End</button>
-            </div>
-            <button class="demo-btn btn-primary" onclick="showAtPosition()">Show Toast at Selected Position</button>
+            <!-- Position Control -->
+            <div class="demo-section">
+                <h2>Position Control</h2>
+                <div class="position-controls">
+                    <button class="position-btn active" onclick="setPosition('top-start')">Top Start</button>
+                    <button class="position-btn" onclick="setPosition('top-center')">Top Center</button>
+                    <button class="position-btn" onclick="setPosition('top-end')">Top End</button>
+                    <button class="position-btn" onclick="setPosition('middle-start')">Middle Start</button>
+                    <button class="position-btn" onclick="setPosition('middle-center')">Middle Center</button>
+                    <button class="position-btn" onclick="setPosition('middle-end')">Middle End</button>
+                    <button class="position-btn" onclick="setPosition('bottom-start')">Bottom Start</button>
+                    <button class="position-btn" onclick="setPosition('bottom-center')">Bottom Center</button>
+                    <button class="position-btn" onclick="setPosition('bottom-end')">Bottom End</button>
+                </div>
+                <button class="demo-btn btn-primary" onclick="showAtPosition()">Show Toast at Selected Position</button>
 
-            <div class="code-block">
-                <pre>// Position control (title is required)
+                <div class="code-block">
+                    <pre>// Position control (title is required)
 GenieAI.Toast.show({
     title: 'Positioned Toast',
     message: 'Toast at specific position',
@@ -740,44 +738,44 @@ GenieAI.Toast.show({
 // top-start, top-center, top-end
 // middle-start, middle-center, middle-end  
 // bottom-start, bottom-center, bottom-end</pre>
+                </div>
             </div>
-        </div>
 
-        <!-- Theme Control -->
-        <div class="demo-section">
-            <h2>Theme Control</h2>
-            <div class="theme-controls">
-                <button class="theme-btn active" onclick="setTheme('light')">Light Theme</button>
-                <button class="theme-btn" onclick="setTheme('dark')">Dark Theme</button>
-                <button class="theme-btn" onclick="setTheme('system')">System Theme</button>
-            </div>
-            <button class="demo-btn btn-primary" onclick="showThemedToast()">Show Themed Toast</button>
+            <!-- Theme Control -->
+            <div class="demo-section">
+                <h2>Theme Control</h2>
+                <div class="theme-controls">
+                    <button class="theme-btn active" onclick="setTheme('light')">Light Theme</button>
+                    <button class="theme-btn" onclick="setTheme('dark')">Dark Theme</button>
+                    <button class="theme-btn" onclick="setTheme('system')">System Theme</button>
+                </div>
+                <button class="demo-btn btn-primary" onclick="showThemedToast()">Show Themed Toast</button>
 
-            <div class="code-block">
-                <pre>// Theme control
+                <div class="code-block">
+                    <pre>// Theme control
 document.documentElement.setAttribute('data-ga-theme', 'dark');
 
 // Available themes:
 // 'light' - Light theme
 // 'dark' - Dark theme  
 // 'system' - Follows system preference</pre>
-            </div>
-        </div>
-
-        <!-- Progress & Timing -->
-        <div class="demo-section">
-            <h2>Progress & Timing</h2>
-            <div class="button-grid">
-                <button class="demo-btn btn-primary" onclick="showWithProgress()">With Progress Bar</button>
-                <button class="demo-btn btn-success" onclick="showPauseOnHover()">Pause on Hover</button>
-                <button class="demo-btn btn-warning" onclick="showLongDuration()">Long Duration</button>
-                <button class="demo-btn btn-info" onclick="showNoAutoClose()">No Auto Close</button>
-                <button class="demo-btn btn-error" onclick="showClickToClose()">Click to Close</button>
-                <button class="demo-btn btn-secondary" onclick="showBackgroundFill()">Background Fill</button>
+                </div>
             </div>
 
-            <div class="code-block">
-                <pre>// Progress and timing options (title is required)
+            <!-- Progress & Timing -->
+            <div class="demo-section">
+                <h2>Progress & Timing</h2>
+                <div class="button-grid">
+                    <button class="demo-btn btn-primary" onclick="showWithProgress()">With Progress Bar</button>
+                    <button class="demo-btn btn-success" onclick="showPauseOnHover()">Pause on Hover</button>
+                    <button class="demo-btn btn-warning" onclick="showLongDuration()">Long Duration</button>
+                    <button class="demo-btn btn-info" onclick="showNoAutoClose()">No Auto Close</button>
+                    <button class="demo-btn btn-error" onclick="showClickToClose()">Click to Close</button>
+                    <button class="demo-btn btn-secondary" onclick="showBackgroundFill()">Background Fill</button>
+                </div>
+
+                <div class="code-block">
+                    <pre>// Progress and timing options (title is required)
 GenieAI.Toast.show({
     title: 'Progress Toast',
     message: 'Toast with progress bar',
@@ -808,23 +806,23 @@ GenieAI.Toast.show({
     type: 'info',
     clickToClose: true
 });</pre>
-            </div>
-        </div>
-
-        <!-- Toast Management -->
-        <div class="demo-section">
-            <h2>Toast Management</h2>
-            <div class="button-grid">
-                <button class="demo-btn btn-primary" onclick="showMultiple()">Show Multiple</button>
-                <button class="demo-btn btn-success" onclick="updateToast()">Update Toast</button>
-                <button class="demo-btn btn-warning" onclick="closeAll()">Close All</button>
-                <button class="demo-btn btn-info" onclick="getCount()">Get Count</button>
-                <button class="demo-btn btn-error" onclick="clearByType()">Clear by Type</button>
-                <button class="demo-btn btn-secondary" onclick="showStack()">Show Stack</button>
+                </div>
             </div>
 
-            <div class="code-block">
-                <pre>// Toast management (title is required)
+            <!-- Toast Management -->
+            <div class="demo-section">
+                <h2>Toast Management</h2>
+                <div class="button-grid">
+                    <button class="demo-btn btn-primary" onclick="showMultiple()">Show Multiple</button>
+                    <button class="demo-btn btn-success" onclick="updateToast()">Update Toast</button>
+                    <button class="demo-btn btn-warning" onclick="closeAll()">Close All</button>
+                    <button class="demo-btn btn-info" onclick="getCount()">Get Count</button>
+                    <button class="demo-btn btn-error" onclick="clearByType()">Clear by Type</button>
+                    <button class="demo-btn btn-secondary" onclick="showStack()">Show Stack</button>
+                </div>
+
+                <div class="code-block">
+                    <pre>// Toast management (title is required)
 // Show multiple toasts
 for (let i = 1; i <= 3; i++) {
     GenieAI.Toast.info(`Toast ${i}`, { title: `Info ${i}` });
@@ -850,433 +848,442 @@ setTimeout(() => {
 GenieAI.Toast.closeAll();
 GenieAI.Toast.clear('error'); // Clear only error toasts
 const count = GenieAI.Toast.getCount();</pre>
-            </div>
-        </div>
-
-        <!-- Features Overview -->
-        <div class="demo-section">
-            <h2>Key Features</h2>
-            <div class="feature-list">
-                <div class="feature-item">
-                    <h3>🎨 Modern Design</h3>
-                    <p>Beautiful, modern toast notifications with glassmorphism effects, gradients, and smooth
-                        animations.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>♿ Accessible</h3>
-                    <p>Built with accessibility in mind, supporting screen readers and keyboard navigation.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>📱 Responsive</h3>
-                    <p>Fully responsive design that works perfectly on all device sizes and orientations.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>🎭 Multiple Variants</h3>
-                    <p>Support for filled, light, and default variants with custom styling options.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>⚡ Performance</h3>
-                    <p>Lightweight and optimized for performance with minimal impact on page load times.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>🔧 Customizable</h3>
-                    <p>Highly customizable with CSS variables, themes, and extensive configuration options.</p>
                 </div>
             </div>
-        </div>
 
-        <!-- Statistics -->
-        <div class="stats">
-            <div class="stat-item">
-                <span class="stat-number">15+</span>
-                <span class="stat-label">Toast Types</span>
+            <!-- Features Overview -->
+            <div class="demo-section">
+                <h2>Key Features</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <h3>🎨 Modern Design</h3>
+                        <p>Beautiful, modern toast notifications with glassmorphism effects, gradients, and smooth
+                            animations.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>♿ Accessible</h3>
+                        <p>Built with accessibility in mind, supporting screen readers and keyboard navigation.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>📱 Responsive</h3>
+                        <p>Fully responsive design that works perfectly on all device sizes and orientations.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🎭 Multiple Variants</h3>
+                        <p>Support for filled, light, and default variants with custom styling options.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>⚡ Performance</h3>
+                        <p>Lightweight and optimized for performance with minimal impact on page load times.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🔧 Customizable</h3>
+                        <p>Highly customizable with CSS variables, themes, and extensive configuration options.</p>
+                    </div>
+                </div>
             </div>
-            <div class="stat-item">
-                <span class="stat-number">9</span>
-                <span class="stat-label">Positions</span>
+
+            <!-- Statistics -->
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Toast Types</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">9</span>
+                    <span class="stat-label">Positions</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Animations</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Themes</span>
+                </div>
             </div>
-            <div class="stat-item">
-                <span class="stat-number">4</span>
-                <span class="stat-label">Animations</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">3</span>
-                <span class="stat-label">Themes</span>
-            </div>
-        </div>
-        </div>
 
-        <script>
-            // Global variables
-            let currentPosition = 'top-end';
-            let currentTheme = 'light';
 
-            // Basic toast functions
-            function showSuccess() {
-                GenieAI.Toast.success('🎉 Amazing! Your action completed successfully!', { title: 'Success' });
-            }
+        </section>
+    </div>
 
-            function showError() {
-                GenieAI.Toast.error('😞 Oops! Something went wrong. Please try again.', { title: 'Error' });
-            }
 
-            function showWarning() {
-                GenieAI.Toast.warning('⚠️ Heads up! Please check your input before proceeding.', { title: 'Warning' });
-            }
+    </div>
+    </div>
 
-            function showInfo() {
-                GenieAI.Toast.info('💡 Here is some useful information for you.', { title: 'Info' });
-            }
 
-            function showPrimary() {
-                GenieAI.Toast.show({
-                    type: 'primary',
-                    title: 'Primary Notification',
-                    message: 'This is a primary notification'
-                });
-            }
 
-            function showSecondary() {
-                GenieAI.Toast.show({
-                    type: 'secondary',
-                    title: 'Secondary Notification',
-                    message: 'This is a secondary notification'
-                });
-            }
+    <script>
+        // Global variables
+        let currentPosition = 'top-end';
+        let currentTheme = 'light';
 
-            // Advanced features
-            function showWithTitle() {
-                GenieAI.Toast.show({
-                    title: 'New Message',
-                    message: 'You have received a new message from John Doe. Click to view details.',
-                    type: 'info',
-                    duration: 5000
-                });
-            }
+        // Basic toast functions
+        function showSuccess() {
+            GenieAI.Toast.success('🎉 Amazing! Your action completed successfully!', { title: 'Success' });
+        }
 
-            function showWithActions() {
-                GenieAI.Toast.show({
-                    message: 'File uploaded successfully!',
-                    type: 'success',
-                    actions: [
-                        {
-                            text: 'View File',
-                            class: 'ga-btn-primary',
-                            click: function () {
-                                alert('Opening file...');
-                            }
-                        },
-                        {
-                            text: 'Dismiss',
-                            class: 'ga-btn-secondary',
-                            click: function (e, toast) {
-                                GenieAI.Toast.close(toast);
-                            }
+        function showError() {
+            GenieAI.Toast.error('😞 Oops! Something went wrong. Please try again.', { title: 'Error' });
+        }
+
+        function showWarning() {
+            GenieAI.Toast.warning('⚠️ Heads up! Please check your input before proceeding.', { title: 'Warning' });
+        }
+
+        function showInfo() {
+            GenieAI.Toast.info('💡 Here is some useful information for you.', { title: 'Info' });
+        }
+
+        function showPrimary() {
+            GenieAI.Toast.show({
+                type: 'primary',
+                title: 'Primary Notification',
+                message: 'This is a primary notification'
+            });
+        }
+
+        function showSecondary() {
+            GenieAI.Toast.show({
+                type: 'secondary',
+                title: 'Secondary Notification',
+                message: 'This is a secondary notification'
+            });
+        }
+
+        // Advanced features
+        function showWithTitle() {
+            GenieAI.Toast.show({
+                title: 'New Message',
+                message: 'You have received a new message from John Doe. Click to view details.',
+                type: 'info',
+                duration: 5000
+            });
+        }
+
+        function showWithActions() {
+            GenieAI.Toast.show({
+                message: 'File uploaded successfully!',
+                type: 'success',
+                actions: [
+                    {
+                        text: 'View File',
+                        class: 'ga-btn-primary',
+                        click: function () {
+                            alert('Opening file...');
                         }
-                    ]
-                });
-            }
-
-            function showConfirmation() {
-                GenieAI.Toast.confirm('Are you sure you want to delete this item?', {
-                    onConfirm: function () {
-                        GenieAI.Toast.success('Item deleted successfully!');
                     },
-                    onCancel: function () {
-                        GenieAI.Toast.info('Deletion cancelled.');
+                    {
+                        text: 'Dismiss',
+                        class: 'ga-btn-secondary',
+                        click: function (e, toast) {
+                            GenieAI.Toast.close(toast);
+                        }
                     }
-                });
-            }
+                ]
+            });
+        }
 
-            function showLoading() {
-                const loadingToast = GenieAI.Toast.loading('Processing your request...');
-
-                // Simulate loading completion
-                setTimeout(() => {
-                    GenieAI.Toast.close(loadingToast);
-                    GenieAI.Toast.success('Request completed successfully!');
-                }, 3000);
-            }
-
-            function showCustomIcon() {
-                GenieAI.Toast.show({
-                    message: 'Custom icon toast',
-                    type: 'info',
-                    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
-                });
-            }
-
-            function showModern() {
-                GenieAI.Toast.modern('This is a modern toast with enhanced styling!');
-            }
-
-            // Variants and sizes
-            function showFilled() {
-                GenieAI.Toast.show({
-                    message: 'Filled variant toast',
-                    type: 'success',
-                    variant: 'filled'
-                });
-            }
-
-            function showLight() {
-                GenieAI.Toast.show({
-                    message: 'Light variant toast',
-                    type: 'info',
-                    variant: 'light'
-                });
-            }
-
-            function showSmall() {
-                GenieAI.Toast.show({
-                    message: 'Small toast',
-                    type: 'warning',
-                    size: 'sm'
-                });
-            }
-
-            function showLarge() {
-                GenieAI.Toast.show({
-                    message: 'Large toast with more content and better visibility',
-                    type: 'primary',
-                    size: 'lg'
-                });
-            }
-
-            function showGlassmorphism() {
-                GenieAI.Toast.show({
-                    message: 'Glassmorphism effect toast',
-                    type: 'info',
-                    glassmorphism: true
-                });
-            }
-
-            function showGradient() {
-                const toast = GenieAI.Toast.show({
-                    message: 'Gradient border toast',
-                    type: 'primary'
-                });
-                toast.addClass('ga-toast-gradient-border');
-            }
-
-            // Animations
-            function showFade() {
-                GenieAI.Toast.show({
-                    message: 'Fade animation toast',
-                    title: 'Fade',
-                    type: 'info',
-                    animation: 'fade'
-                });
-            }
-
-            function showSlide() {
-                GenieAI.Toast.show({
-                    message: 'Slide animation toast',
-                    title: 'Slide',
-                    type: 'success',
-                    animation: 'slide'
-                });
-            }
-
-            function showBounce() {
-                GenieAI.Toast.show({
-                    message: 'Bounce animation toast',
-                    title: 'Bounce',
-                    type: 'warning',
-                    animation: 'bounce'
-                });
-            }
-
-            function showScale() {
-                GenieAI.Toast.show({
-                    message: 'Scale animation toast',
-                    title: 'Scale',
-                    type: 'info',
-                    animation: 'scale'
-                });
-            }
-
-            function showShake() {
-                const toast = GenieAI.Toast.show({
-                    message: 'Shake effect toast',
-                    title: 'Shake',
-                    type: 'error'
-                });
-                toast.addClass('ga-toast-shake');
-            }
-
-            function showHeartbeat() {
-                const toast = GenieAI.Toast.show({
-                    message: 'Heartbeat effect toast',
-                    title: 'Heartbeat',
-                    type: 'success'
-                });
-                toast.addClass('ga-toast-heartbeat');
-            }
-
-            // Position control
-            function setPosition(position) {
-                currentPosition = position;
-                document.querySelectorAll('.position-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                event.target.classList.add('active');
-            }
-
-            function showAtPosition() {
-                GenieAI.Toast.show({
-                    message: `Toast at ${currentPosition} position`,
-                    title: 'Position',
-                    type: 'info',
-                    position: currentPosition
-                });
-            }
-
-            // Theme control
-            function setTheme(theme) {
-                currentTheme = theme;
-                document.documentElement.setAttribute('data-ga-theme', theme);
-                document.querySelectorAll('.theme-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                event.target.classList.add('active');
-            }
-
-            function showThemedToast() {
-                GenieAI.Toast.show({
-                    message: `Toast with ${currentTheme} theme`,
-                    title: 'Theme',
-                    type: 'info'
-                });
-            }
-
-            // Progress and timing
-            function showWithProgress() {
-                GenieAI.Toast.show({
-                    message: 'Toast with progress bar',
-                    title: 'Progress',
-                    type: 'info',
-                    progress: true,
-                    duration: 5000
-                });
-            }
-
-            function showPauseOnHover() {
-                GenieAI.Toast.show({
-                    message: 'Hover to pause countdown',
-                    title: 'Pause',
-                    type: 'success',
-                    pauseOnHover: true,
-                    duration: 5000
-                });
-            }
-
-            function showLongDuration() {
-                GenieAI.Toast.show({
-                    message: 'This toast will stay for 10 seconds',
-                    title: 'Long',
-                    type: 'warning',
-                    duration: 10000
-                });
-            }
-
-            function showNoAutoClose() {
-                GenieAI.Toast.show({
-                    message: 'This toast will not auto-close',
-                    title: 'No Auto Close',
-                    type: 'info',
-                    duration: 0,
-                    closable: true
-                });
-            }
-
-            function showClickToClose() {
-                GenieAI.Toast.show({
-                    message: 'Click anywhere on this toast to close it',
-                    type: 'info',
-                    clickToClose: true
-                });
-            }
-
-            function showBackgroundFill() {
-                GenieAI.Toast.show({
-                    message: 'Toast with background fill effect',
-                    type: 'primary',
-                    progressBackground: true,
-                    duration: 5000
-                });
-            }
-
-            // Toast management
-            function showMultiple() {
-                const types = ['success', 'info', 'warning', 'error'];
-                types.forEach((type, index) => {
-                    setTimeout(() => {
-                        GenieAI.Toast.show({
-                            message: `Toast ${index + 1} - ${type}`,
-                            type: type
-                        });
-                    }, index * 500);
-                });
-            }
-
-            function updateToast() {
-                const toast = GenieAI.Toast.show({
-                    id: 'updateable-toast',
-                    message: 'Initial message - will update in 2 seconds',
-                    type: 'info',
-                    duration: 0
-                });
-
-                setTimeout(() => {
-                    GenieAI.Toast.update('updateable-toast', {
-                        message: 'Message updated successfully!',
-                        type: 'success'
-                    });
-                }, 2000);
-            }
-
-            function closeAll() {
-                GenieAI.Toast.closeAll();
-            }
-
-            function getCount() {
-                const count = GenieAI.Toast.getCount();
-                GenieAI.Toast.info(`There are currently ${count} toasts visible`);
-            }
-
-            function clearByType() {
-                GenieAI.Toast.clear('info');
-                GenieAI.Toast.info('All info toasts have been cleared');
-            }
-
-            function showStack() {
-                // Show multiple toasts in a stack
-                for (let i = 1; i <= 5; i++) {
-                    setTimeout(() => {
-                        GenieAI.Toast.show({
-                            message: `Stacked toast ${i}`,
-                            type: 'info',
-                            size: 'sm'
-                        });
-                    }, i * 200);
+        function showConfirmation() {
+            GenieAI.Toast.confirm('Are you sure you want to delete this item?', {
+                onConfirm: function () {
+                    GenieAI.Toast.success('Item deleted successfully!');
+                },
+                onCancel: function () {
+                    GenieAI.Toast.info('Deletion cancelled.');
                 }
-            }
+            });
+        }
 
-            // Initialize demo
-            $(document).ready(function () {
-                // Show welcome toast
+        function showLoading() {
+            const loadingToast = GenieAI.Toast.loading('Processing your request...');
+
+            // Simulate loading completion
+            setTimeout(() => {
+                GenieAI.Toast.close(loadingToast);
+                GenieAI.Toast.success('Request completed successfully!');
+            }, 3000);
+        }
+
+        function showCustomIcon() {
+            GenieAI.Toast.show({
+                message: 'Custom icon toast',
+                type: 'info',
+                icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
+            });
+        }
+
+        function showModern() {
+            GenieAI.Toast.modern('This is a modern toast with enhanced styling!');
+        }
+
+        // Variants and sizes
+        function showFilled() {
+            GenieAI.Toast.show({
+                message: 'Filled variant toast',
+                type: 'success',
+                variant: 'filled'
+            });
+        }
+
+        function showLight() {
+            GenieAI.Toast.show({
+                message: 'Light variant toast',
+                type: 'info',
+                variant: 'light'
+            });
+        }
+
+        function showSmall() {
+            GenieAI.Toast.show({
+                message: 'Small toast',
+                type: 'warning',
+                size: 'sm'
+            });
+        }
+
+        function showLarge() {
+            GenieAI.Toast.show({
+                message: 'Large toast with more content and better visibility',
+                type: 'primary',
+                size: 'lg'
+            });
+        }
+
+        function showGlassmorphism() {
+            GenieAI.Toast.show({
+                message: 'Glassmorphism effect toast',
+                type: 'info',
+                glassmorphism: true
+            });
+        }
+
+        function showGradient() {
+            const toast = GenieAI.Toast.show({
+                message: 'Gradient border toast',
+                type: 'primary'
+            });
+            toast.addClass('ga-toast-gradient-border');
+        }
+
+        // Animations
+        function showFade() {
+            GenieAI.Toast.show({
+                message: 'Fade animation toast',
+                title: 'Fade',
+                type: 'info',
+                animation: 'fade'
+            });
+        }
+
+        function showSlide() {
+            GenieAI.Toast.show({
+                message: 'Slide animation toast',
+                title: 'Slide',
+                type: 'success',
+                animation: 'slide'
+            });
+        }
+
+        function showBounce() {
+            GenieAI.Toast.show({
+                message: 'Bounce animation toast',
+                title: 'Bounce',
+                type: 'warning',
+                animation: 'bounce'
+            });
+        }
+
+        function showScale() {
+            GenieAI.Toast.show({
+                message: 'Scale animation toast',
+                title: 'Scale',
+                type: 'info',
+                animation: 'scale'
+            });
+        }
+
+        function showShake() {
+            const toast = GenieAI.Toast.show({
+                message: 'Shake effect toast',
+                title: 'Shake',
+                type: 'error'
+            });
+            toast.addClass('ga-toast-shake');
+        }
+
+        function showHeartbeat() {
+            const toast = GenieAI.Toast.show({
+                message: 'Heartbeat effect toast',
+                title: 'Heartbeat',
+                type: 'success'
+            });
+            toast.addClass('ga-toast-heartbeat');
+        }
+
+        // Position control
+        function setPosition(position) {
+            currentPosition = position;
+            document.querySelectorAll('.position-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function showAtPosition() {
+            GenieAI.Toast.show({
+                message: `Toast at ${currentPosition} position`,
+                title: 'Position',
+                type: 'info',
+                position: currentPosition
+            });
+        }
+
+        // Theme control
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-ga-theme', theme);
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function showThemedToast() {
+            GenieAI.Toast.show({
+                message: `Toast with ${currentTheme} theme`,
+                title: 'Theme',
+                type: 'info'
+            });
+        }
+
+        // Progress and timing
+        function showWithProgress() {
+            GenieAI.Toast.show({
+                message: 'Toast with progress bar',
+                title: 'Progress',
+                type: 'info',
+                progress: true,
+                duration: 5000
+            });
+        }
+
+        function showPauseOnHover() {
+            GenieAI.Toast.show({
+                message: 'Hover to pause countdown',
+                title: 'Pause',
+                type: 'success',
+                pauseOnHover: true,
+                duration: 5000
+            });
+        }
+
+        function showLongDuration() {
+            GenieAI.Toast.show({
+                message: 'This toast will stay for 10 seconds',
+                title: 'Long',
+                type: 'warning',
+                duration: 10000
+            });
+        }
+
+        function showNoAutoClose() {
+            GenieAI.Toast.show({
+                message: 'This toast will not auto-close',
+                title: 'No Auto Close',
+                type: 'info',
+                duration: 0,
+                closable: true
+            });
+        }
+
+        function showClickToClose() {
+            GenieAI.Toast.show({
+                message: 'Click anywhere on this toast to close it',
+                type: 'info',
+                clickToClose: true
+            });
+        }
+
+        function showBackgroundFill() {
+            GenieAI.Toast.show({
+                message: 'Toast with background fill effect',
+                type: 'primary',
+                progressBackground: true,
+                duration: 5000
+            });
+        }
+
+        // Toast management
+        function showMultiple() {
+            const types = ['success', 'info', 'warning', 'error'];
+            types.forEach((type, index) => {
                 setTimeout(() => {
                     GenieAI.Toast.show({
-                        title: 'Welcome to GA Toasts! 🎉',
-                        message: 'Discover the power of beautiful, modern toast notifications. Click the buttons below to explore all the amazing features!',
-                        type: 'success',
-                        duration: 6000,
-                        position: 'top-center'
+                        message: `Toast ${index + 1} - ${type}`,
+                        type: type
                     });
-                }, 1000);
+                }, index * 500);
             });
-        </script>
+        }
+
+        function updateToast() {
+            const toast = GenieAI.Toast.show({
+                id: 'updateable-toast',
+                message: 'Initial message - will update in 2 seconds',
+                type: 'info',
+                duration: 0
+            });
+
+            setTimeout(() => {
+                GenieAI.Toast.update('updateable-toast', {
+                    message: 'Message updated successfully!',
+                    type: 'success'
+                });
+            }, 2000);
+        }
+
+        function closeAll() {
+            GenieAI.Toast.closeAll();
+        }
+
+        function getCount() {
+            const count = GenieAI.Toast.getCount();
+            GenieAI.Toast.info(`There are currently ${count} toasts visible`);
+        }
+
+        function clearByType() {
+            GenieAI.Toast.clear('info');
+            GenieAI.Toast.info('All info toasts have been cleared');
+        }
+
+        function showStack() {
+            // Show multiple toasts in a stack
+            for (let i = 1; i <= 5; i++) {
+                setTimeout(() => {
+                    GenieAI.Toast.show({
+                        message: `Stacked toast ${i}`,
+                        type: 'info',
+                        size: 'sm'
+                    });
+                }, i * 200);
+            }
+        }
+
+        // Initialize demo
+        $(document).ready(function () {
+            // Show welcome toast
+            setTimeout(() => {
+                GenieAI.Toast.show({
+                    title: 'Welcome to GA Toasts! 🎉',
+                    message: 'Discover the power of beautiful, modern toast notifications. Click the buttons below to explore all the amazing features!',
+                    type: 'success',
+                    duration: 6000,
+                    position: 'top-center'
+                });
+            }, 1000);
+        });
+    </script>
 </body>
 
 </html>
