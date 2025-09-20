@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" href="/images/gennie_logo.png">
+    <title>GA Toasts - Interactive Examples</title>
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="variables.css">
+    <link rel="stylesheet" href="toasts.css">
+    
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- GA Toasts JavaScript -->
+    <script src="toasts.js"></script>
+    
+    
+    <!-- Fallback for jQuery -->
+    <script>
+        if (typeof jQuery === 'undefined') {
+            console.error('jQuery is required for GA Toasts to work properly. Please include jQuery before the toasts.js script.');
+        }
+    </script>
+    
+    <!-- Demo Styles -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--ga-font-sans);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--ga-text-primary);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed, #ec4899);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 50px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .demo-section {
+            margin-bottom: 50px;
+            padding: 35px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            backdrop-filter: blur(10px);
+        }
+        
+        .demo-section h2 {
+            color: #1e40af;
+            margin-bottom: 25px;
+            font-size: 1.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.01em;
+        }
+        
+        .demo-section h2::before {
+            content: '';
+            width: 5px;
+            height: 35px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            border-radius: 3px;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .demo-btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .demo-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .demo-btn:hover::before {
+            left: 100%;
+        }
+        
+        .demo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
+        .btn-success { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .btn-error { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .btn-warning { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        .btn-info { background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; }
+        .btn-secondary { background: linear-gradient(135deg, #6b7280, #4b5563); color: white; }
+        
+        .code-block {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 16px;
+            font-family: 'JetBrains Mono', 'Fira Code', var(--ga-font-mono);
+            font-size: 14px;
+            overflow-x: auto;
+            margin-top: 25px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(59, 130, 246, 0.1) inset;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .feature-item {
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+            border-radius: 16px;
+            border-left: 5px solid #3b82f6;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.12),
+                0 0 0 1px rgba(59, 130, 246, 0.1) inset;
+        }
+        
+        .feature-item h3 {
+            color: #1e40af;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .feature-item p {
+            color: var(--ga-text-secondary);
+            line-height: 1.6;
+        }
+        
+        .position-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .position-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--ga-primary);
+            background: transparent;
+            color: var(--ga-primary);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .position-btn.active,
+        .position-btn:hover {
+            background: var(--ga-primary);
+            color: white;
+        }
+        
+        .theme-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .theme-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--ga-border-medium);
+            background: var(--ga-bg-primary);
+            color: var(--ga-text-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-btn.active {
+            border-color: var(--ga-primary);
+            background: var(--ga-primary);
+            color: white;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+        
+        .stat-label {
+            color: var(--ga-text-secondary);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ GA Toasts</h1>
+        <p class="subtitle">Beautiful, modern, and accessible toast notifications that elevate your web applications with smooth animations and intuitive design</p>
+        
+        <!-- Basic Toast Types -->
+        <div class="demo-section">
+            <h2>Basic Toast Types</h2>
+            <div class="button-grid">
+                <button class="demo-btn btn-success" onclick="showSuccess()">✨ Success Toast</button>
+                <button class="demo-btn btn-error" onclick="showError()">❌ Error Toast</button>
+                <button class="demo-btn btn-warning" onclick="showWarning()">⚠️ Warning Toast</button>
+                <button class="demo-btn btn-info" onclick="showInfo()">ℹ️ Info Toast</button>
+                <button class="demo-btn btn-primary" onclick="showPrimary()">🔵 Primary Toast</button>
+                <button class="demo-btn btn-secondary" onclick="showSecondary()">⚪ Secondary Toast</button>
+            </div>
+            
+            <div class="code-block">
+                <pre>// Basic toast types (title is required)
+GenieAI.Toast.success('Operation completed successfully!', { title: 'Success' });
+GenieAI.Toast.error('Something went wrong!', { title: 'Error' });
+GenieAI.Toast.warning('Please check your input', { title: 'Warning' });
+GenieAI.Toast.info('Here is some information', { title: 'Info' });
+GenieAI.Toast.show({ 
+    type: 'primary', 
+    title: 'Primary Notification',
+    message: 'Primary notification' 
+});
+GenieAI.Toast.show({ 
+    type: 'secondary', 
+    title: 'Secondary Notification',
+    message: 'Secondary notification' 
+});</pre>
+            </div>
+        </div>
+        
+        <!-- Advanced Features -->
+        <div class="demo-section">
+            <h2>Advanced Features</h2>
+            <div class="button-grid">
+                <button class="demo-btn btn-primary" onclick="showWithTitle()">With Title</button>
+                <button class="demo-btn btn-success" onclick="showWithActions()">With Actions</button>
+                <button class="demo-btn btn-info" onclick="showConfirmation()">Confirmation</button>
+                <button class="demo-btn btn-warning" onclick="showLoading()">Loading Toast</button>
+                <button class="demo-btn btn-error" onclick="showCustomIcon()">Custom Icon</button>
+                <button class="demo-btn btn-primary" onclick="showModern()">Modern Style</button>
+            </div>
+            
+            <div class="code-block">
+                <pre>// Advanced features (title is required)
+GenieAI.Toast.show({
+    title: 'New Message',
+    message: 'You have received a new message from John Doe',
+    type: 'info',
+    duration: 5000
+});
+
+GenieAI.Toast.show({
+    title: 'File Upload',
+    message: 'File uploaded successfully',
+    type: 'success',
+    actions: [
+        { text: 'View', click: () => console.log('View clicked') },
+        { text: 'Dismiss', click: (e, toast) => GenieAI.Toast.close(toast) }
+    ]
+});
+
+GenieAI.Toast.confirm('Are you sure you want to delete this item?', {
+    title: 'Confirm Deletion',
+    onConfirm: () => console.log('Confirmed'),
+    onCancel: () => console.log('Cancelled')
+});</pre>
+            </div>
+        </div>
+        
+        <!-- Toast Variants -->
+        <div class="demo-section">
+            <h2>Toast Variants & Sizes</h2>
+            <div class="button-grid">
+                <button class="demo-btn btn-primary" onclick="showFilled()">Filled Variant</button>
+                <button class="demo-btn btn-success" onclick="showLight()">Light Variant</button>
+                <button class="demo-btn btn-info" onclick="showSmall()">Small Size</button>
+                <button class="demo-btn btn-warning" onclick="showLarge()">Large Size</button>
+                <button class="demo-btn btn-error" onclick="showGlassmorphism()">Glassmorphism</button>
+                <button class="demo-btn btn-secondary" onclick="showGradient()">Gradient Border</button>
+            </div>
+            
+            <div class="code-block">
+                <pre>// Variants and sizes (title is required)
+GenieAI.Toast.show({
+    title: 'Filled Variant',
+    message: 'Filled variant toast',
+    type: 'success',
+    variant: 'filled'
+});
+
+GenieAI.Toast.show({
+    title: 'Light Variant',
+    message: 'Light variant toast',
+    type: 'info',
+    variant: 'light'
+});
+
+GenieAI.Toast.show({
+    title: 'Small Toast',
+    message: 'Small toast',
+    type: 'warning',
+    size: 'sm'
+});
+
+GenieAI.Toast.show({
+    title: 'Large Toast',
+    message: 'Large toast with more content',
+    type: 'primary',
+    size: 'lg'
+});</pre>
+            </div>
+        </div>
+        
+        <!-- Animations -->
+        <div class="demo-section">
+            <h2>Animation Effects</h2>
+            <div class="button-grid">
+                <button class="demo-btn btn-primary" onclick="showFade()">Fade Animation</button>
+                <button class="demo-btn btn-success" onclick="showSlide()">Slide Animation</button>
+                <button class="demo-btn btn-warning" onclick="showBounce()">Bounce Animation</button>
+                <button class="demo-btn btn-info" onclick="showScale()">Scale Animation</button>
+                <button class="demo-btn btn-error" onclick="showShake()">Shake Effect</button>
+                <button class="demo-btn btn-secondary" onclick="showHeartbeat()">Heartbeat Effect</button>
+            </div>
+            
+            <div class="code-block">
+                <pre>// Animation effects (title is required)
+GenieAI.Toast.show({
+    title: 'Fade Animation',
+    message: 'Fade animation',
+    type: 'info',
+    animation: 'fade'
+});
+
+GenieAI.Toast.show({
+    title: 'Slide Animation',
+    message: 'Slide animation',
+    type: 'success',
+    animation: 'slide'
+});
+
+GenieAI.Toast.show({
+    title: 'Bounce Animation',
+    message: 'Bounce animation',
+    type: 'warning',
+    animation: 'bounce'
+});
+
+// Add custom effects after creation
+const toast = GenieAI.Toast.show({ 
+    title: 'Custom Effect',
+    message: 'Custom effect', 
+    type: 'info' 
+});
+toast.addClass('ga-toast-shake');</pre>
+            </div>
+        </div>
+        
+        <!-- Position Control -->
+        <div class="demo-section">
+            <h2>Position Control</h2>
+            <div class="position-controls">
+                <button class="position-btn active" onclick="setPosition('top-start')">Top Start</button>
+                <button class="position-btn" onclick="setPosition('top-center')">Top Center</button>
+                <button class="position-btn" onclick="setPosition('top-end')">Top End</button>
+                <button class="position-btn" onclick="setPosition('middle-start')">Middle Start</button>
+                <button class="position-btn" onclick="setPosition('middle-center')">Middle Center</button>
+                <button class="position-btn" onclick="setPosition('middle-end')">Middle End</button>
+                <button class="position-btn" onclick="setPosition('bottom-start')">Bottom Start</button>
+                <button class="position-btn" onclick="setPosition('bottom-center')">Bottom Center</button>
+                <button class="position-btn" onclick="setPosition('bottom-end')">Bottom End</button>
+            </div>
+            <button class="demo-btn btn-primary" onclick="showAtPosition()">Show Toast at Selected Position</button>
+            
+            <div class="code-block">
+                <pre>// Position control (title is required)
+GenieAI.Toast.show({
+    title: 'Positioned Toast',
+    message: 'Toast at specific position',
+    type: 'info',
+    position: 'top-center'
+});
+
+// Available positions:
+// top-start, top-center, top-end
+// middle-start, middle-center, middle-end  
+// bottom-start, bottom-center, bottom-end</pre>
+            </div>
+        </div>
+        
+        <!-- Theme Control -->
+        <div class="demo-section">
+            <h2>Theme Control</h2>
+            <div class="theme-controls">
+                <button class="theme-btn active" onclick="setTheme('light')">Light Theme</button>
+                <button class="theme-btn" onclick="setTheme('dark')">Dark Theme</button>
+                <button class="theme-btn" onclick="setTheme('system')">System Theme</button>
+            </div>
+            <button class="demo-btn btn-primary" onclick="showThemedToast()">Show Themed Toast</button>
+            
+            <div class="code-block">
+                <pre>// Theme control
+document.documentElement.setAttribute('data-ga-theme', 'dark');
+
+// Available themes:
+// 'light' - Light theme
+// 'dark' - Dark theme  
+// 'system' - Follows system preference</pre>
+            </div>
+        </div>
+        
+        <!-- Progress & Timing -->
+        <div class="demo-section">
+            <h2>Progress & Timing</h2>
+            <div class="button-grid">
+                <button class="demo-btn btn-primary" onclick="showWithProgress()">With Progress Bar</button>
+                <button class="demo-btn btn-success" onclick="showPauseOnHover()">Pause on Hover</button>
+                <button class="demo-btn btn-warning" onclick="showLongDuration()">Long Duration</button>
+                <button class="demo-btn btn-info" onclick="showNoAutoClose()">No Auto Close</button>
+                <button class="demo-btn btn-error" onclick="showClickToClose()">Click to Close</button>
+                <button class="demo-btn btn-secondary" onclick="showBackgroundFill()">Background Fill</button>
+            </div>
+            
+            <div class="code-block">
+                <pre>// Progress and timing options (title is required)
+GenieAI.Toast.show({
+    title: 'Progress Toast',
+    message: 'Toast with progress bar',
+    type: 'info',
+    progress: true,
+    duration: 5000
+});
+
+GenieAI.Toast.show({
+    title: 'Pause on Hover',
+    message: 'Pause on hover',
+    type: 'success',
+    pauseOnHover: true,
+    duration: 3000
+});
+
+GenieAI.Toast.show({
+    title: 'No Auto Close',
+    message: 'No auto close',
+    type: 'warning',
+    duration: 0,
+    closable: true
+});
+
+GenieAI.Toast.show({
+    title: 'Click to Close',
+    message: 'Click to close',
+    type: 'info',
+    clickToClose: true
+});</pre>
+            </div>
+        </div>
+        
+        <!-- Toast Management -->
+        <div class="demo-section">
+            <h2>Toast Management</h2>
+            <div class="button-grid">
+                <button class="demo-btn btn-primary" onclick="showMultiple()">Show Multiple</button>
+                <button class="demo-btn btn-success" onclick="updateToast()">Update Toast</button>
+                <button class="demo-btn btn-warning" onclick="closeAll()">Close All</button>
+                <button class="demo-btn btn-info" onclick="getCount()">Get Count</button>
+                <button class="demo-btn btn-error" onclick="clearByType()">Clear by Type</button>
+                <button class="demo-btn btn-secondary" onclick="showStack()">Show Stack</button>
+            </div>
+            
+            <div class="code-block">
+                <pre>// Toast management (title is required)
+// Show multiple toasts
+for (let i = 1; i <= 3; i++) {
+    GenieAI.Toast.info(`Toast ${i}`, { title: `Info ${i}` });
+}
+
+// Update existing toast
+const toast = GenieAI.Toast.show({
+    id: 'updateable-toast',
+    title: 'Initial Toast',
+    message: 'Initial message',
+    type: 'info'
+});
+
+setTimeout(() => {
+    GenieAI.Toast.update('updateable-toast', {
+        title: 'Updated Toast',
+        message: 'Updated message!',
+        type: 'success'
+    });
+}, 2000);
+
+// Management methods
+GenieAI.Toast.closeAll();
+GenieAI.Toast.clear('error'); // Clear only error toasts
+const count = GenieAI.Toast.getCount();</pre>
+            </div>
+        </div>
+        
+        <!-- Features Overview -->
+        <div class="demo-section">
+            <h2>Key Features</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h3>🎨 Modern Design</h3>
+                    <p>Beautiful, modern toast notifications with glassmorphism effects, gradients, and smooth animations.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>♿ Accessible</h3>
+                    <p>Built with accessibility in mind, supporting screen readers and keyboard navigation.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>📱 Responsive</h3>
+                    <p>Fully responsive design that works perfectly on all device sizes and orientations.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🎭 Multiple Variants</h3>
+                    <p>Support for filled, light, and default variants with custom styling options.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>⚡ Performance</h3>
+                    <p>Lightweight and optimized for performance with minimal impact on page load times.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔧 Customizable</h3>
+                    <p>Highly customizable with CSS variables, themes, and extensive configuration options.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number">15+</span>
+                <span class="stat-label">Toast Types</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">9</span>
+                <span class="stat-label">Positions</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">4</span>
+                <span class="stat-label">Animations</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">3</span>
+                <span class="stat-label">Themes</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentPosition = 'top-end';
+        let currentTheme = 'light';
+        
+        // Basic toast functions
+        function showSuccess() {
+            GenieAI.Toast.success('🎉 Amazing! Your action completed successfully!', {title: 'Success'});
+        }
+        
+        function showError() {
+            GenieAI.Toast.error('😞 Oops! Something went wrong. Please try again.', {title: 'Error'});
+        }
+        
+        function showWarning() {
+            GenieAI.Toast.warning('⚠️ Heads up! Please check your input before proceeding.', {title: 'Warning'});
+        }
+        
+        function showInfo() {
+            GenieAI.Toast.info('💡 Here is some useful information for you.', {title: 'Info'});
+        }
+        
+        function showPrimary() {
+            GenieAI.Toast.show({
+                type: 'primary',
+                title: 'Primary Notification',
+                message: 'This is a primary notification'
+            });
+        }
+        
+        function showSecondary() {
+            GenieAI.Toast.show({
+                type: 'secondary',
+                title: 'Secondary Notification',
+                message: 'This is a secondary notification'
+            });
+        }
+        
+        // Advanced features
+        function showWithTitle() {
+            GenieAI.Toast.show({
+                title: 'New Message',
+                message: 'You have received a new message from John Doe. Click to view details.',
+                type: 'info',
+                duration: 5000
+            });
+        }
+        
+        function showWithActions() {
+            GenieAI.Toast.show({
+                message: 'File uploaded successfully!',
+                type: 'success',
+                actions: [
+                    {
+                        text: 'View File',
+                        class: 'ga-btn-primary',
+                        click: function() {
+                            alert('Opening file...');
+                        }
+                    },
+                    {
+                        text: 'Dismiss',
+                        class: 'ga-btn-secondary',
+                        click: function(e, toast) {
+                            GenieAI.Toast.close(toast);
+                        }
+                    }
+                ]
+            });
+        }
+        
+        function showConfirmation() {
+            GenieAI.Toast.confirm('Are you sure you want to delete this item?', {
+                onConfirm: function() {
+                    GenieAI.Toast.success('Item deleted successfully!');
+                },
+                onCancel: function() {
+                    GenieAI.Toast.info('Deletion cancelled.');
+                }
+            });
+        }
+        
+        function showLoading() {
+            const loadingToast = GenieAI.Toast.loading('Processing your request...');
+            
+            // Simulate loading completion
+            setTimeout(() => {
+                GenieAI.Toast.close(loadingToast);
+                GenieAI.Toast.success('Request completed successfully!');
+            }, 3000);
+        }
+        
+        function showCustomIcon() {
+            GenieAI.Toast.show({
+                message: 'Custom icon toast',
+                type: 'info',
+                icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
+            });
+        }
+        
+        function showModern() {
+            GenieAI.Toast.modern('This is a modern toast with enhanced styling!');
+        }
+        
+        // Variants and sizes
+        function showFilled() {
+            GenieAI.Toast.show({
+                message: 'Filled variant toast',
+                type: 'success',
+                variant: 'filled'
+            });
+        }
+        
+        function showLight() {
+            GenieAI.Toast.show({
+                message: 'Light variant toast',
+                type: 'info',
+                variant: 'light'
+            });
+        }
+        
+        function showSmall() {
+            GenieAI.Toast.show({
+                message: 'Small toast',
+                type: 'warning',
+                size: 'sm'
+            });
+        }
+        
+        function showLarge() {
+            GenieAI.Toast.show({
+                message: 'Large toast with more content and better visibility',
+                type: 'primary',
+                size: 'lg'
+            });
+        }
+        
+        function showGlassmorphism() {
+            GenieAI.Toast.show({
+                message: 'Glassmorphism effect toast',
+                type: 'info',
+                glassmorphism: true
+            });
+        }
+        
+        function showGradient() {
+            const toast = GenieAI.Toast.show({
+                message: 'Gradient border toast',
+                type: 'primary'
+            });
+            toast.addClass('ga-toast-gradient-border');
+        }
+        
+        // Animations
+        function showFade() {
+            GenieAI.Toast.show({
+                message: 'Fade animation toast',
+                title: 'Fade',
+                type: 'info',
+                animation: 'fade'
+            });
+        }
+        
+        function showSlide() {
+            GenieAI.Toast.show({
+                message: 'Slide animation toast',
+                title: 'Slide',
+                type: 'success',
+                animation: 'slide'
+            });
+        }
+        
+        function showBounce() {
+            GenieAI.Toast.show({
+                message: 'Bounce animation toast',
+                title: 'Bounce',
+                type: 'warning',
+                animation: 'bounce'
+            });
+        }
+        
+        function showScale() {
+            GenieAI.Toast.show({
+                message: 'Scale animation toast',
+                title: 'Scale',
+                type: 'info',
+                animation: 'scale'
+            });
+        }
+        
+        function showShake() {
+            const toast = GenieAI.Toast.show({
+                message: 'Shake effect toast',
+                title: 'Shake',
+                type: 'error'
+            });
+            toast.addClass('ga-toast-shake');
+        }
+        
+        function showHeartbeat() {
+            const toast = GenieAI.Toast.show({
+                message: 'Heartbeat effect toast',
+                title: 'Heartbeat',
+                type: 'success'
+            });
+            toast.addClass('ga-toast-heartbeat');
+        }
+        
+        // Position control
+        function setPosition(position) {
+            currentPosition = position;
+            document.querySelectorAll('.position-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        function showAtPosition() {
+            GenieAI.Toast.show({
+                message: `Toast at ${currentPosition} position`,
+                title: 'Position',
+                type: 'info',
+                position: currentPosition
+            });
+        }
+        
+        // Theme control
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-ga-theme', theme);
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        function showThemedToast() {
+            GenieAI.Toast.show({
+                message: `Toast with ${currentTheme} theme`,
+                title: 'Theme',
+                type: 'info'
+            });
+        }
+        
+        // Progress and timing
+        function showWithProgress() {
+            GenieAI.Toast.show({
+                message: 'Toast with progress bar',
+                title: 'Progress',
+                type: 'info',
+                progress: true,
+                duration: 5000
+            });
+        }
+        
+        function showPauseOnHover() {
+            GenieAI.Toast.show({
+                message: 'Hover to pause countdown',
+                title: 'Pause',
+                type: 'success',
+                pauseOnHover: true,
+                duration: 5000
+            });
+        }
+        
+        function showLongDuration() {
+            GenieAI.Toast.show({
+                message: 'This toast will stay for 10 seconds',
+                title: 'Long',
+                type: 'warning',
+                duration: 10000
+            });
+        }
+        
+        function showNoAutoClose() {
+            GenieAI.Toast.show({
+                message: 'This toast will not auto-close',
+                title: 'No Auto Close',
+                type: 'info',
+                duration: 0,
+                closable: true
+            });
+        }
+        
+        function showClickToClose() {
+            GenieAI.Toast.show({
+                message: 'Click anywhere on this toast to close it',
+                type: 'info',
+                clickToClose: true
+            });
+        }
+        
+        function showBackgroundFill() {
+            GenieAI.Toast.show({
+                message: 'Toast with background fill effect',
+                type: 'primary',
+                progressBackground: true,
+                duration: 5000
+            });
+        }
+        
+        // Toast management
+        function showMultiple() {
+            const types = ['success', 'info', 'warning', 'error'];
+            types.forEach((type, index) => {
+                setTimeout(() => {
+                    GenieAI.Toast.show({
+                        message: `Toast ${index + 1} - ${type}`,
+                        type: type
+                    });
+                }, index * 500);
+            });
+        }
+        
+        function updateToast() {
+            const toast = GenieAI.Toast.show({
+                id: 'updateable-toast',
+                message: 'Initial message - will update in 2 seconds',
+                type: 'info',
+                duration: 0
+            });
+            
+            setTimeout(() => {
+                GenieAI.Toast.update('updateable-toast', {
+                    message: 'Message updated successfully!',
+                    type: 'success'
+                });
+            }, 2000);
+        }
+        
+        function closeAll() {
+            GenieAI.Toast.closeAll();
+        }
+        
+        function getCount() {
+            const count = GenieAI.Toast.getCount();
+            GenieAI.Toast.info(`There are currently ${count} toasts visible`);
+        }
+        
+        function clearByType() {
+            GenieAI.Toast.clear('info');
+            GenieAI.Toast.info('All info toasts have been cleared');
+        }
+        
+        function showStack() {
+            // Show multiple toasts in a stack
+            for (let i = 1; i <= 5; i++) {
+                setTimeout(() => {
+                    GenieAI.Toast.show({
+                        message: `Stacked toast ${i}`,
+                        type: 'info',
+                        size: 'sm'
+                    });
+                }, i * 200);
+            }
+        }
+        
+        // Initialize demo
+        $(document).ready(function() {
+            // Show welcome toast
+            setTimeout(() => {
+                GenieAI.Toast.show({
+                    title: 'Welcome to GA Toasts! 🎉',
+                    message: 'Discover the power of beautiful, modern toast notifications. Click the buttons below to explore all the amazing features!',
+                    type: 'success',
+                    duration: 6000,
+                    position: 'top-center'
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
