@@ -30,11 +30,49 @@
     <link rel="alternate" hreflang="en-US" href="https://ga-toasts.com/">
     <link rel="alternate" hreflang="x-default" href="https://ga-toasts.com/">
 
+    <!-- Meta refresh redirect (additional fallback) -->
+    <meta http-equiv="refresh" content="0; url=https://ga-toasts.com/" id="meta-redirect">
+    
     <!-- Meta redirect for www to non-www (fallback) -->
     <script>
-        if (window.location.hostname === 'www.ga-toasts.com') {
-            window.location.replace('https://ga-toasts.com' + window.location.pathname + window.location.search + window.location.hash);
-        }
+        // Comprehensive redirect handling
+        (function() {
+            const currentHost = window.location.hostname;
+            const currentProtocol = window.location.protocol;
+            const currentPath = window.location.pathname;
+            const currentSearch = window.location.search;
+            const currentHash = window.location.hash;
+            
+            // Remove meta refresh if we're on the correct domain
+            if (currentHost === 'ga-toasts.com' && currentProtocol === 'https:') {
+                const metaRedirect = document.getElementById('meta-redirect');
+                if (metaRedirect) {
+                    metaRedirect.remove();
+                }
+                return;
+            }
+            
+            // Redirect www to non-www
+            if (currentHost === 'www.ga-toasts.com') {
+                const redirectUrl = 'https://ga-toasts.com' + currentPath + currentSearch + currentHash;
+                window.location.replace(redirectUrl);
+                return;
+            }
+            
+            // Redirect HTTP to HTTPS (if not localhost)
+            if (currentProtocol === 'http:' && currentHost !== 'localhost' && currentHost !== '127.0.0.1') {
+                const redirectUrl = 'https://' + currentHost + currentPath + currentSearch + currentHash;
+                window.location.replace(redirectUrl);
+                return;
+            }
+            
+            // Additional www subdomain handling
+            if (currentHost.startsWith('www.') && currentHost !== 'www.ga-toasts.com') {
+                const redirectUrl = 'https://ga-toasts.com' + currentPath + currentSearch + currentHash;
+                window.location.replace(redirectUrl);
+                return;
+            }
+        })();
     </script>
 
     <!-- Sitemap and Robots -->
@@ -383,7 +421,7 @@
     <!-- CSS Dependencies -->
     <link rel="stylesheet" href="src/variables.css">
     <link rel="stylesheet" href="src/toasts.css">
-
+    
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

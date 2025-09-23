@@ -4,9 +4,9 @@
 # Enable rewrite engine
 RewriteEngine On
 
-# Force HTTPS (if SSL certificate is available)
-# RewriteCond %{HTTPS} off
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Force HTTPS redirect (uncomment when SSL is available)
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Canonical redirect: www to non-www (recommended for SEO)
 RewriteCond %{HTTP_HOST} ^www\.ga-toasts\.com$ [NC]
@@ -16,9 +16,18 @@ RewriteRule ^(.*)$ https://ga-toasts.com/$1 [R=301,L]
 # RewriteCond %{HTTP_HOST} ^ga-toasts\.com$ [NC]
 # RewriteRule ^(.*)$ https://www.ga-toasts.com/$1 [R=301,L]
 
-# Redirect HTTP to HTTPS (uncomment when SSL is available)
-# RewriteCond %{HTTPS} off
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Additional www redirect patterns
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# Handle both HTTP and HTTPS www redirects
+RewriteCond %{HTTPS} on
+RewriteCond %{HTTP_HOST} ^www\.ga-toasts\.com$ [NC]
+RewriteRule ^(.*)$ https://ga-toasts.com/$1 [R=301,L]
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} ^www\.ga-toasts\.com$ [NC]
+RewriteRule ^(.*)$ https://ga-toasts.com/$1 [R=301,L]
 
 # Remove trailing slashes (optional - helps with duplicate content)
 RewriteCond %{REQUEST_FILENAME} !-d
