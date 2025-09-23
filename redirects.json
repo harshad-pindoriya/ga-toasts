@@ -1,0 +1,35 @@
+{
+  "redirects": [
+    {
+      "source": "https://www.ga-toasts.com",
+      "destination": "https://ga-toasts.com",
+      "permanent": true,
+      "statusCode": 301
+    },
+    {
+      "source": "https://www.ga-toasts.com/",
+      "destination": "https://ga-toasts.com/",
+      "permanent": true,
+      "statusCode": 301
+    },
+    {
+      "source": "http://ga-toasts.com",
+      "destination": "https://ga-toasts.com",
+      "permanent": true,
+      "statusCode": 301
+    },
+    {
+      "source": "http://www.ga-toasts.com",
+      "destination": "https://ga-toasts.com",
+      "permanent": true,
+      "statusCode": 301
+    }
+  ],
+  "notes": {
+    "description": "Redirect configuration for GA Toasts website",
+    "purpose": "Handle www/non-www and HTTP/HTTPS redirects to prevent duplicate content issues",
+    "implementation": "Use with hosting platforms like Vercel, Netlify, or custom server configurations",
+    "canonical_domain": "ga-toasts.com (non-www)",
+    "ssl_required": true
+  }
+}

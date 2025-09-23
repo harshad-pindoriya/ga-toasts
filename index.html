@@ -7,7 +7,8 @@
 
     <!-- Primary Meta Tags -->
     <title>GA Toasts - Best JavaScript Toast Notifications Library 2024 | 15+ Types, 9 Positions, 4 Animations</title>
-    <meta name="title" content="GA Toasts - Best JavaScript Toast Notifications Library 2024 | 15+ Types, 9 Positions, 4 Animations">
+    <meta name="title"
+        content="GA Toasts - Best JavaScript Toast Notifications Library 2024 | 15+ Types, 9 Positions, 4 Animations">
     <meta name="description"
         content="🚀 The ultimate JavaScript toast notifications library! 15+ toast types, 9 positions, 4 animations, 3 themes. Lightweight, accessible, responsive. Perfect for React, Vue, Angular, vanilla JS. Free download with live demo!">
     <meta name="keywords"
@@ -16,14 +17,26 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow">
     <meta name="bingbot" content="index, follow">
-    <meta name="language" content="English">
+    <meta name="language" content="en">
     <meta name="revisit-after" content="7 days">
     <meta name="distribution" content="global">
     <meta name="rating" content="general">
 
-    <!-- Canonical URL -->
+    <!-- Canonical URL - Always use non-www version -->
     <link rel="canonical" href="https://ga-toasts.com/">
-    
+
+    <!-- Language and Region Targeting -->
+    <link rel="alternate" hreflang="en" href="https://ga-toasts.com/">
+    <link rel="alternate" hreflang="en-US" href="https://ga-toasts.com/">
+    <link rel="alternate" hreflang="x-default" href="https://ga-toasts.com/">
+
+    <!-- Meta redirect for www to non-www (fallback) -->
+    <script>
+        if (window.location.hostname === 'www.ga-toasts.com') {
+            window.location.replace('https://ga-toasts.com' + window.location.pathname + window.location.search + window.location.hash);
+        }
+    </script>
+
     <!-- Sitemap and Robots -->
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
     <link rel="alternate" type="application/rss+xml" title="GA Toasts RSS Feed" href="/rss.xml">
@@ -48,6 +61,9 @@
     <meta property="og:image:type" content="image/png">
     <meta property="og:site_name" content="GA Toasts">
     <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="en_GB">
+    <meta property="og:locale:alternate" content="en_CA">
+    <meta property="og:locale:alternate" content="en_AU">
     <meta property="og:updated_time" content="2024-12-19T00:00:00Z">
     <meta property="og:see_also" content="https://ga-toasts.com/#examples">
     <meta property="article:author" content="GA Toasts Team">
@@ -79,7 +95,7 @@
     <meta name="apple-mobile-web-app-title" content="GA Toasts">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    
+
     <!-- Enhanced SEO Meta Tags -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="color-scheme" content="light dark">
@@ -103,6 +119,22 @@
     <meta name="content-script-type" content="text/javascript">
     <meta name="content-style-type" content="text/css">
 
+    <!-- Redirect and Canonical Meta Tags -->
+    <meta name="canonical-domain" content="ga-toasts.com">
+    <meta name="preferred-domain" content="ga-toasts.com">
+    <meta http-equiv="X-DNS-Prefetch-Control" content="on">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Language and Locale Meta Tags -->
+    <meta name="locale" content="en_US">
+    <meta name="geo.region" content="US">
+    <meta name="geo.placename" content="United States">
+    <meta name="ICBM" content="39.50, -98.35">
+    <meta name="geo.position" content="39.50;-98.35">
+    <meta name="DC.language" content="en">
+    <meta name="DC.language.iso" content="en">
+    <meta name="DC.language.rfc3066" content="en-US">
+
     <!-- Preconnect to external domains for performance -->
     <link rel="preconnect" href="https://code.jquery.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -110,13 +142,13 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    
+
     <!-- Performance and Resource Hints -->
     <link rel="preload" href="src/toasts.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="src/toasts.js" as="script">
     <link rel="preload" href="src/variables.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="images/gennie_logo.png" as="image">
-    
+
     <!-- Critical Resource Hints -->
     <link rel="modulepreload" href="src/toasts.js">
     <link rel="prefetch" href="src/toasts.css">
@@ -273,7 +305,7 @@
             "@type": "ContactPoint",
             "contactType": "Customer Service",
             "email": "contact@ga-toasts.com",
-            "availableLanguage": "English"
+            "availableLanguage": "en"
         }
     }
     </script>
@@ -351,10 +383,11 @@
     <!-- CSS Dependencies -->
     <link rel="stylesheet" href="src/variables.css">
     <link rel="stylesheet" href="src/toasts.css">
-    
+
     <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <!-- GA Toasts JavaScript -->
     <script src="src/toasts.js"></script>
 
@@ -447,6 +480,246 @@
             line-height: var(--ga-leading-relaxed);
         }
 
+        /* Resource Section Styles */
+        .resource-section {
+            margin: var(--ga-space-8) 0;
+            padding: var(--ga-space-6);
+            background: var(--ga-bg-surface);
+            border-radius: var(--ga-radius-lg);
+            border: var(--ga-border-1) solid var(--ga-border-light);
+        }
+
+        .resource-section h2 {
+            color: var(--ga-primary);
+            margin-bottom: var(--ga-space-4);
+            font-size: var(--ga-text-2xl);
+            font-weight: var(--ga-font-semibold);
+        }
+
+        .guide-toc {
+            margin: var(--ga-space-5) 0;
+            padding: var(--ga-space-4);
+            background: var(--ga-bg-subtle);
+            border-radius: var(--ga-radius-md);
+        }
+
+        .guide-toc h3 {
+            margin-bottom: var(--ga-space-3);
+            color: var(--ga-text-primary);
+            font-size: var(--ga-text-lg);
+        }
+
+        .guide-toc ol {
+            margin-left: var(--ga-space-5);
+        }
+
+        .guide-toc li {
+            margin-bottom: var(--ga-space-2);
+        }
+
+        .guide-toc a {
+            color: var(--ga-primary);
+            text-decoration: none;
+        }
+
+        .guide-toc a:hover {
+            text-decoration: underline;
+        }
+
+        .download-section {
+            margin-top: var(--ga-space-6);
+        }
+
+        .download-section h3 {
+            margin-bottom: var(--ga-space-4);
+            color: var(--ga-text-primary);
+            font-size: var(--ga-text-lg);
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--ga-space-4);
+        }
+
+        .download-item {
+            padding: var(--ga-space-4);
+            background: var(--ga-bg-primary);
+            border-radius: var(--ga-radius-md);
+            border: var(--ga-border-1) solid var(--ga-border-light);
+            text-align: center;
+        }
+
+        .download-item h4 {
+            margin-bottom: var(--ga-space-2);
+            color: var(--ga-primary);
+            font-size: var(--ga-text-base);
+        }
+
+        .download-item p {
+            margin-bottom: var(--ga-space-3);
+            color: var(--ga-text-secondary);
+            font-size: var(--ga-text-sm);
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: var(--ga-space-2) var(--ga-space-4);
+            background: var(--ga-primary);
+            color: var(--ga-text-inverse);
+            text-decoration: none;
+            border-radius: var(--ga-radius-md);
+            font-size: var(--ga-text-sm);
+            font-weight: var(--ga-font-medium);
+            transition: var(--ga-transition-fast);
+        }
+
+        .download-btn:hover {
+            background: var(--ga-primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Comparison Table Styles */
+        .comparison-section {
+            margin: var(--ga-space-8) 0;
+            padding: var(--ga-space-6);
+            background: var(--ga-bg-surface);
+            border-radius: var(--ga-radius-lg);
+            border: var(--ga-border-1) solid var(--ga-border-light);
+        }
+
+        .comparison-section h2 {
+            color: var(--ga-primary);
+            margin-bottom: var(--ga-space-4);
+            font-size: var(--ga-text-2xl);
+            font-weight: var(--ga-font-semibold);
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+            margin-top: var(--ga-space-5);
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--ga-bg-primary);
+            border-radius: var(--ga-radius-md);
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--ga-space-3);
+            text-align: left;
+            border-bottom: var(--ga-border-1) solid var(--ga-border-light);
+        }
+
+        .comparison-table th {
+            background: var(--ga-primary);
+            color: var(--ga-text-inverse);
+            font-weight: var(--ga-font-semibold);
+        }
+
+        .comparison-table td {
+            color: var(--ga-text-primary);
+        }
+
+        .comparison-table tr:hover {
+            background: var(--ga-bg-subtle);
+        }
+
+        /* Social Section Styles */
+        .social-section {
+            margin: var(--ga-space-8) 0;
+            padding: var(--ga-space-6);
+            background: var(--ga-bg-surface);
+            border-radius: var(--ga-radius-lg);
+            border: var(--ga-border-1) solid var(--ga-border-light);
+            text-align: center;
+        }
+
+        .social-section h2 {
+            color: var(--ga-primary);
+            margin-bottom: var(--ga-space-4);
+            font-size: var(--ga-text-2xl);
+            font-weight: var(--ga-font-semibold);
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--ga-space-3);
+            margin: var(--ga-space-5) 0;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--ga-space-2);
+            padding: var(--ga-space-3) var(--ga-space-5);
+            background: var(--ga-bg-primary);
+            color: var(--ga-text-primary);
+            text-decoration: none;
+            border-radius: var(--ga-radius-md);
+            border: var(--ga-border-1) solid var(--ga-border-light);
+            font-size: var(--ga-text-sm);
+            font-weight: var(--ga-font-medium);
+            transition: var(--ga-transition-fast);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--ga-shadow-md);
+        }
+
+        .social-btn.twitter:hover {
+            background: #1da1f2;
+            color: white;
+            border-color: #1da1f2;
+        }
+
+        .social-btn.linkedin:hover {
+            background: #0077b5;
+            color: white;
+            border-color: #0077b5;
+        }
+
+        .social-btn.github:hover {
+            background: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        .social-btn.npm:hover {
+            background: #cb3837;
+            color: white;
+            border-color: #cb3837;
+        }
+
+        .github-badges {
+            margin-top: var(--ga-space-6);
+        }
+
+        .github-badges h3 {
+            margin-bottom: var(--ga-space-4);
+            color: var(--ga-text-primary);
+            font-size: var(--ga-text-lg);
+        }
+
+        .badge-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--ga-space-2);
+        }
+
+        .github-badge {
+            height: 28px;
+            border-radius: var(--ga-radius-sm);
+        }
+
         .demo-section {
             margin-bottom: var(--ga-space-10);
             padding: var(--ga-space-6);
@@ -455,7 +728,7 @@
             border: var(--ga-border-1) solid var(--ga-border-light);
         }
 
-        .advanced-features-section{
+        .advanced-features-section {
             margin-top: var(--ga-space-10) !important;
         }
 
@@ -714,6 +987,13 @@
                 padding: 20px;
             }
         }
+
+        .mt-10{
+            margin-top: var(--ga-space-10) !important;
+        }
+        .mt-0{
+            margin-top: var(--ga-space-0) !important;
+        }
     </style>
 </head>
 
@@ -724,25 +1004,36 @@
 
     <div class="container" id="main-content" role="main">
         <h1>🚀 GA Toasts - Best JavaScript Toast Notifications Library 2024</h1>
-        <p class="subtitle">The ultimate JavaScript toast notifications library! Beautiful, modern, and accessible toast notifications that elevate your web applications with smooth animations and intuitive design. Featuring 15+ types, 9 positions, 4 animations, and 3 themes. Perfect for React, Vue, Angular, and vanilla JavaScript projects.</p>
-        
+        <p class="subtitle">The ultimate JavaScript toast notifications library! Beautiful, modern, and accessible toast
+            notifications that elevate your web applications with smooth animations and intuitive design. Featuring 15+
+            types, 9 positions, 4 animations, and 3 themes. Perfect for React, Vue, Angular, and vanilla JavaScript
+            projects.</p>
+
         <!-- SEO Content Section -->
         <div class="seo-content">
             <h2>Why Choose GA Toasts for Your Next Project?</h2>
-            <p>GA Toasts is the most comprehensive and modern JavaScript toast notifications library available in 2024. Whether you're building a React application, Vue.js project, Angular app, or using vanilla JavaScript, GA Toasts provides everything you need for beautiful, accessible, and performant toast notifications.</p>
-            
+            <p>GA Toasts is the most comprehensive and modern JavaScript toast notifications library available in 2024.
+                Whether you're building a React application, Vue.js project, Angular app, or using vanilla JavaScript,
+                GA Toasts provides everything you need for beautiful, accessible, and performant toast notifications.
+            </p>
+
             <h3>🎯 Key Benefits:</h3>
             <ul>
-                <li><strong>Framework Agnostic:</strong> Works seamlessly with React, Vue, Angular, and vanilla JavaScript</li>
+                <li><strong>Framework Agnostic:</strong> Works seamlessly with React, Vue, Angular, and vanilla
+                    JavaScript</li>
                 <li><strong>Lightweight & Fast:</strong> Minimal bundle size with optimized performance</li>
-                <li><strong>Accessibility First:</strong> Built with ARIA attributes and keyboard navigation support</li>
+                <li><strong>Accessibility First:</strong> Built with ARIA attributes and keyboard navigation support
+                </li>
                 <li><strong>Mobile Responsive:</strong> Perfect display on all device sizes and orientations</li>
                 <li><strong>Highly Customizable:</strong> Extensive theming options and CSS variable support</li>
-                <li><strong>Modern Design:</strong> Glassmorphism effects, smooth animations, and contemporary styling</li>
+                <li><strong>Modern Design:</strong> Glassmorphism effects, smooth animations, and contemporary styling
+                </li>
             </ul>
-            
-            <p><strong>Perfect for:</strong> Web applications, dashboards, admin panels, e-commerce sites, SaaS platforms, mobile web apps, and any project requiring user feedback notifications.</p>
+
+            <p><strong>Perfect for:</strong> Web applications, dashboards, admin panels, e-commerce sites, SaaS
+                platforms, mobile web apps, and any project requiring user feedback notifications.</p>
         </div>
+
 
         <!-- Basic Toast Types -->
         <section class="demo-section" aria-labelledby="basic-toast-types">
@@ -1482,6 +1773,159 @@ const count = GenieAIToast.getCount();</pre>
             }, 1000);
         });
     </script>
+
+    <!-- Bottom Sections: Resources, Comparison, and Social Sharing -->
+    <div class="container mt-10">
+
+        <!-- Complete Toast Notifications Guide 2024 -->
+        <div class="resource-section mt-0">
+            <h2>📚 Complete Toast Notifications Guide 2024</h2>
+            <p>Everything you need to know about implementing modern toast notifications in your web applications. This
+                comprehensive guide covers best practices, accessibility standards, and performance optimization.</p>
+
+            <div class="guide-toc">
+                <h3>Table of Contents:</h3>
+                <ol>
+                    <li><a href="#toast-fundamentals">Toast Notification Fundamentals</a></li>
+                    <li><a href="#accessibility-best-practices">Accessibility Best Practices</a></li>
+                    <li><a href="#performance-optimization">Performance Optimization Techniques</a></li>
+                    <li><a href="#framework-integration">Framework Integration Guide</a></li>
+                    <li><a href="#design-patterns">Modern Design Patterns</a></li>
+                    <li><a href="#troubleshooting">Common Issues & Troubleshooting</a></li>
+                </ol>
+            </div>
+
+            <div class="download-section">
+                <h3>📥 Free Resources</h3>
+                <div class="download-grid">
+                    <div class="download-item">
+                        <h4>📋 Toast Implementation Checklist</h4>
+                        <p>Complete checklist for implementing accessible toast notifications</p>
+                        <a href="#" class="download-btn"
+                            onclick="GenieAIToast.info('Download link will be available soon!')">Download PDF</a>
+                    </div>
+                    <div class="download-item">
+                        <h4>🎨 Design System Templates</h4>
+                        <p>Ready-to-use design templates for popular frameworks</p>
+                        <a href="#" class="download-btn"
+                            onclick="GenieAIToast.info('Download link will be available soon!')">Download ZIP</a>
+                    </div>
+                    <div class="download-item">
+                        <h4>⚡ Performance Benchmarks</h4>
+                        <p>Detailed performance comparison with other toast libraries</p>
+                        <a href="#" class="download-btn"
+                            onclick="GenieAIToast.info('Download link will be available soon!')">View Report</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Library Comparison 2024 -->
+        <div class="comparison-section">
+            <h2>🆚 Toast Library Comparison 2024</h2>
+            <p>See how GA Toasts compares to other popular toast notification libraries in the market.</p>
+
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>GA Toasts</th>
+                            <th>React Toastify</th>
+                            <th>Vue Toastification</th>
+                            <th>Angular Toastr</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bundle Size</td>
+                            <td><strong>2.1KB</strong></td>
+                            <td>4.2KB</td>
+                            <td>3.8KB</td>
+                            <td>5.1KB</td>
+                        </tr>
+                        <tr>
+                            <td>Toast Types</td>
+                            <td><strong>15+</strong></td>
+                            <td>6</td>
+                            <td>8</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Positions</td>
+                            <td><strong>9</strong></td>
+                            <td>6</td>
+                            <td>6</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Animations</td>
+                            <td><strong>4</strong></td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Accessibility</td>
+                            <td><strong>Full ARIA</strong></td>
+                            <td>Basic</td>
+                            <td>Basic</td>
+                            <td>Limited</td>
+                        </tr>
+                        <tr>
+                            <td>Framework Support</td>
+                            <td><strong>All</strong></td>
+                            <td>React Only</td>
+                            <td>Vue Only</td>
+                            <td>Angular Only</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Share GA Toasts -->
+        <div class="social-section">
+            <h2>🌟 Share GA Toasts</h2>
+            <p>Help spread the word about GA Toasts! Share with your developer community and contribute to the project.
+            </p>
+
+            <div class="social-buttons">
+                <a href="https://twitter.com/intent/tweet?text=Check%20out%20GA%20Toasts%20-%20the%20best%20JavaScript%20toast%20notifications%20library%20in%202024!%20https://ga-toasts.com"
+                    target="_blank" class="social-btn twitter" onclick="GenieAIToast.success('Thanks for sharing! 🐦')">
+                    <span>🐦</span> Share on Twitter
+                </a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://ga-toasts.com" target="_blank"
+                    class="social-btn linkedin" onclick="GenieAIToast.success('Thanks for sharing! 💼')">
+                    <span>💼</span> Share on LinkedIn
+                </a>
+                <a href="https://github.com/ga-toasts/ga-toasts" target="_blank" class="social-btn github"
+                    onclick="GenieAIToast.info('Star us on GitHub! ⭐')">
+                    <span>⭐</span> Star on GitHub
+                </a>
+                <a href="https://www.npmjs.com/package/ga-toasts" target="_blank" class="social-btn npm"
+                    onclick="GenieAIToast.info('Check us out on NPM! 📦')">
+                    <span>📦</span> View on NPM
+                </a>
+            </div>
+
+            <div class="github-badges">
+                <h3>📊 Project Stats</h3>
+                <div class="badge-grid">
+                    <img src="https://img.shields.io/github/stars/ga-toasts/ga-toasts?style=for-the-badge&logo=github"
+                        alt="GitHub Stars" class="github-badge">
+                    <img src="https://img.shields.io/npm/v/ga-toasts?style=for-the-badge&logo=npm" alt="NPM Version"
+                        class="github-badge">
+                    <img src="https://img.shields.io/npm/dm/ga-toasts?style=for-the-badge&logo=npm" alt="NPM Downloads"
+                        class="github-badge">
+                    <img src="https://img.shields.io/github/license/ga-toasts/ga-toasts?style=for-the-badge"
+                        alt="License" class="github-badge">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </body>
 
 </html>
