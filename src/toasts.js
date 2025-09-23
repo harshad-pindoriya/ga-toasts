@@ -185,67 +185,7 @@
                 }
             });
 
-            // Auto-close toasts with pause on hover
-            document.addEventListener('ga:toast:shown', function (e) {
-                const toast = e.target;
-                const autoClose = toast.getAttribute('data-ga-auto-close');
-                const pauseOnHover = toast.getAttribute('data-ga-pause-on-hover');
-                const progress = toast.querySelector('.ga-toast-progress');
-                
-                if (autoClose && parseInt(autoClose) > 0) {
-                    let startTime = Date.now();
-                    let remainingTime = parseInt(autoClose);
-                    
-                    const startCountdown = function() {
-                        startTime = Date.now();
-                        // Clear any existing timeout
-                        if (toast.gaTimeoutId) {
-                            clearTimeout(toast.gaTimeoutId);
-                        }
-                        toast.gaTimeoutId = setTimeout(function () {
-                            if (Utils.exists(toast) && !Utils.hasClass(toast, 'hide')) {
-                                self.close(toast);
-                            }
-                        }, remainingTime);
-                    };
-                    
-                    // Start initial countdown
-                    startCountdown();
-                    
-                    // Pause on hover if enabled
-                    if (pauseOnHover === 'true') {
-                        toast.addEventListener('mouseenter', function() {
-                            const elapsed = Date.now() - startTime;
-                            remainingTime = Math.max(0, remainingTime - elapsed);
-                            if (toast.gaTimeoutId) {
-                                clearTimeout(toast.gaTimeoutId);
-                            }
-                            Utils.addClass(toast, 'ga-toast-paused');
-                            
-                            // Pause progress bar animation
-                            if (progress) {
-                                const currentTransform = Utils.getStyle(progress, 'transform');
-                                Utils.css(progress, { 'transition': 'none' });
-                                progress.setAttribute('data-paused-transform', currentTransform);
-                            }
-                        });
-                        
-                        toast.addEventListener('mouseleave', function() {
-                            Utils.removeClass(toast, 'ga-toast-paused');
-                            
-                            // Resume progress bar animation
-                            if (progress) {
-                                Utils.css(progress, {
-                                    'transition': 'transform ' + remainingTime + 'ms linear',
-                                    'transform': 'scaleX(0)'
-                                });
-                            }
-                            
-                            startCountdown();
-                        });
-                    }
-                }
-            });
+            // Auto-close functionality is now handled directly in setupAutoClose method
 
             // Handle toast click to close (optional)
             Utils.on(document, 'click', '.ga-toast[data-ga-click-to-close="true"]', function (e) {
@@ -299,11 +239,78 @@
             setTimeout(function () {
                 Utils.addClass(toast, 'show');
                 Utils.trigger(toast, 'ga:toast:shown');
+                
+                // Set up auto-close functionality
+                self.setupAutoClose(toast, settings);
             }, 10);
 
             GenieAI.utils.log('Toast shown', settings);
 
             return toast;
+        },
+
+        /**
+         * Set up auto-close functionality for a toast
+         */
+        setupAutoClose: function (toast, settings) {
+            const self = this;
+            const autoClose = settings.duration;
+            const pauseOnHover = settings.pauseOnHover;
+            const progress = toast.querySelector('.ga-toast-progress');
+            
+            if (autoClose && parseInt(autoClose) > 0) {
+                let startTime = Date.now();
+                let remainingTime = parseInt(autoClose);
+                
+                const startCountdown = function() {
+                    startTime = Date.now();
+                    // Clear any existing timeout
+                    if (toast.gaTimeoutId) {
+                        clearTimeout(toast.gaTimeoutId);
+                    }
+                    toast.gaTimeoutId = setTimeout(function () {
+                        if (Utils.exists(toast) && !Utils.hasClass(toast, 'hide')) {
+                            self.close(toast);
+                        }
+                    }, remainingTime);
+                };
+                
+                // Start initial countdown
+                startCountdown();
+                
+                // Pause on hover if enabled
+                if (pauseOnHover) {
+                    toast.addEventListener('mouseenter', function() {
+                        const elapsed = Date.now() - startTime;
+                        remainingTime = Math.max(0, remainingTime - elapsed);
+                        if (toast.gaTimeoutId) {
+                            clearTimeout(toast.gaTimeoutId);
+                        }
+                        Utils.addClass(toast, 'ga-toast-paused');
+                        
+                        // Pause progress bar animation
+                        if (progress) {
+                            const currentTransform = Utils.getStyle(progress, 'transform');
+                            Utils.css(progress, { 'transition': 'none' });
+                            progress.setAttribute('data-paused-transform', currentTransform);
+                        }
+                    });
+                    
+                    toast.addEventListener('mouseleave', function() {
+                        Utils.removeClass(toast, 'ga-toast-paused');
+                        
+                        // Resume progress bar animation
+                        if (progress) {
+                            Utils.css(progress, {
+                                'transition': 'transform ' + remainingTime + 'ms linear',
+                                'transform': 'scaleX(0)'
+                            });
+                        }
+                        
+                        startCountdown();
+                    });
+                }
+            }
         },
 
         /**
@@ -453,10 +460,7 @@
                 }, 10);
             }
 
-            // Add auto-close data
-            if (options.duration && options.duration > 0) {
-                toast.setAttribute('data-ga-auto-close', options.duration);
-            }
+            // Auto-close is now handled in setupAutoClose method
 
             return toast;
         },
