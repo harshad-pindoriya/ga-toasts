@@ -85,9 +85,9 @@
     <!-- <meta name="yandex-verification" content="your-yandex-verification-code"> -->
 
     <!-- Additional Performance Hints -->
-    <link rel="preload" href="toasts.css" as="style">
-    <link rel="preload" href="toasts.js" as="script">
-    <link rel="preload" href="variables.css" as="style">
+    <link rel="preload" href="src/toasts.css" as="style">
+    <link rel="preload" href="src/toasts.js" as="script">
+    <link rel="preload" href="src/variables.css" as="style">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -1252,7 +1252,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         // Initialize demo
-        $(document).ready(function () {
+        document.addEventListener('DOMContentLoaded', function () {
             // Show welcome toast
             setTimeout(() => {
                 GenieAI.Toast.show({
