@@ -206,7 +206,10 @@
     <link rel="stylesheet" href="src/variables.css">
     <link rel="stylesheet" href="src/toasts.css">
     
-    <!-- GA Toasts JavaScript (Pure Vanilla JS - No Dependencies) -->
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    <!-- GA Toasts JavaScript -->
     <script src="src/toasts.js"></script>
 
     <!-- Demo Styles -->
@@ -541,16 +544,16 @@
 
             <div class="code-block">
                 <pre>// Basic toast types (title is required)
-GenieAI.Toast.success('Operation completed successfully!', { title: 'Success' });
-GenieAI.Toast.error('Something went wrong!', { title: 'Error' });
-GenieAI.Toast.warning('Please check your input', { title: 'Warning' });
-GenieAI.Toast.info('Here is some information', { title: 'Info' });
-GenieAI.Toast.show({ 
+GenieAIToast.success('Operation completed successfully!', { title: 'Success' });
+GenieAIToast.error('Something went wrong!', { title: 'Error' });
+GenieAIToast.warning('Please check your input', { title: 'Warning' });
+GenieAIToast.info('Here is some information', { title: 'Info' });
+GenieAIToast.show({ 
     type: 'primary', 
     title: 'Primary Notification',
     message: 'Primary notification' 
 });
-GenieAI.Toast.show({ 
+GenieAIToast.show({ 
     type: 'secondary', 
     title: 'Secondary Notification',
     message: 'Secondary notification' 
@@ -574,24 +577,24 @@ GenieAI.Toast.show({
                 <div class="code-block">
                     <pre>
                         // Advanced features (title is required)
-                        GenieAI.Toast.show({
+                        GenieAIToast.show({
                             title: 'New Message',
                             message: 'You have received a new message from John Doe',
                             type: 'info',
                             duration: 5000
                         });
 
-                        GenieAI.Toast.show({
+                        GenieAIToast.show({
                             title: 'File Upload',
                             message: 'File uploaded successfully',
                             type: 'success',
                             actions: [
                                 { text: 'View', click: () => console.log('View clicked') },
-                                { text: 'Dismiss', click: (e, toast) => GenieAI.Toast.close(toast) }
+                                { text: 'Dismiss', click: (e, toast) => GenieAIToast.close(toast) }
                             ]
                         });
 
-                        GenieAI.Toast.confirm('Are you sure you want to delete this item?', {
+                        GenieAIToast.confirm('Are you sure you want to delete this item?', {
                             title: 'Confirm Deletion',
                             onConfirm: () => console.log('Confirmed'),
                             onCancel: () => console.log('Cancelled')
@@ -615,28 +618,28 @@ GenieAI.Toast.show({
 
                 <div class="code-block">
                     <pre>// Variants and sizes (title is required)
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'Filled Variant',
     message: 'Filled variant toast',
     type: 'success',
     variant: 'filled'
 });
 
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'Light Variant',
     message: 'Light variant toast',
     type: 'info',
     variant: 'light'
 });
 
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'Small Toast',
     message: 'Small toast',
     type: 'warning',
     size: 'sm'
 });
 
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'Large Toast',
     message: 'Large toast with more content',
     type: 'primary',
@@ -659,21 +662,21 @@ GenieAI.Toast.show({
 
                 <div class="code-block">
                     <pre>// Animation effects (title is required)
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'Fade Animation',
     message: 'Fade animation',
     type: 'info',
     animation: 'fade'
 });
 
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'Slide Animation',
     message: 'Slide animation',
     type: 'success',
     animation: 'slide'
 });
 
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'Bounce Animation',
     message: 'Bounce animation',
     type: 'warning',
@@ -681,7 +684,7 @@ GenieAI.Toast.show({
 });
 
 // Add custom effects after creation
-const toast = GenieAI.Toast.show({ 
+const toast = GenieAIToast.show({ 
     title: 'Custom Effect',
     message: 'Custom effect', 
     type: 'info' 
@@ -708,7 +711,7 @@ toast.addClass('ga-toast-shake');</pre>
 
                 <div class="code-block">
                     <pre>// Position control (title is required)
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'Positioned Toast',
     message: 'Toast at specific position',
     type: 'info',
@@ -757,7 +760,7 @@ document.documentElement.setAttribute('data-ga-theme', 'dark');
 
                 <div class="code-block">
                     <pre>// Progress and timing options (title is required)
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'Progress Toast',
     message: 'Toast with progress bar',
     type: 'info',
@@ -765,7 +768,7 @@ GenieAI.Toast.show({
     duration: 5000
 });
 
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'Pause on Hover',
     message: 'Pause on hover',
     type: 'success',
@@ -773,7 +776,7 @@ GenieAI.Toast.show({
     duration: 3000
 });
 
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'No Auto Close',
     message: 'No auto close',
     type: 'warning',
@@ -781,7 +784,7 @@ GenieAI.Toast.show({
     closable: true
 });
 
-GenieAI.Toast.show({
+GenieAIToast.show({
     title: 'Click to Close',
     message: 'Click to close',
     type: 'info',
@@ -806,11 +809,11 @@ GenieAI.Toast.show({
                     <pre>// Toast management (title is required)
 // Show multiple toasts
 for (let i = 1; i <= 3; i++) {
-    GenieAI.Toast.info(`Toast ${i}`, { title: `Info ${i}` });
+    GenieAIToast.info(`Toast ${i}`, { title: `Info ${i}` });
 }
 
 // Update existing toast
-const toast = GenieAI.Toast.show({
+const toast = GenieAIToast.show({
     id: 'updateable-toast',
     title: 'Initial Toast',
     message: 'Initial message',
@@ -818,7 +821,7 @@ const toast = GenieAI.Toast.show({
 });
 
 setTimeout(() => {
-    GenieAI.Toast.update('updateable-toast', {
+    GenieAIToast.update('updateable-toast', {
         title: 'Updated Toast',
         message: 'Updated message!',
         type: 'success'
@@ -826,9 +829,9 @@ setTimeout(() => {
 }, 2000);
 
 // Management methods
-GenieAI.Toast.closeAll();
-GenieAI.Toast.clear('error'); // Clear only error toasts
-const count = GenieAI.Toast.getCount();</pre>
+GenieAIToast.closeAll();
+GenieAIToast.clear('error'); // Clear only error toasts
+const count = GenieAIToast.getCount();</pre>
                 </div>
             </div>
 
@@ -901,23 +904,23 @@ const count = GenieAI.Toast.getCount();</pre>
 
         // Basic toast functions
         function showSuccess() {
-            GenieAI.Toast.success('🎉 Amazing! Your action completed successfully!', { title: 'Success' });
+            GenieAIToast.success('🎉 Amazing! Your action completed successfully!', { title: 'Success' });
         }
 
         function showError() {
-            GenieAI.Toast.error('😞 Oops! Something went wrong. Please try again.', { title: 'Error' });
+            GenieAIToast.error('😞 Oops! Something went wrong. Please try again.', { title: 'Error' });
         }
 
         function showWarning() {
-            GenieAI.Toast.warning('⚠️ Heads up! Please check your input before proceeding.', { title: 'Warning' });
+            GenieAIToast.warning('⚠️ Heads up! Please check your input before proceeding.', { title: 'Warning' });
         }
 
         function showInfo() {
-            GenieAI.Toast.info('💡 Here is some useful information for you.', { title: 'Info' });
+            GenieAIToast.info('💡 Here is some useful information for you.', { title: 'Info' });
         }
 
         function showPrimary() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 type: 'primary',
                 title: 'Primary Notification',
                 message: 'This is a primary notification'
@@ -925,7 +928,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showSecondary() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 type: 'secondary',
                 title: 'Secondary Notification',
                 message: 'This is a secondary notification'
@@ -934,7 +937,7 @@ const count = GenieAI.Toast.getCount();</pre>
 
         // Advanced features
         function showWithTitle() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 title: 'New Message',
                 message: 'You have received a new message from John Doe. Click to view details.',
                 type: 'info',
@@ -943,7 +946,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showWithActions() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'File uploaded successfully!',
                 type: 'success',
                 actions: [
@@ -958,7 +961,7 @@ const count = GenieAI.Toast.getCount();</pre>
                         text: 'Dismiss',
                         class: 'ga-btn-secondary',
                         click: function (e, toast) {
-                            GenieAI.Toast.close(toast);
+                            GenieAIToast.close(toast);
                         }
                     }
                 ]
@@ -966,28 +969,28 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showConfirmation() {
-            GenieAI.Toast.confirm('Are you sure you want to delete this item?', {
+            GenieAIToast.confirm('Are you sure you want to delete this item?', {
                 onConfirm: function () {
-                    GenieAI.Toast.success('Item deleted successfully!');
+                    GenieAIToast.success('Item deleted successfully!');
                 },
                 onCancel: function () {
-                    GenieAI.Toast.info('Deletion cancelled.');
+                    GenieAIToast.info('Deletion cancelled.');
                 }
             });
         }
 
         function showLoading() {
-            const loadingToast = GenieAI.Toast.loading('Processing your request...');
+            const loadingToast = GenieAIToast.loading('Processing your request...');
 
             // Simulate loading completion
             setTimeout(() => {
-                GenieAI.Toast.close(loadingToast);
-                GenieAI.Toast.success('Request completed successfully!');
+                GenieAIToast.close(loadingToast);
+                GenieAIToast.success('Request completed successfully!');
             }, 3000);
         }
 
         function showCustomIcon() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Custom icon toast',
                 type: 'info',
                 icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
@@ -995,12 +998,12 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showModern() {
-            GenieAI.Toast.modern('This is a modern toast with enhanced styling!');
+            GenieAIToast.modern('This is a modern toast with enhanced styling!');
         }
 
         // Variants and sizes
         function showFilled() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Filled variant toast',
                 type: 'success',
                 variant: 'filled'
@@ -1008,7 +1011,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showLight() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Light variant toast',
                 type: 'info',
                 variant: 'light'
@@ -1016,7 +1019,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showSmall() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Small toast',
                 type: 'warning',
                 size: 'sm'
@@ -1024,7 +1027,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showLarge() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Large toast with more content and better visibility',
                 type: 'primary',
                 size: 'lg'
@@ -1032,7 +1035,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showGlassmorphism() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Glassmorphism effect toast',
                 type: 'info',
                 glassmorphism: true
@@ -1040,7 +1043,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showGradient() {
-            const toast = GenieAI.Toast.show({
+            const toast = GenieAIToast.show({
                 message: 'Gradient border toast',
                 type: 'primary'
             });
@@ -1049,7 +1052,7 @@ const count = GenieAI.Toast.getCount();</pre>
 
         // Animations
         function showFade() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Fade animation toast',
                 title: 'Fade',
                 type: 'info',
@@ -1058,7 +1061,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showSlide() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Slide animation toast',
                 title: 'Slide',
                 type: 'success',
@@ -1067,7 +1070,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showBounce() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Bounce animation toast',
                 title: 'Bounce',
                 type: 'warning',
@@ -1076,7 +1079,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showScale() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Scale animation toast',
                 title: 'Scale',
                 type: 'info',
@@ -1085,7 +1088,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showShake() {
-            const toast = GenieAI.Toast.show({
+            const toast = GenieAIToast.show({
                 message: 'Shake effect toast',
                 title: 'Shake',
                 type: 'error'
@@ -1094,7 +1097,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showHeartbeat() {
-            const toast = GenieAI.Toast.show({
+            const toast = GenieAIToast.show({
                 message: 'Heartbeat effect toast',
                 title: 'Heartbeat',
                 type: 'success'
@@ -1112,7 +1115,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showAtPosition() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: `Toast at ${currentPosition} position`,
                 title: 'Position',
                 type: 'info',
@@ -1131,7 +1134,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showThemedToast() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: `Toast with ${currentTheme} theme`,
                 title: 'Theme',
                 type: 'info'
@@ -1140,7 +1143,7 @@ const count = GenieAI.Toast.getCount();</pre>
 
         // Progress and timing
         function showWithProgress() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Toast with progress bar',
                 title: 'Progress',
                 type: 'info',
@@ -1150,7 +1153,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showPauseOnHover() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Hover to pause countdown',
                 title: 'Pause',
                 type: 'success',
@@ -1160,7 +1163,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showLongDuration() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'This toast will stay for 10 seconds',
                 title: 'Long',
                 type: 'warning',
@@ -1169,7 +1172,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showNoAutoClose() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'This toast will not auto-close',
                 title: 'No Auto Close',
                 type: 'info',
@@ -1179,7 +1182,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showClickToClose() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Click anywhere on this toast to close it',
                 type: 'info',
                 clickToClose: true
@@ -1187,7 +1190,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function showBackgroundFill() {
-            GenieAI.Toast.show({
+            GenieAIToast.show({
                 message: 'Toast with background fill effect',
                 type: 'primary',
                 progressBackground: true,
@@ -1200,7 +1203,7 @@ const count = GenieAI.Toast.getCount();</pre>
             const types = ['success', 'info', 'warning', 'error'];
             types.forEach((type, index) => {
                 setTimeout(() => {
-                    GenieAI.Toast.show({
+                    GenieAIToast.show({
                         message: `Toast ${index + 1} - ${type}`,
                         type: type
                     });
@@ -1209,7 +1212,7 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function updateToast() {
-            const toast = GenieAI.Toast.show({
+            const toast = GenieAIToast.show({
                 id: 'updateable-toast',
                 message: 'Initial message - will update in 2 seconds',
                 type: 'info',
@@ -1217,7 +1220,7 @@ const count = GenieAI.Toast.getCount();</pre>
             });
 
             setTimeout(() => {
-                GenieAI.Toast.update('updateable-toast', {
+                GenieAIToast.update('updateable-toast', {
                     message: 'Message updated successfully!',
                     type: 'success'
                 });
@@ -1225,24 +1228,24 @@ const count = GenieAI.Toast.getCount();</pre>
         }
 
         function closeAll() {
-            GenieAI.Toast.closeAll();
+            GenieAIToast.closeAll();
         }
 
         function getCount() {
-            const count = GenieAI.Toast.getCount();
-            GenieAI.Toast.info(`There are currently ${count} toasts visible`);
+            const count = GenieAIToast.getCount();
+            GenieAIToast.info(`There are currently ${count} toasts visible`);
         }
 
         function clearByType() {
-            GenieAI.Toast.clear('info');
-            GenieAI.Toast.info('All info toasts have been cleared');
+            GenieAIToast.clear('info');
+            GenieAIToast.info('All info toasts have been cleared');
         }
 
         function showStack() {
             // Show multiple toasts in a stack
             for (let i = 1; i <= 5; i++) {
                 setTimeout(() => {
-                    GenieAI.Toast.show({
+                    GenieAIToast.show({
                         message: `Stacked toast ${i}`,
                         type: 'info',
                         size: 'sm'
@@ -1255,7 +1258,7 @@ const count = GenieAI.Toast.getCount();</pre>
         document.addEventListener('DOMContentLoaded', function () {
             // Show welcome toast
             setTimeout(() => {
-                GenieAI.Toast.show({
+                GenieAIToast.show({
                     title: 'Welcome to GA Toasts! 🎉',
                     message: 'Discover the power of beautiful, modern toast notifications. Click the buttons below to explore all the amazing features!',
                     type: 'success',
