@@ -186,20 +186,23 @@
             });
 
             // Auto-close toasts with pause on hover
-            Utils.on(document, 'ga:toast:shown', '.ga-toast', function (e) {
+            document.addEventListener('ga:toast:shown', function (e) {
                 const toast = e.target;
                 const autoClose = toast.getAttribute('data-ga-auto-close');
                 const pauseOnHover = toast.getAttribute('data-ga-pause-on-hover');
                 const progress = toast.querySelector('.ga-toast-progress');
                 
                 if (autoClose && parseInt(autoClose) > 0) {
-                    let timeoutId;
                     let startTime = Date.now();
                     let remainingTime = parseInt(autoClose);
                     
                     const startCountdown = function() {
                         startTime = Date.now();
-                        timeoutId = setTimeout(function () {
+                        // Clear any existing timeout
+                        if (toast.gaTimeoutId) {
+                            clearTimeout(toast.gaTimeoutId);
+                        }
+                        toast.gaTimeoutId = setTimeout(function () {
                             if (Utils.exists(toast) && !Utils.hasClass(toast, 'hide')) {
                                 self.close(toast);
                             }
@@ -214,7 +217,9 @@
                         toast.addEventListener('mouseenter', function() {
                             const elapsed = Date.now() - startTime;
                             remainingTime = Math.max(0, remainingTime - elapsed);
-                            clearTimeout(timeoutId);
+                            if (toast.gaTimeoutId) {
+                                clearTimeout(toast.gaTimeoutId);
+                            }
                             Utils.addClass(toast, 'ga-toast-paused');
                             
                             // Pause progress bar animation
@@ -465,24 +470,26 @@
                 return;
             }
 
-            // Remove any active timeouts and hover events
-            const newToast = toastElement.cloneNode(true);
-            toastElement.parentNode.replaceChild(newToast, toastElement);
+            // Clear any existing timeout
+            if (toastElement.gaTimeoutId) {
+                clearTimeout(toastElement.gaTimeoutId);
+                delete toastElement.gaTimeoutId;
+            }
 
-            Utils.removeClass(newToast, 'ga-toast-paused');
-            Utils.removeClass(newToast, 'show');
-            Utils.addClass(newToast, 'hide');
+            Utils.removeClass(toastElement, 'ga-toast-paused');
+            Utils.removeClass(toastElement, 'show');
+            Utils.addClass(toastElement, 'hide');
 
             const removeDelay = 300; // Match CSS transition duration
 
             setTimeout(function () {
-                if (Utils.exists(newToast)) {
-                    Utils.trigger(newToast, 'ga:toast:closed');
-                    newToast.remove();
+                if (Utils.exists(toastElement)) {
+                    Utils.trigger(toastElement, 'ga:toast:closed');
+                    toastElement.remove();
                 }
             }, removeDelay);
 
-            GenieAI.utils.log('Toast closed', newToast.id);
+            GenieAI.utils.log('Toast closed', toastElement.id);
         },
 
         /**
