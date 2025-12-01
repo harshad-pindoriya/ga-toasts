@@ -420,7 +420,8 @@
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <div class="container" id="main-content" role="main">
+    <!-- Main demo / documentation area -->
+    <main class="container" id="main-content">
         <h1>🚀 GA Toasts - Best JavaScript Toast Notifications Library 2024</h1>
         <p class="subtitle">The ultimate JavaScript toast notifications library! Beautiful, modern, and accessible toast
             notifications that elevate your web applications with smooth animations and intuitive design. Featuring 15+
@@ -467,8 +468,8 @@
         </div>
 
 
-        <!-- Basic Toast Types -->
-        <section class="" aria-labelledby="basic-toast-types">
+        <!-- Interactive Examples -->
+        <section id="examples" aria-labelledby="basic-toast-types">
             <section class="demo-section">
 
                 <h2 id="basic-toast-types">Basic Toast Types</h2>
@@ -511,6 +512,7 @@
                     <button class="demo-btn btn-warning" onclick="showLoading()">Loading Toast</button>
                     <button class="demo-btn btn-error" onclick="showCustomIcon()">Custom Icon</button>
                     <button class="demo-btn btn-primary" onclick="showModern()">Modern Style</button>
+                    <button class="demo-btn btn-secondary" onclick="showSwipeToClose()">Swipe to Close</button>
                 </div>
 
                 <div class="code-block">
@@ -536,12 +538,20 @@ GaToasts.confirm('Are you sure you want to delete this item?', {
     title: 'Confirm Deletion',
     onConfirm: () => console.log('Confirmed'),
     onCancel: () => console.log('Cancelled')
+});
+
+// Enable swipe-to-close interaction on touch devices
+GaToasts.show({
+    title: 'Swipe to close',
+    message: 'Drag this toast left or right on touch devices to dismiss it.',
+    type: 'info',
+    swipeToClose: true
 });</pre>
                 </div>
             </section>
 
             <!-- Density & Status -->
-            <div class="demo-section">
+            <section class="demo-section" id="density-status">
                 <h2>Density & Status</h2>
                 <div class="button-grid">
                     <button class="demo-btn btn-primary" onclick="showCompact()">Compact Info</button>
@@ -569,11 +579,11 @@ GaToasts.show({
     statusText: 'Production'
 });</pre>
                 </div>
-            </div>
+            </section>
 
 
             <!-- Toast Variants -->
-            <div class="demo-section">
+            <section class="demo-section" id="variants-sizes">
                 <h2>Toast Variants & Sizes</h2>
                 <div class="button-grid">
                     <button class="demo-btn btn-primary" onclick="showFilled()">Filled Variant</button>
@@ -614,10 +624,10 @@ GaToasts.show({
     size: 'lg'
 });</pre>
                 </div>
-            </div>
+            </section>
 
             <!-- Animations -->
-            <div class="demo-section">
+            <section class="demo-section" id="animation-effects">
                 <h2>Animation Effects</h2>
                 <div class="button-grid">
                     <button class="demo-btn btn-primary" onclick="showFade()">Fade Animation</button>
@@ -659,10 +669,10 @@ const toast = GaToasts.show({
 });
 toast.addClass('ga-toast-shake');</pre>
                 </div>
-            </div>
+            </section>
 
             <!-- Position Control -->
-            <div class="demo-section">
+            <section class="demo-section" id="position-control">
                 <h2>Position Control</h2>
                 <div class="position-controls">
                     <button class="position-btn active" onclick="setPosition('top-start')">Top Start</button>
@@ -691,10 +701,10 @@ GaToasts.show({
 // middle-start, middle-center, middle-end  
 // bottom-start, bottom-center, bottom-end</pre>
                 </div>
-            </div>
+            </section>
 
             <!-- Theme Control -->
-            <div class="demo-section">
+            <section class="demo-section" id="theme-control">
                 <h2>Theme Control</h2>
                 <div class="theme-controls">
                     <button class="theme-btn active" onclick="setTheme('light')">Light Theme</button>
@@ -712,10 +722,10 @@ document.documentElement.setAttribute('data-ga-theme', 'dark');
 // 'dark' - Dark theme  
 // 'system' - Follows system preference</pre>
                 </div>
-            </div>
+            </section>
 
             <!-- Progress & Timing -->
-            <div class="demo-section">
+            <section class="demo-section" id="progress-timing">
                 <h2>Progress & Timing</h2>
                 <div class="button-grid">
                     <button class="demo-btn btn-primary" onclick="showWithProgress()">With Progress Bar</button>
@@ -762,10 +772,10 @@ GaToasts.show({
     clickToClose: true
 });</pre>
                 </div>
-            </div>
+            </section>
 
             <!-- Toast Management -->
-            <div class="demo-section">
+            <section class="demo-section" id="toast-management">
                 <h2>Toast Management</h2>
                 <div class="button-grid">
                     <button class="demo-btn btn-primary" onclick="showMultiple()">Show Multiple</button>
@@ -804,10 +814,10 @@ GaToasts.closeAll();
 GaToasts.clear('error'); // Clear only error toasts
 const count = GaToasts.getCount();</pre>
                 </div>
-            </div>
+            </section>
 
             <!-- Features Overview -->
-            <div class="demo-section">
+            <section class="demo-section" id="features-overview">
                 <h2>Key Features</h2>
                 <div class="feature-list">
                     <div class="feature-item">
@@ -836,10 +846,10 @@ const count = GaToasts.getCount();</pre>
                         <p>Highly customizable with CSS variables, themes, and extensive configuration options.</p>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <!-- Statistics -->
-            <div class="stats">
+            <section class="stats" id="stats">
                 <div class="stat-item">
                     <span class="stat-number">15+</span>
                     <span class="stat-label">Toast Types</span>
@@ -856,13 +866,11 @@ const count = GaToasts.getCount();</pre>
                     <span class="stat-number">3</span>
                     <span class="stat-label">Themes</span>
                 </div>
-            </div>
+            </section>
 
 
         </section>
-    </div>
-    </div>
-    </div>
+    </main>
 
 
 
@@ -870,10 +878,10 @@ const count = GaToasts.getCount();</pre>
     <script src="src/demo.js"></script>
 
     <!-- Bottom Sections: Resources, Comparison, and Social Sharing -->
-    <div class="container mt-10">
+    <section class="container mt-10" aria-label="Additional resources">
 
         <!-- Complete Toast Notifications Guide 2024 -->
-        <div class="resource-section mt-0">
+        <section class="resource-section mt-0" id="toast-fundamentals">
             <h2>📚 Complete Toast Notifications Guide 2024</h2>
             <p>Everything you need to know about implementing modern toast notifications in your web applications. This
                 comprehensive guide covers best practices, accessibility standards, and performance optimization.</p>
@@ -913,10 +921,10 @@ const count = GaToasts.getCount();</pre>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Toast Library Comparison 2024 -->
-        <div class="comparison-section">
+        <section class="comparison-section" id="library-comparison">
             <h2>🆚 Toast Library Comparison 2024</h2>
             <p>See how GA Toasts compares to other popular toast notification libraries in the market.</p>
 
@@ -977,10 +985,10 @@ const count = GaToasts.getCount();</pre>
                     </tbody>
                 </table>
             </div>
-        </div>
+        </section>
 
         <!-- Share GA Toasts -->
-        <div class="social-section">
+        <section class="social-section" id="share-ga-toasts">
             <h2>🌟 Share GA Toasts</h2>
             <p>Help spread the word about GA Toasts! Share with your developer community and contribute to the project.
             </p>
@@ -1002,9 +1010,9 @@ const count = GaToasts.getCount();</pre>
                     onclick="GaToasts.info('Check us out on NPM! 📦')">
                     <span>📦</span> View on NPM
                 </a>
-            </div>
+        </section>
 
-            <div class="github-badges">
+        <section class="github-badges" aria-label="Project stats">
                 <h3>📊 Project Stats</h3>
                 <div class="badge-grid">
                     <img src="https://img.shields.io/github/stars/ga-toasts/ga-toasts?style=for-the-badge&logo=github"
@@ -1017,9 +1025,9 @@ const count = GaToasts.getCount();</pre>
                         alt="License" class="github-badge">
                 </div>
             </div>
-        </div>
+        </section>
 
-    </div>
+    </section>
 
 </body>
 

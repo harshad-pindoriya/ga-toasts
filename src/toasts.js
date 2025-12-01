@@ -257,6 +257,7 @@
                 id: 'ga-toast-' + GaToastsUtils.generateId(),
                 title: '',
                 message: '',
+                meta: '',
                 type: 'info',
                 duration: 5000,
                 closable: true,
@@ -267,6 +268,12 @@
                 variant: '', // '', 'filled', 'light'
                 animation: 'slide', // 'fade', 'slide', 'bounce', 'scale'
                 clickToClose: false,
+                swipeToClose: true,
+                // Media / visual
+                avatar: null,
+                avatarAlt: '',
+                unread: false,
+                truncateTitle: false,
                 progress: true,
                 progressBackground: true,
                 pauseOnHover: true,
@@ -290,6 +297,11 @@
             }
 
             const toast = this.create(settings);
+
+            // Enable swipe-to-close interaction if configured
+            if (settings.swipeToClose) {
+                this.attachSwipeHandlers(toast);
+            }
             const container = this.getContainer(settings.position);
 
             container.appendChild(toast);
@@ -365,12 +377,24 @@
                 const header = document.createElement('div');
                 header.className = 'ga-toast-header';
 
-                // Left section (icon + title)
+                // Left section (avatar + icon + title)
                 const left = document.createElement('div');
                 left.className = 'ga-toast-header-left';
-                
-                console.log(options);
-                
+
+                // Optional avatar (URL string)
+                if (options.avatar) {
+                    const avatar = document.createElement('img');
+                    avatar.className = 'ga-toast-avatar';
+                    avatar.src = options.avatar;
+                    if (options.avatarAlt) {
+                        avatar.alt = options.avatarAlt;
+                    } else if (options.title) {
+                        avatar.alt = options.title;
+                    } else {
+                        avatar.alt = 'Notification avatar';
+                    }
+                    left.appendChild(avatar);
+                }
 
                 // Auto icon support
                 let resolvedIcon = options.icon;
@@ -393,11 +417,21 @@
                     iconDiv.innerHTML = resolvedIcon;
                     left.appendChild(iconDiv);
                 }
-                
+
+                // Optional unread dot
+                if (options.unread) {
+                    const unreadDot = document.createElement('span');
+                    unreadDot.className = 'ga-toast-unread-dot';
+                    left.appendChild(unreadDot);
+                }
+
                 if (options.title) {
                     const title = document.createElement('h4');
                     title.className = 'ga-toast-title';
                     title.textContent = options.title;
+                    if (options.truncateTitle) {
+                        title.classList.add('ga-toast-title-truncate');
+                    }
                     left.appendChild(title);
                 }
 
@@ -427,13 +461,27 @@
                 content.appendChild(header);
             }
 
-            // Add body if message exists
-            // For compact toasts we still render the message, but keep the layout
+            // Add body if there is message or meta
+            // For compact toasts we still render the content, but keep the layout
             // tight via CSS (see `.ga-toast-compact .ga-toast-body`).
-            if (options.message) {
+            if (options.message || options.meta) {
                 const body = document.createElement('div');
                 body.className = 'ga-toast-body';
-                body.innerHTML = options.message;
+
+                if (options.meta) {
+                    const meta = document.createElement('div');
+                    meta.className = 'ga-toast-meta';
+                    meta.textContent = options.meta;
+                    body.appendChild(meta);
+                }
+
+                if (options.message) {
+                    const messageEl = document.createElement('div');
+                    messageEl.className = 'ga-toast-message';
+                    messageEl.innerHTML = options.message;
+                    body.appendChild(messageEl);
+                }
+
                 content.appendChild(body);
             }
 
@@ -527,6 +575,76 @@
             }
 
             return toast;
+        },
+
+        /**
+         * Attach swipe-to-close interaction (primarily for touch devices)
+         */
+        attachSwipeHandlers: function (toast) {
+            if (!toast) return;
+
+            const self = this;
+            let pointerDown = false;
+            let startX = 0;
+            let startY = 0;
+            let currentX = 0;
+            let startTime = 0;
+
+            const SWIPE_DISTANCE = 60;
+
+            function onPointerDown(e) {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                pointerDown = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                currentX = startX;
+                startTime = Date.now();
+                toast.setPointerCapture && toast.setPointerCapture(e.pointerId);
+            }
+
+            function onPointerMove(e) {
+                if (!pointerDown) return;
+                currentX = e.clientX;
+                const dx = currentX - startX;
+                const dy = e.clientY - startY;
+
+                // Only treat mostly horizontal movement as swipe
+                if (Math.abs(dx) < 5 || Math.abs(dx) < Math.abs(dy)) {
+                    return;
+                }
+
+                e.preventDefault();
+
+                const translateX = dx;
+                const opacity = Math.max(0.2, 1 - Math.abs(dx) / 200);
+                toast.style.transform = 'translateX(' + translateX + 'px)';
+                toast.style.opacity = String(opacity);
+            }
+
+            function onPointerUp(e) {
+                if (!pointerDown) return;
+                pointerDown = false;
+
+                const dx = currentX - startX;
+                const dy = e.clientY - startY;
+                const elapsed = Date.now() - startTime;
+
+                const isHorizontal = Math.abs(dx) > Math.abs(dy);
+                const passedDistance = Math.abs(dx) > SWIPE_DISTANCE;
+
+                // Reset visual state
+                toast.style.transform = '';
+                toast.style.opacity = '';
+
+                if (isHorizontal && passedDistance) {
+                    self.close(toast);
+                }
+            }
+
+            toast.addEventListener('pointerdown', onPointerDown);
+            toast.addEventListener('pointermove', onPointerMove);
+            toast.addEventListener('pointerup', onPointerUp);
+            toast.addEventListener('pointercancel', onPointerUp);
         },
 
         /**

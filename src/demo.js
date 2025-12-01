@@ -113,6 +113,15 @@ function showModern() {
     GaToasts.modern('This is a modern toast with enhanced styling!');
 }
 
+function showSwipeToClose() {
+    GaToasts.show({
+        title: 'Swipe to close',
+        message: 'On touch devices, drag this toast left or right to dismiss it.',
+        type: 'info',
+        swipeToClose: true
+    });
+}
+
 // Variants and sizes
 function showFilled() {
     GaToasts.show({
