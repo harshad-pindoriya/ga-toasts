@@ -618,7 +618,8 @@
                 glassmorphism: true,
                 animation: 'slide',
                 size: 'md',
-                variant: 'filled'
+                // Use light variant so content remains clearly visible on light backgrounds
+                variant: 'light'
             };
             
             var settings = $.extend({}, defaults, options);

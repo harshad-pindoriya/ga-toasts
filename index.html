@@ -21,17 +21,17 @@
     <meta name="revisit-after" content="7 days">
     <meta name="distribution" content="global">
     <meta name="rating" content="general">
-    
+
     <!-- Meta redirect for www to non-www (fallback) -->
     <script>
         // Comprehensive redirect handling
-        (function() {
+        (function () {
             const currentHost = window.location.hostname;
             const currentProtocol = window.location.protocol;
             const currentPath = window.location.pathname;
             const currentSearch = window.location.search;
             const currentHash = window.location.hash;
-            
+
             // Remove meta refresh if we're on the correct domain
             if (currentHost === 'ga-toasts.com' && currentProtocol === 'https:') {
                 const metaRedirect = document.getElementById('meta-redirect');
@@ -40,21 +40,21 @@
                 }
                 return;
             }
-            
+
             // Redirect www to non-www
             if (currentHost === 'www.ga-toasts.com') {
                 const redirectUrl = 'https://ga-toasts.com' + currentPath + currentSearch + currentHash;
                 window.location.replace(redirectUrl);
                 return;
             }
-            
+
             // Redirect HTTP to HTTPS (if not localhost)
             if (currentProtocol === 'http:' && currentHost !== 'localhost' && currentHost !== '127.0.0.1') {
                 const redirectUrl = 'https://' + currentHost + currentPath + currentSearch + currentHash;
                 window.location.replace(redirectUrl);
                 return;
             }
-            
+
             // Additional www subdomain handling
             if (currentHost.startsWith('www.') && currentHost !== 'www.ga-toasts.com') {
                 const redirectUrl = 'https://ga-toasts.com' + currentPath + currentSearch + currentHash;
@@ -410,7 +410,7 @@
     <!-- CSS Dependencies -->
     <link rel="stylesheet" href="src/variables.css">
     <link rel="stylesheet" href="src/toasts.css">
-    
+
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -438,11 +438,12 @@
         .container {
             max-width: var(--ga-container-xl);
             margin: 0 auto;
-            background: var(--ga-bg-primary);
-            border-radius: var(--ga-radius-xl);
+            /* Layout-only wrapper: avoid card-in-card effect */
+            background: transparent;
+            border-radius: 0;
             padding: var(--ga-space-10);
-            box-shadow: var(--ga-shadow-lg);
-            border: var(--ga-border-1) solid var(--ga-border-light);
+            box-shadow: none;
+            border: none;
         }
 
         h1 {
@@ -1015,11 +1016,53 @@
             }
         }
 
-        .mt-10{
+        .mt-10 {
             margin-top: var(--ga-space-10) !important;
         }
-        .mt-0{
+
+        .mt-0 {
             margin-top: var(--ga-space-0) !important;
+        }
+
+        /* Dark mode adjustments */
+        [data-ga-theme="dark"] body {
+            background: var(--ga-bg-secondary);
+            color: var(--ga-text-primary);
+        }
+
+        [data-ga-theme="dark"] .seo-content,
+        [data-ga-theme="dark"] .demo-section,
+        [data-ga-theme="dark"] .resource-section,
+        [data-ga-theme="dark"] .comparison-section,
+        [data-ga-theme="dark"] .social-section {
+            background: var(--ga-bg-surface);
+            border-color: var(--ga-border-dark);
+        }
+
+        [data-ga-theme="dark"] .download-item,
+        [data-ga-theme="dark"] .feature-item,
+        [data-ga-theme="dark"] .stat-item {
+            background: var(--ga-bg-secondary);
+            border-color: var(--ga-border-medium);
+        }
+
+        [data-ga-theme="dark"] .comparison-table table {
+            background: var(--ga-bg-primary);
+        }
+
+        [data-ga-theme="dark"] .comparison-table th {
+            background: var(--ga-primary-dark);
+        }
+
+        [data-ga-theme="dark"] .code-block {
+            background: var(--ga-gray-900);
+            border-color: var(--ga-border-dark);
+            /* Force light text so instructions stay readable on dark background */
+            color: var(--ga-white);
+        }
+
+        [data-ga-theme="dark"] .code-block pre {
+            color: inherit;
         }
     </style>
 </head>
@@ -1035,6 +1078,13 @@
             notifications that elevate your web applications with smooth animations and intuitive design. Featuring 15+
             types, 9 positions, 4 animations, and 3 themes. Perfect for React, Vue, Angular, and vanilla JavaScript
             projects.</p>
+
+        <!-- Global Theme Switcher -->
+        <div class="theme-controls" aria-label="Theme switcher">
+            <button class="theme-btn active" onclick="setTheme('light')">Light Theme</button>
+            <button class="theme-btn" onclick="setTheme('dark')">Dark Theme</button>
+            <button class="theme-btn" onclick="setTheme('system')">System Theme</button>
+        </div>
 
         <!-- SEO Content Section -->
         <div class="seo-content">
@@ -1063,34 +1113,36 @@
 
 
         <!-- Basic Toast Types -->
-        <section class="demo-section" aria-labelledby="basic-toast-types">
-            <h2 id="basic-toast-types">Basic Toast Types</h2>
-            <div class="button-grid">
-                <button class="demo-btn btn-success" onclick="showSuccess()">✨ Success Toast</button>
-                <button class="demo-btn btn-error" onclick="showError()">❌ Error Toast</button>
-                <button class="demo-btn btn-warning" onclick="showWarning()">⚠️ Warning Toast</button>
-                <button class="demo-btn btn-info" onclick="showInfo()">ℹ️ Info Toast</button>
-                <button class="demo-btn btn-primary" onclick="showPrimary()">🔵 Primary Toast</button>
-                <button class="demo-btn btn-secondary" onclick="showSecondary()">⚪ Secondary Toast</button>
-            </div>
+        <section class="" aria-labelledby="basic-toast-types">
+            <section class="demo-section">
 
-            <div class="code-block">
-                <pre>// Basic toast types (title is required)
-GenieAIToast.success('Operation completed successfully!', { title: 'Success' });
-GenieAIToast.error('Something went wrong!', { title: 'Error' });
-GenieAIToast.warning('Please check your input', { title: 'Warning' });
-GenieAIToast.info('Here is some information', { title: 'Info' });
-GenieAIToast.show({ 
-    type: 'primary', 
-    title: 'Primary Notification',
-    message: 'Primary notification' 
-});
-GenieAIToast.show({ 
-    type: 'secondary', 
-    title: 'Secondary Notification',
-    message: 'Secondary notification' 
-});</pre>
-            </div>
+                <h2 id="basic-toast-types">Basic Toast Types</h2>
+                <div class="button-grid">
+                    <button class="demo-btn btn-success" onclick="showSuccess()">✨ Success Toast</button>
+                    <button class="demo-btn btn-error" onclick="showError()">❌ Error Toast</button>
+                    <button class="demo-btn btn-warning" onclick="showWarning()">⚠️ Warning Toast</button>
+                    <button class="demo-btn btn-info" onclick="showInfo()">ℹ️ Info Toast</button>
+                    <button class="demo-btn btn-primary" onclick="showPrimary()">🔵 Primary Toast</button>
+                    <button class="demo-btn btn-secondary" onclick="showSecondary()">⚪ Secondary Toast</button>
+                </div>
+
+                <div class="code-block">
+                    <pre>// Basic toast types (title is required)
+    GenieAIToast.success('Operation completed successfully!', { title: 'Success' });
+    GenieAIToast.error('Something went wrong!', { title: 'Error' });
+    GenieAIToast.warning('Please check your input', { title: 'Warning' });
+    GenieAIToast.info('Here is some information', { title: 'Info' });
+    GenieAIToast.show({ 
+        type: 'primary', 
+        title: 'Primary Notification',
+        message: 'Primary notification' 
+    });
+    GenieAIToast.show({ 
+        type: 'secondary', 
+        title: 'Secondary Notification',
+        message: 'Secondary notification' 
+    });</pre>
+            </section>
 
 
 

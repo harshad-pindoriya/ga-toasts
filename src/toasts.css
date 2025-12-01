@@ -108,10 +108,7 @@
     background-clip: padding-box;
     border: var(--ga-border-1) solid var(--ga-border-light);
     border-radius: var(--ga-radius-xl);
-    box-shadow: 
-        var(--ga-shadow-toast),
-        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    box-shadow: none;
     opacity: 0;
     transform: translateX(100%) scale(0.95);
     transition: 
@@ -126,6 +123,8 @@
     overflow-wrap: break-word;
     backdrop-filter: var(--ga-bg-blur);
     isolation: isolate;
+    /* Ensure inner elements like progress bar stay visually inside rounded corners */
+    overflow: hidden;
 }
 
 .ga-toast::before {
@@ -141,10 +140,7 @@
 }
 
 .ga-toast:hover {
-    box-shadow: 
-        var(--ga-shadow-lg),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-        0 1px 0 rgba(255, 255, 255, 0.15) inset;
+    box-shadow: none;
     transform: translateY(-2px);
 }
 
@@ -274,22 +270,20 @@
 }
 
 .ga-toast-close::before {
-    content: "X";
+    /* Use a more natural close glyph and rely on flex centering from the button */
+    content: "×";
     display: block;
     width: 100%;
     height: 100%;
-    line-height: 1;
     text-align: center;
-    font-size: 18px;
-    margin-top: 11px;
-    margin-left: 0px;
+    line-height: 32px;
+    font-size: 16px;
+    margin: 0;
 }
 
 /* Toast Icon - Enhanced */
 .ga-toast-icon {
     flex-shrink: 0;
-    width: var(--ga-icon-lg);
-    height: var(--ga-icon-lg);
     margin-right: var(--ga-space-3);
     margin-top: 2px;
     padding: var(--ga-space-2);
@@ -404,9 +398,6 @@
     background: linear-gradient(135deg, var(--ga-primary), var(--ga-primary-hover));
     border-color: var(--ga-primary);
     color: var(--ga-text-inverse);
-    box-shadow: 
-        var(--ga-shadow-toast),
-        0 0 20px rgba(0, 115, 170, 0.3);
 }
 
 .ga-toast-primary-filled .ga-toast-title,
@@ -423,9 +414,6 @@
     background: linear-gradient(135deg, var(--ga-success), var(--ga-success-hover));
     border-color: var(--ga-success);
     color: var(--ga-text-inverse);
-    box-shadow: 
-        var(--ga-shadow-toast),
-        0 0 20px rgba(0, 163, 42, 0.3);
 }
 
 .ga-toast-success-filled .ga-toast-title,
@@ -442,9 +430,6 @@
     background: linear-gradient(135deg, var(--ga-error), var(--ga-error-hover));
     border-color: var(--ga-error);
     color: var(--ga-text-inverse);
-    box-shadow: 
-        var(--ga-shadow-toast),
-        0 0 20px rgba(214, 54, 56, 0.3);
 }
 
 .ga-toast-error-filled .ga-toast-title,
@@ -461,9 +446,6 @@
     background: linear-gradient(135deg, var(--ga-warning), var(--ga-warning-hover));
     border-color: var(--ga-warning);
     color: var(--ga-text-inverse);
-    box-shadow: 
-        var(--ga-shadow-toast),
-        0 0 20px rgba(219, 166, 23, 0.3);
 }
 
 .ga-toast-warning-filled .ga-toast-title,
@@ -480,9 +462,6 @@
     background: linear-gradient(135deg, var(--ga-info), var(--ga-info-hover));
     border-color: var(--ga-info);
     color: var(--ga-text-inverse);
-    box-shadow: 
-        var(--ga-shadow-toast),
-        0 0 20px rgba(114, 174, 230, 0.3);
 }
 
 .ga-toast-info-filled .ga-toast-title,
@@ -620,15 +599,17 @@
 .ga-toast-progress {
     position: absolute;
     bottom: 0;
-    left: 0;
+    /* Inset slightly from the toast edges so corners stay visually rounded */
+    left: 2px;
     height: 3px;
-    width: 100%;
+    width: calc(100% - 4px);
     background: linear-gradient(90deg, 
         var(--ga-primary), 
         var(--ga-primary-hover),
         var(--ga-primary-light)
     );
-    border-radius: 0 0 var(--ga-radius-xl) var(--ga-radius-xl);
+    /* Fully rounded bar to avoid any squarish edge */
+    border-radius: 999px;
     transform: scaleX(1);
     transform-origin: left center;
     transition: transform linear;
@@ -732,19 +713,12 @@
 .ga-toast-modern {
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-        var(--ga-shadow-toast),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-        0 1px 0 rgba(255, 255, 255, 0.15) inset;
 }
 
 .ga-toast-glass {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .ga-toast-progress.ga-toast-progress-primary {
@@ -1487,17 +1461,10 @@
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .ga-toast-neumorphism {
     background: var(--ga-bg-secondary);
-    box-shadow: 
-        8px 8px 16px rgba(0, 0, 0, 0.1),
-        -8px -8px 16px rgba(255, 255, 255, 0.7),
-        inset 2px 2px 4px rgba(0, 0, 0, 0.05);
     border: none;
 }
 
