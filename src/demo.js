@@ -42,7 +42,7 @@ function showCompact() {
         title: 'New Message',
         message: 'You have received a new message from John Doe. Click to view details.',
         compact: true,
-        duration: 50000000
+        duration: 5000
     });
 }
 
