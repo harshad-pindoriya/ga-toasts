@@ -1,9 +1,9 @@
 /**
  * Toast component JavaScript for Genie AI Plugin
- * Defines toast functionality and interactions
+ * Vanilla JS implementation - No jQuery dependency
  */
 
-(function ($) {
+(function () {
     'use strict';
 
     // Initialize GenieAI global object if it doesn't exist
@@ -15,12 +15,126 @@
                 },
                 log: function(message, data) {
                     if (console && console.log) {
-                        console.log('[GA Toasts]', message, data || '');
                     }
                 }
             }
         };
     }
+
+    // Helper functions
+    const helpers = {
+        // Query selector wrapper
+        qs: function(selector, context) {
+            return (context || document).querySelector(selector);
+        },
+        
+        // Query selector all wrapper
+        qsa: function(selector, context) {
+            return Array.from((context || document).querySelectorAll(selector));
+        },
+        
+        // Add event listener with delegation
+        on: function(element, event, selector, handler) {
+            if (typeof selector === 'function') {
+                handler = selector;
+                element.addEventListener(event, handler);
+            } else {
+                element.addEventListener(event, function(e) {
+                    const target = e.target.closest(selector);
+                    if (target) {
+                        handler.call(target, e);
+                    }
+                });
+            }
+        },
+        
+        // Remove event listener
+        off: function(element, event, handler) {
+            element.removeEventListener(event, handler);
+        },
+        
+        // Add class
+        addClass: function(element, className) {
+            if (!element) return;
+            const classes = className.split(' ');
+            element.classList.add(...classes);
+        },
+        
+        // Remove class
+        removeClass: function(element, className) {
+            if (!element) return;
+            const classes = className.split(' ');
+            element.classList.remove(...classes);
+        },
+        
+        // Has class
+        hasClass: function(element, className) {
+            return element && element.classList.contains(className);
+        },
+        
+        // Get/Set data attribute
+        data: function(element, key, value) {
+            if (value === undefined) {
+                return element.dataset[key];
+            }
+            element.dataset[key] = value;
+        },
+        
+        // Get/Set attribute
+        attr: function(element, key, value) {
+            if (value === undefined) {
+                return element.getAttribute(key);
+            }
+            element.setAttribute(key, value);
+        },
+        
+        // Remove element
+        remove: function(element) {
+            if (element && element.parentNode) {
+                element.parentNode.removeChild(element);
+            }
+        },
+        
+        // Trigger custom event
+        trigger: function(element, eventName, detail) {
+            const event = new CustomEvent(eventName, {
+                detail: detail,
+                bubbles: true,
+                cancelable: true
+            });
+            element.dispatchEvent(event);
+        },
+        
+        // Extend objects (simple deep merge)
+        extend: function() {
+            const extended = {};
+            const deep = arguments[0] === true;
+            const start = deep ? 1 : 0;
+            
+            for (let i = start; i < arguments.length; i++) {
+                const obj = arguments[i];
+                if (!obj) continue;
+                
+                for (let key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        if (deep && typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+                            extended[key] = this.extend(true, extended[key] || {}, obj[key]);
+                        } else {
+                            extended[key] = obj[key];
+                        }
+                    }
+                }
+            }
+            return extended;
+        },
+        
+        // Create element from HTML string
+        createElement: function(html) {
+            const template = document.createElement('template');
+            template.innerHTML = html.trim();
+            return template.content.firstChild;
+        }
+    };
 
     // Toast component
     GenieAI.Toast = {
@@ -36,36 +150,36 @@
          * Bind events
          */
         bindEvents: function () {
-            var self = this;
+            const self = this;
 
             // Close toast triggers
-            $(document).on('click', '[data-ga-toast-close], .ga-toast-close', function (e) {
+            helpers.on(document, 'click', '[data-ga-toast-close], .ga-toast-close', function (e) {
                 e.preventDefault();
-                var toastId = $(this).data('ga-toast-close');
+                const toastId = helpers.data(this, 'gaToastClose');
                 if (toastId) {
-                    self.close('#' + toastId);
+                    self.close(helpers.qs('#' + toastId));
                 } else {
-                    self.close($(this).closest('.ga-toast'));
+                    self.close(this.closest('.ga-toast'));
                 }
             });
 
             // Auto-close toasts with pause on hover
-            $(document).on('ga:toast:shown', '.ga-toast', function () {
-                var $toast = $(this);
-                var autoClose = $toast.data('ga-auto-close');
-                var pauseOnHover = $toast.data('ga-pause-on-hover');
-                var $progress = $toast.find('.ga-toast-progress');
+            helpers.on(document, 'ga:toast:shown', '.ga-toast', function (e) {
+                const toast = e.target;
+                const autoClose = parseInt(helpers.data(toast, 'gaAutoClose'));
+                const pauseOnHover = helpers.data(toast, 'gaPauseOnHover') === 'true';
+                const progress = helpers.qs('.ga-toast-progress', toast);
                 
                 if (autoClose && autoClose > 0) {
-                    var timeoutId;
-                    var startTime = Date.now();
-                    var remainingTime = autoClose;
+                    let timeoutId;
+                    let startTime = Date.now();
+                    let remainingTime = autoClose;
                     
-                    var startCountdown = function() {
+                    const startCountdown = function() {
                         startTime = Date.now();
                         timeoutId = setTimeout(function () {
-                            if ($toast.length && !$toast.hasClass('hide')) {
-                                self.close($toast);
+                            if (toast && !helpers.hasClass(toast, 'hide')) {
+                                self.close(toast);
                             }
                         }, remainingTime);
                     };
@@ -75,27 +189,27 @@
                     
                     // Pause on hover if enabled
                     if (pauseOnHover) {
-                        $toast.on('mouseenter', function() {
-                            var elapsed = Date.now() - startTime;
+                        toast.addEventListener('mouseenter', function() {
+                            const elapsed = Date.now() - startTime;
                             remainingTime = Math.max(0, remainingTime - elapsed);
                             clearTimeout(timeoutId);
-                            $toast.addClass('ga-toast-paused');
+                            helpers.addClass(toast, 'ga-toast-paused');
                             
                             // Pause progress bar animation
-                            if ($progress.length) {
-                                var currentTransform = $progress.css('transform');
-                                $progress.css('transition', 'none');
-                                $progress.attr('data-paused-transform', currentTransform);
+                            if (progress) {
+                                const currentTransform = getComputedStyle(progress).transform;
+                                progress.style.transition = 'none';
+                                helpers.attr(progress, 'data-paused-transform', currentTransform);
                             }
                         });
                         
-                        $toast.on('mouseleave', function() {
-                            $toast.removeClass('ga-toast-paused');
+                        toast.addEventListener('mouseleave', function() {
+                            helpers.removeClass(toast, 'ga-toast-paused');
                             
                             // Resume progress bar animation
-                            if ($progress.length) {
-                                $progress.css('transition', 'transform ' + remainingTime + 'ms linear');
-                                $progress.css('transform', 'scaleX(0)');
+                            if (progress) {
+                                progress.style.transition = 'transform ' + remainingTime + 'ms linear';
+                                progress.style.transform = 'scaleX(0)';
                             }
                             
                             startCountdown();
@@ -105,9 +219,11 @@
             });
 
             // Handle toast click to close (optional)
-            $(document).on('click', '.ga-toast[data-ga-click-to-close="true"]', function (e) {
-                if (!$(e.target).closest('.ga-toast-actions, .ga-toast-close').length) {
-                    self.close($(this));
+            helpers.on(document, 'click', '.ga-toast', function (e) {
+                if (helpers.attr(this, 'data-ga-click-to-close') === 'true') {
+                    if (!e.target.closest('.ga-toast-actions, .ga-toast-close')) {
+                        self.close(this);
+                    }
                 }
             });
         },
@@ -116,7 +232,7 @@
          * Initialize default container
          */
         initDefaultContainer: function () {
-            if ($('.ga-container').length > 0) {
+            if (helpers.qs('.ga-container')) {
                 // Create default container if it doesn't exist
                 this.getContainer('top-end');
             }
@@ -126,7 +242,7 @@
          * Show toast
          */
         show: function (options) {
-            var defaults = {
+            const defaults = {
                 id: 'ga-toast-' + GenieAI.utils.generateId(),
                 title: '',
                 message: '',
@@ -140,40 +256,37 @@
                 variant: '', // '', 'filled', 'light'
                 animation: 'slide', // 'fade', 'slide', 'bounce', 'scale'
                 clickToClose: false,
-                progress: true, // New: Enable progress bar by default
-                progressBackground: true, // New: Enable background fill with opacity
-                pauseOnHover: true // New: Pause countdown on hover
+                progress: true,
+                progressBackground: true,
+                pauseOnHover: true
             };
 
-            var settings = $.extend({}, defaults, options);
+            const settings = helpers.extend({}, defaults, options);
 
-            var $toast = this.create(settings);
-            var $container = this.getContainer(settings.position);
+            const toast = this.create(settings);
+            const container = this.getContainer(settings.position);
 
-            $container.append($toast);
+            container.appendChild(toast);
 
             // Trigger animation after a small delay to ensure DOM is ready
             setTimeout(function () {
-                $toast.addClass('show');
-                $toast.trigger('ga:toast:shown');
+                helpers.addClass(toast, 'show');
+                helpers.trigger(toast, 'ga:toast:shown');
             }, 10);
 
             GenieAI.utils.log('Toast shown', settings);
 
-            return $toast;
+            return toast;
         },
 
         /**
          * Create toast element
          */
-        /**
-   * Create toast element
-   */
         create: function (options) {
             // Ensure options is an object
             options = options || {};
             
-            var classes = ['ga-toast', 'ga-toast-' + options.type];
+            const classes = ['ga-toast', 'ga-toast-' + options.type];
 
             // Add size class
             if (options.size) {
@@ -198,156 +311,175 @@
                 classes.push('ga-toast-glass');
             }
 
-            var $toast = $('<div class="' + classes.join(' ') + '" id="' + options.id + '">');
+            const toast = document.createElement('div');
+            toast.className = classes.join(' ');
+            toast.id = options.id;
 
             // Add click to close attribute
             if (options.clickToClose) {
-                $toast.attr('data-ga-click-to-close', 'true');
+                helpers.attr(toast, 'data-ga-click-to-close', 'true');
             }
 
             // Add pause on hover attribute
             if (options.pauseOnHover) {
-                $toast.attr('data-ga-pause-on-hover', 'true');
+                helpers.attr(toast, 'data-ga-pause-on-hover', 'true');
             }
 
             // Create content wrapper
-            var $content = $('<div class="ga-toast-content">');
+            const content = document.createElement('div');
+            content.className = 'ga-toast-content';
 
             // Add header if title, closable, or icon exists
             if (options.title || options.closable || options.icon) {
-                var $header = $('<div class="ga-toast-header">');
+                const header = document.createElement('div');
+                header.className = 'ga-toast-header';
 
                 // Left section (icon + title)
-                var $left = $('<div class="ga-toast-header-left">');
+                const left = document.createElement('div');
+                left.className = 'ga-toast-header-left';
+                
                 if (options.icon) {
-                    var $icon = $('<div class="ga-toast-icon">' + options.icon + '</div>');
-                    $left.append($icon);
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = 'ga-toast-icon';
+                    iconDiv.innerHTML = options.icon;
+                    left.appendChild(iconDiv);
                 }
+                
                 if (options.title) {
-                    $left.append('<h4 class="ga-toast-title">' + this.escapeHtml(options.title) + '</h4>');
+                    const title = document.createElement('h4');
+                    title.className = 'ga-toast-title';
+                    title.textContent = options.title;
+                    left.appendChild(title);
                 }
-                $header.append($left);
+                
+                header.appendChild(left);
 
                 // Right section (close button)
                 if (options.closable) {
-                    $header.append('<button type="button" class="ga-toast-close" aria-label="Close" data-ga-toast-close></button>');
+                    const closeBtn = document.createElement('button');
+                    closeBtn.type = 'button';
+                    closeBtn.className = 'ga-toast-close';
+                    helpers.attr(closeBtn, 'aria-label', 'Close');
+                    helpers.attr(closeBtn, 'data-ga-toast-close', '');
+                    header.appendChild(closeBtn);
                 }
 
-                $content.append($header);
+                content.appendChild(header);
             }
 
             // Add body if message exists
             if (options.message) {
-                var $body = $('<div class="ga-toast-body">' + options.message + '</div>');
-                $content.append($body);
+                const body = document.createElement('div');
+                body.className = 'ga-toast-body';
+                body.innerHTML = options.message;
+                content.appendChild(body);
             }
 
             // Add actions if they exist
             if (options.actions && options.actions.length > 0) {
-                var $actions = $('<div class="ga-toast-actions">');
-                var self = this;
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'ga-toast-actions';
+                const self = this;
 
                 options.actions.forEach(function (action) {
-                    var btnClasses = ['ga-btn', 'ga-btn-sm'];
+                    const btnClasses = ['ga-btn', 'ga-btn-sm'];
                     if (action.class) {
                         btnClasses.push(action.class);
                     } else {
                         btnClasses.push('ga-btn-secondary');
                     }
 
-                    var $btn = $('<button type="button" class="' + btnClasses.join(' ') + '">' +
-                        self.escapeHtml(action.text) + '</button>');
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = btnClasses.join(' ');
+                    btn.textContent = action.text;
 
                     if (action.click) {
-                        $btn.on('click', function (e) {
-                            action.click(e, $toast);
+                        btn.addEventListener('click', function (e) {
+                            action.click(e, toast);
                         });
                     }
 
-                    $actions.append($btn);
+                    actionsDiv.appendChild(btn);
                 });
 
-                $content.append($actions);
+                content.appendChild(actionsDiv);
             }
 
-            $toast.append($content);
+            toast.appendChild(content);
 
             // Add progress bar if enabled
             if (options.progress && options.duration && options.duration > 0) {
-                var $progress = $('<div class="ga-toast-progress ga-toast-progress-' + options.type + '"></div>');
-                $progress.css({
-                    'width': '100%',
-                    'transform': 'scaleX(1)',
-                    'transform-origin': 'left center'
-                });
-                $toast.append($progress);
+                const progress = document.createElement('div');
+                progress.className = 'ga-toast-progress ga-toast-progress-' + options.type;
+                progress.style.width = '100%';
+                progress.style.transform = 'scaleX(1)';
+                progress.style.transformOrigin = 'left center';
+                toast.appendChild(progress);
 
                 // Animate progress bar with smooth countdown
                 setTimeout(function () {
-                    $progress.css({
-                        'transition': 'transform ' + options.duration + 'ms linear',
-                        'transform': 'scaleX(0)'
-                    });
+                    progress.style.transition = 'transform ' + options.duration + 'ms linear';
+                    progress.style.transform = 'scaleX(0)';
                 }, 10);
             }
 
             // Add background fill with opacity if enabled
             if (options.progressBackground && options.duration && options.duration > 0) {
-                var $backgroundFill = $('<div class="ga-toast-background-fill ga-toast-bg-' + options.type + '"></div>');
-                $toast.append($backgroundFill);
+                const backgroundFill = document.createElement('div');
+                backgroundFill.className = 'ga-toast-background-fill ga-toast-bg-' + options.type;
+                toast.appendChild(backgroundFill);
 
                 // Animate background fill
                 setTimeout(function () {
-                    $backgroundFill.css({
-                        'transition': 'opacity ' + options.duration + 'ms linear',
-                        'opacity': '0'
-                    });
+                    backgroundFill.style.transition = 'opacity ' + options.duration + 'ms linear';
+                    backgroundFill.style.opacity = '0';
                 }, 10);
             }
 
             // Add auto-close data
             if (options.duration && options.duration > 0) {
-                $toast.data('ga-auto-close', options.duration);
+                helpers.data(toast, 'gaAutoClose', options.duration.toString());
             }
 
-            return $toast;
+            return toast;
         },
-
 
         /**
          * Close toast
          */
         close: function (toast) {
-            var $toast = $(toast);
-            if ($toast.length === 0 || $toast.hasClass('hide')) {
+            if (!toast || helpers.hasClass(toast, 'hide')) {
                 return;
             }
 
-            // Remove any active timeouts and hover events
-            $toast.off('mouseenter mouseleave');
-            $toast.removeClass('ga-toast-paused');
+            // Remove any active event listeners
+            const newToast = toast.cloneNode(true);
+            toast.parentNode.replaceChild(newToast, toast);
+            toast = newToast;
 
-            $toast.removeClass('show').addClass('hide');
+            helpers.removeClass(toast, 'show');
+            helpers.addClass(toast, 'hide');
 
-            var removeDelay = 300; // Match CSS transition duration
+            const removeDelay = 300; // Match CSS transition duration
 
             setTimeout(function () {
-                if ($toast.length) {
-                    $toast.trigger('ga:toast:closed');
-                    $toast.remove();
+                if (toast) {
+                    helpers.trigger(toast, 'ga:toast:closed');
+                    helpers.remove(toast);
                 }
             }, removeDelay);
 
-            GenieAI.utils.log('Toast closed', $toast.attr('id'));
+            GenieAI.utils.log('Toast closed', toast.id);
         },
 
         /**
          * Close all toasts
          */
         closeAll: function () {
-            var self = this;
-            $('.ga-toast').each(function () {
-                self.close($(this));
+            const self = this;
+            helpers.qsa('.ga-toast').forEach(function (toast) {
+                self.close(toast);
             });
         },
 
@@ -355,28 +487,31 @@
          * Get or create container by position
          */
         getContainer: function (position) {
-            var containerId = 'ga-toast-container-' + position;
-            var $container = $('#' + containerId);
+            const containerId = 'ga-toast-container-' + position;
+            let container = helpers.qs('#' + containerId);
 
-            if ($container.length === 0) {
-                $container = $('<div id="' + containerId + '" class="ga-toast-container ga-toast-container-' + position + '"></div>');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = containerId;
+                container.className = 'ga-toast-container ga-toast-container-' + position;
 
                 // Try to append to ga-container first, then body
-                if ($('.ga-container').length > 0) {
-                    $('.ga-container').append($container);
+                const gaContainer = helpers.qs('.ga-container');
+                if (gaContainer) {
+                    gaContainer.appendChild(container);
                 } else {
-                    $('body').append($container);
+                    document.body.appendChild(container);
                 }
             }
 
-            return $container;
+            return container;
         },
 
         /**
          * Show success toast
          */
         success: function (message, options) {
-            var settings = $.extend({}, options || {}, {
+            const settings = helpers.extend({}, options || {}, {
                 type: 'success',
                 message: message,
                 duration: (options && options.duration) || 5000,
@@ -390,10 +525,10 @@
          */
         error: function (message, options) {
             console.log('error', options);
-            var settings = $.extend({}, options || {}, {
+            const settings = helpers.extend({}, options || {}, {
                 type: 'error',
                 message: message,
-                duration: (options && options.duration) || 8000, // Longer duration for errors
+                duration: (options && options.duration) || 8000,
                 icon: '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>'
             });
             return this.show(settings);
@@ -403,7 +538,7 @@
          * Show warning toast
          */
         warning: function (message, options) {
-            var settings = $.extend({}, options || {}, {
+            const settings = helpers.extend({}, options || {}, {
                 type: 'warning',
                 message: message,
                 duration: (options && options.duration) || 6000,
@@ -416,7 +551,7 @@
          * Show info toast
          */
         info: function (message, options) {
-            var settings = $.extend({}, options || {}, {
+            const settings = helpers.extend({}, options || {}, {
                 type: 'info',
                 message: message,
                 duration: (options && options.duration) || 4000,
@@ -429,18 +564,18 @@
          * Show confirmation toast
          */
         confirm: function (message, options) {
-            var self = this;
-            var defaults = {
+            const self = this;
+            const defaults = {
                 type: 'warning',
                 message: message,
-                duration: 0, // Don't auto-close confirmation toasts
+                duration: 0,
                 closable: false,
                 actions: [
                     {
                         text: 'Cancel',
                         class: 'ga-btn-secondary',
-                        click: function (e, $toast) {
-                            self.close($toast);
+                        click: function (e, toast) {
+                            self.close(toast);
                             if (options && options.onCancel) {
                                 options.onCancel();
                             }
@@ -449,8 +584,8 @@
                     {
                         text: 'Confirm',
                         class: 'ga-btn-primary',
-                        click: function (e, $toast) {
-                            self.close($toast);
+                        click: function (e, toast) {
+                            self.close(toast);
                             if (options && options.onConfirm) {
                                 options.onConfirm();
                             }
@@ -459,7 +594,7 @@
                 ]
             };
 
-            var settings = $.extend(true, {}, defaults, options);
+            const settings = helpers.extend(true, {}, defaults, options);
             return this.show(settings);
         },
 
@@ -467,7 +602,7 @@
          * Show loading toast
          */
         loading: function (message, options) {
-            var defaults = {
+            const defaults = {
                 type: 'info',
                 message: message || 'Loading...',
                 closable: false,
@@ -475,62 +610,68 @@
                 icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="ga-spin"/></svg>'
             };
 
-            var settings = $.extend({}, defaults, options);
-            var $toast = this.show(settings);
-            $toast.addClass('ga-toast-loading');
-            return $toast;
+            const settings = helpers.extend({}, defaults, options);
+            const toast = this.show(settings);
+            helpers.addClass(toast, 'ga-toast-loading');
+            return toast;
         },
 
         /**
          * Update toast content
          */
         update: function (toastId, options) {
-            // Ensure options is an object
             options = options || {};
             
-            var $toast = $('#' + toastId);
-            if ($toast.length === 0) {
+            const toast = helpers.qs('#' + toastId);
+            if (!toast) {
                 GenieAI.utils.log('Toast not found for update: ' + toastId);
                 return false;
             }
 
             if (options.title !== undefined) {
-                var $title = $toast.find('.ga-toast-title');
-                if ($title.length > 0) {
-                    $title.html(this.escapeHtml(options.title));
+                const title = helpers.qs('.ga-toast-title', toast);
+                if (title) {
+                    title.textContent = options.title;
                 } else if (options.title) {
-                    // Add title if it doesn't exist
-                    var $header = $toast.find('.ga-toast-header');
-                    if ($header.length === 0) {
-                        $header = $('<div class="ga-toast-header">');
-                        $toast.find('.ga-toast-content').prepend($header);
+                    let header = helpers.qs('.ga-toast-header', toast);
+                    if (!header) {
+                        header = document.createElement('div');
+                        header.className = 'ga-toast-header';
+                        const content = helpers.qs('.ga-toast-content', toast);
+                        content.insertBefore(header, content.firstChild);
                     }
-                    $header.prepend('<h4 class="ga-toast-title">' + this.escapeHtml(options.title) + '</h4>');
+                    const titleEl = document.createElement('h4');
+                    titleEl.className = 'ga-toast-title';
+                    titleEl.textContent = options.title;
+                    header.insertBefore(titleEl, header.firstChild);
                 }
             }
 
             if (options.message !== undefined) {
-                var $message = $toast.find('.ga-toast-body');
-                if ($message.length > 0) {
-                    $message.html(options.message);
+                const messageEl = helpers.qs('.ga-toast-body', toast);
+                if (messageEl) {
+                    messageEl.innerHTML = options.message;
                 }
             }
 
             if (options.type) {
-                $toast.removeClass('ga-toast-success ga-toast-error ga-toast-warning ga-toast-info ga-toast-primary ga-toast-secondary')
-                    .addClass('ga-toast-' + options.type);
+                helpers.removeClass(toast, 'ga-toast-success ga-toast-error ga-toast-warning ga-toast-info ga-toast-primary ga-toast-secondary');
+                helpers.addClass(toast, 'ga-toast-' + options.type);
             }
 
             if (options.icon !== undefined) {
-                var $icon = $toast.find('.ga-toast-icon');
+                const icon = helpers.qs('.ga-toast-icon', toast);
                 if (options.icon) {
-                    if ($icon.length > 0) {
-                        $icon.html(options.icon);
+                    if (icon) {
+                        icon.innerHTML = options.icon;
                     } else {
-                        $toast.prepend('<div class="ga-toast-icon">' + options.icon + '</div>');
+                        const iconDiv = document.createElement('div');
+                        iconDiv.className = 'ga-toast-icon';
+                        iconDiv.innerHTML = options.icon;
+                        toast.insertBefore(iconDiv, toast.firstChild);
                     }
-                } else {
-                    $icon.remove();
+                } else if (icon) {
+                    helpers.remove(icon);
                 }
             }
 
@@ -542,19 +683,19 @@
          */
         getCount: function (type) {
             if (type) {
-                return $('.ga-toast.ga-toast-' + type).length;
+                return helpers.qsa('.ga-toast.ga-toast-' + type).length;
             }
-            return $('.ga-toast').length;
+            return helpers.qsa('.ga-toast').length;
         },
 
         /**
          * Clear all toasts
          */
         clear: function (type) {
-            var self = this;
+            const self = this;
             if (type) {
-                $('.ga-toast.ga-toast-' + type).each(function () {
-                    self.close($(this));
+                helpers.qsa('.ga-toast.ga-toast-' + type).forEach(function (toast) {
+                    self.close(toast);
                 });
             } else {
                 this.closeAll();
@@ -565,52 +706,35 @@
          * Check if toast exists
          */
         exists: function (toastId) {
-            return $('#' + toastId).length > 0;
+            return !!helpers.qs('#' + toastId);
         },
 
         /**
          * Get toast by ID
          */
         get: function (toastId) {
-            return $('#' + toastId);
-        },
-
-        /**
-         * Escape HTML to prevent XSS
-         */
-        escapeHtml: function (text) {
-            if (typeof text !== 'string') {
-                return text;
-            }
-            var map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+            return helpers.qs('#' + toastId);
         },
 
         /**
          * Set global defaults
          */
         setDefaults: function (defaults) {
-            this.globalDefaults = $.extend({}, this.globalDefaults || {}, defaults);
+            this.globalDefaults = helpers.extend({}, this.globalDefaults || {}, defaults);
         },
 
         /**
          * Get merged options with global defaults
          */
         getMergedOptions: function (options) {
-            return $.extend({}, this.globalDefaults || {}, options);
+            return helpers.extend({}, this.globalDefaults || {}, options);
         },
 
         /**
          * Show modern toast with enhanced styling
          */
         modern: function (message, options) {
-            var defaults = {
+            const defaults = {
                 message: message,
                 progress: true,
                 progressBackground: true,
@@ -618,11 +742,10 @@
                 glassmorphism: true,
                 animation: 'slide',
                 size: 'md',
-                // Use light variant so content remains clearly visible on light backgrounds
                 variant: 'light'
             };
             
-            var settings = $.extend({}, defaults, options);
+            const settings = helpers.extend({}, defaults, options);
             return this.show(settings);
         },
 
@@ -630,7 +753,7 @@
          * Show notification with modern styling
          */
         notification: function (title, message, options) {
-            var defaults = {
+            const defaults = {
                 title: title,
                 message: message,
                 type: 'info',
@@ -643,17 +766,21 @@
                 duration: 4000
             };
             
-            var settings = $.extend({}, defaults, options);
+            const settings = helpers.extend({}, defaults, options);
             return this.show(settings);
         }
     };
 
     // Initialize when document is ready
-    $(document).ready(function () {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            GenieAI.Toast.init();
+        });
+    } else {
         GenieAI.Toast.init();
-    });
+    }
 
     // Export for global access
     window.GenieAIToast = GenieAI.Toast;
 
-})(jQuery);
+})();

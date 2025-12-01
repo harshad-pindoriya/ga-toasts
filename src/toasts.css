@@ -101,7 +101,7 @@
     align-items: flex-start;
     width: 380px;
     max-width: 100%;
-    padding: var(--ga-space-2);
+    padding: var(--ga-space-3) var(--ga-space-4);
     margin-bottom: var(--ga-space-md);
     color: var(--ga-text-primary);
     background: linear-gradient(135deg, var(--ga-bg-primary), var(--ga-bg-secondary));
@@ -125,6 +125,10 @@
     isolation: isolate;
     /* Ensure inner elements like progress bar stay visually inside rounded corners */
     overflow: hidden;
+    /* Enable smoother font rendering for crisper text */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 .ga-toast::before {
@@ -170,7 +174,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: var(--ga-space-3);
+    margin-bottom: var(--ga-space-2);
     padding-right: var(--ga-space-8);
 }
 
@@ -209,7 +213,8 @@
 .ga-toast-body {
     flex: 1;
     padding: 0;
-    color: var(--ga-text-primary);
+    /* Slightly softer body text for better hierarchy under the title */
+    color: var(--ga-text-secondary);
     min-width: 0;
     padding-right: var(--ga-space-8);
     line-height: var(--ga-leading-relaxed);
@@ -220,7 +225,7 @@
 }
 
 .ga-toast-body p {
-    margin: 0 0 var(--ga-space-2) 0;
+    margin: 0 0 var(--ga-space-1-5) 0;
 }
 
 .ga-toast-body p:last-child {
@@ -975,9 +980,6 @@
         var(--ga-bg-primary), 
         var(--ga-bg-secondary)
     );
-    box-shadow: 
-        var(--ga-shadow-toast),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 [data-ga-theme="dark"] .ga-toast-loading::before,
