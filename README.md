@@ -7,6 +7,8 @@ A modern, accessible, and feature-rich toast notification library for web applic
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Size](https://img.shields.io/badge/Size-~12KB-orange)
 
+**Live Demo:** [https://harshad-pindoriya.github.io/gatoasts/](https://harshad-pindoriya.github.io/gatoasts/)
+
 ## ✨ Features
 
 - 🎨 **Modern Design** - Beautiful glassmorphism effects, gradients, and smooth animations
@@ -44,35 +46,34 @@ A modern, accessible, and feature-rich toast notification library for web applic
    <script src="src/toasts.js"></script>
    ```
 
-   **Note:** No external dependencies required! The library will automatically initialize the `GenieAI` global object if it doesn't exist.
+   **Note:** No external dependencies required! The library exposes a single global `GaToasts` object in the browser.
 
 3. **Initialize (optional):**
    ```javascript
    // Auto-initializes on document ready
-   // Manual initialization if needed
-   GenieAI.Toast.init();
-   
-   // Alternative access via global alias
-   GenieAIToast.success('Hello World!');
+   // Manual initialization if needed (usually not required)
+   GaToasts.init && GaToasts.init();
+
+   GaToasts.success('Hello World!');
    ```
 
 ### Basic Usage
 
 ```javascript
 // Simple success toast (title is required)
-GenieAI.Toast.success('Operation completed successfully!', { title: 'Success' });
+GaToasts.success('Operation completed successfully!', { title: 'Success' });
 
 // Simple error toast (title is required)
-GenieAI.Toast.error('Something went wrong!', { title: 'Error' });
+GaToasts.error('Something went wrong!', { title: 'Error' });
 
 // Simple warning toast (title is required)
-GenieAI.Toast.warning('Please check your input', { title: 'Warning' });
+GaToasts.warning('Please check your input', { title: 'Warning' });
 
 // Simple info toast (title is required)
-GenieAI.Toast.info('Here is some information', { title: 'Info' });
+GaToasts.info('Here is some information', { title: 'Info' });
 
 // Custom toast (title is required)
-GenieAI.Toast.show({
+GaToasts.show({
     title: 'Custom Toast',
     message: 'This is a custom toast notification',
     type: 'info',
@@ -84,7 +85,7 @@ GenieAI.Toast.show({
 
 ### Core Methods
 
-#### `GenieAI.Toast.show(options)`
+#### `GaToasts.show(options)`
 
 Creates and displays a toast notification.
 
@@ -114,58 +115,58 @@ Creates and displays a toast notification.
 }
 ```
 
-#### `GenieAI.Toast.success(message, options)`
+#### `GaToasts.success(message, options)`
 
 Creates a success toast.
 
 ```javascript
-GenieAI.Toast.success('Operation completed!', {
+GaToasts.success('Operation completed!', {
     title: 'Success',
     duration: 3000,
     position: 'top-center'
 });
 ```
 
-#### `GenieAI.Toast.error(message, options)`
+#### `GaToasts.error(message, options)`
 
 Creates an error toast.
 
 ```javascript
-GenieAI.Toast.error('Something went wrong!', {
+GaToasts.error('Something went wrong!', {
     title: 'Error',
     duration: 8000,
     closable: true
 });
 ```
 
-#### `GenieAI.Toast.warning(message, options)`
+#### `GaToasts.warning(message, options)`
 
 Creates a warning toast.
 
 ```javascript
-GenieAI.Toast.warning('Please check your input', {
+GaToasts.warning('Please check your input', {
     title: 'Warning',
     duration: 6000
 });
 ```
 
-#### `GenieAI.Toast.info(message, options)`
+#### `GaToasts.info(message, options)`
 
 Creates an info toast.
 
 ```javascript
-GenieAI.Toast.info('Here is some information', {
+GaToasts.info('Here is some information', {
     title: 'Info',
     duration: 4000
 });
 ```
 
-#### `GenieAI.Toast.confirm(message, options)`
+#### `GaToasts.confirm(message, options)`
 
 Creates a confirmation toast with action buttons.
 
 ```javascript
-GenieAI.Toast.confirm('Are you sure you want to delete this item?', {
+GaToasts.confirm('Are you sure you want to delete this item?', {
     onConfirm: function() {
         console.log('Confirmed');
     },
@@ -175,56 +176,56 @@ GenieAI.Toast.confirm('Are you sure you want to delete this item?', {
 });
 ```
 
-#### `GenieAI.Toast.loading(message, options)`
+#### `GaToasts.loading(message, options)`
 
 Creates a loading toast.
 
 ```javascript
-const loadingToast = GenieAI.Toast.loading('Processing...');
+const loadingToast = GaToasts.loading('Processing...');
 
 // Close when done
 setTimeout(() => {
-    GenieAI.Toast.close(loadingToast);
-    GenieAI.Toast.success('Done!');
+    GaToasts.close(loadingToast);
+    GaToasts.success('Done!');
 }, 3000);
 ```
 
 ### Management Methods
 
-#### `GenieAI.Toast.close(toast)`
+#### `GaToasts.close(toast)`
 
 Closes a specific toast.
 
 ```javascript
-const toast = GenieAI.Toast.show({ message: 'Test' });
-GenieAI.Toast.close(toast);
+const toast = GaToasts.show({ message: 'Test' });
+GaToasts.close(toast);
 // or
-GenieAI.Toast.close('#toast-id');
+GaToasts.close('#toast-id');
 ```
 
-#### `GenieAI.Toast.closeAll()`
+#### `GaToasts.closeAll()`
 
 Closes all visible toasts.
 
 ```javascript
-GenieAI.Toast.closeAll();
+GaToasts.closeAll();
 ```
 
-#### `GenieAI.Toast.clear(type)`
+#### `GaToasts.clear(type)`
 
 Clears all toasts of a specific type.
 
 ```javascript
-GenieAI.Toast.clear('error'); // Clear only error toasts
-GenieAI.Toast.clear();        // Clear all toasts
+GaToasts.clear('error'); // Clear only error toasts
+GaToasts.clear();        // Clear all toasts
 ```
 
-#### `GenieAI.Toast.update(toastId, options)`
+#### `GaToasts.update(toastId, options)`
 
 Updates an existing toast.
 
 ```javascript
-const toast = GenieAI.Toast.show({
+const toast = GaToasts.show({
     id: 'updateable-toast',
     message: 'Initial message',
     type: 'info'
@@ -232,70 +233,70 @@ const toast = GenieAI.Toast.show({
 
 // Update after 2 seconds
 setTimeout(() => {
-    GenieAI.Toast.update('updateable-toast', {
+    GaToasts.update('updateable-toast', {
         message: 'Updated message!',
         type: 'success'
     });
 }, 2000);
 ```
 
-#### `GenieAI.Toast.getCount(type)`
+#### `GaToasts.getCount(type)`
 
 Gets the count of visible toasts.
 
 ```javascript
-const totalCount = GenieAI.Toast.getCount();
-const errorCount = GenieAI.Toast.getCount('error');
+const totalCount = GaToasts.getCount();
+const errorCount = GaToasts.getCount('error');
 ```
 
-#### `GenieAI.Toast.exists(toastId)`
+#### `GaToasts.exists(toastId)`
 
 Checks if a toast exists.
 
 ```javascript
-if (GenieAI.Toast.exists('my-toast')) {
+if (GaToasts.exists('my-toast')) {
     console.log('Toast exists');
 }
 ```
 
-#### `GenieAI.Toast.get(toastId)`
+#### `GaToasts.get(toastId)`
 
 Gets a toast element by ID.
 
 ```javascript
-const toast = GenieAI.Toast.get('my-toast');
+const toast = GaToasts.get('my-toast');
 ```
 
 ### Utility Methods
 
-#### `GenieAI.Toast.modern(message, options)`
+#### `GaToasts.modern(message, options)`
 
 Creates a modern-styled toast with enhanced features.
 
 ```javascript
-GenieAI.Toast.modern('Modern toast with enhanced styling!', {
+GaToasts.modern('Modern toast with enhanced styling!', {
     type: 'success',
     glassmorphism: true
 });
 ```
 
-#### `GenieAI.Toast.notification(title, message, options)`
+#### `GaToasts.notification(title, message, options)`
 
 Creates a notification-style toast.
 
 ```javascript
-GenieAI.Toast.notification('New Message', 'You have a new message from John', {
+GaToasts.notification('New Message', 'You have a new message from John', {
     type: 'info',
     duration: 5000
 });
 ```
 
-#### `GenieAI.Toast.setDefaults(defaults)`
+#### `GaToasts.setDefaults(defaults)`
 
 Sets global default options.
 
 ```javascript
-GenieAI.Toast.setDefaults({
+GaToasts.setDefaults({
     position: 'top-center',
     duration: 3000,
     animation: 'fade'
@@ -399,7 +400,7 @@ GA Toasts is built with accessibility in mind:
 
 ```javascript
 // Toast with proper ARIA attributes
-GenieAI.Toast.show({
+GaToasts.show({
     message: 'Important notification',
     type: 'error',
     role: 'alert',  // For screen readers
@@ -436,7 +437,7 @@ GenieAI.Toast.show({
 ### Action Buttons
 
 ```javascript
-GenieAI.Toast.show({
+GaToasts.show({
     message: 'File uploaded successfully!',
     type: 'success',
     actions: [
@@ -446,14 +447,14 @@ GenieAI.Toast.show({
             click: function(e, toast) {
                 // Handle view action
                 window.open('/file.pdf');
-                GenieAI.Toast.close(toast);
+                GaToasts.close(toast);
             }
         },
         {
             text: 'Dismiss',
             class: 'ga-btn-secondary',
             click: function(e, toast) {
-                GenieAI.Toast.close(toast);
+                GaToasts.close(toast);
             }
         }
     ]
@@ -463,7 +464,7 @@ GenieAI.Toast.show({
 ### Custom Icons
 
 ```javascript
-GenieAI.Toast.show({
+GaToasts.show({
     message: 'Custom icon toast',
     type: 'info',
     icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
@@ -474,7 +475,7 @@ GenieAI.Toast.show({
 
 ```javascript
 // Toast with progress bar
-GenieAI.Toast.show({
+GaToasts.show({
     message: 'Processing...',
     type: 'info',
     progress: true,
@@ -482,7 +483,7 @@ GenieAI.Toast.show({
 });
 
 // Toast with background fill
-GenieAI.Toast.show({
+GaToasts.show({
     message: 'Uploading file...',
     type: 'primary',
     progressBackground: true,
@@ -496,7 +497,7 @@ GenieAI.Toast.show({
 // Show multiple toasts in a stack
 for (let i = 1; i <= 5; i++) {
     setTimeout(() => {
-        GenieAI.Toast.show({
+        GaToasts.show({
             message: `Stacked toast ${i}`,
             type: 'info',
             size: 'sm'

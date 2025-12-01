@@ -6,19 +6,30 @@
 (function () {
     'use strict';
 
-    // Initialize GenieAI global object if it doesn't exist
-    if (typeof window.GenieAI === 'undefined') {
-        window.GenieAI = {
-            utils: {
-                generateId: function() {
-                    return 'toast_' + Math.random().toString(36).substr(2, 9);
-                },
-                log: function(message, data) {
-                    if (console && console.log) {
-                    }
-                }
+    // Simple utility object for internal helpers (no global namespace)
+    const GaToastsUtils = {
+        generateId: function() {
+            return 'toast_' + Math.random().toString(36).substr(2, 9);
+        },
+        log: function(message, data) {
+            if (console && console.log) {
+                // console.log('[GaToasts]', message, data || '');
             }
-        };
+        }
+    };
+
+    // Optional external logger hook
+    let GaToastsLogger = null;
+
+    function logEvent(eventName, payload) {
+        GaToastsUtils.log(eventName, payload);
+        if (typeof GaToastsLogger === 'function') {
+            try {
+                GaToastsLogger(eventName, payload);
+            } catch (e) {
+                // Swallow logger errors to avoid breaking the app
+            }
+        }
     }
 
     // Helper functions
@@ -137,7 +148,7 @@
     };
 
     // Toast component
-    GenieAI.Toast = {
+    const Toast = {
         /**
          * Initialize toasts
          */
@@ -243,7 +254,7 @@
          */
         show: function (options) {
             const defaults = {
-                id: 'ga-toast-' + GenieAI.utils.generateId(),
+                id: 'ga-toast-' + GaToastsUtils.generateId(),
                 title: '',
                 message: '',
                 type: 'info',
@@ -258,10 +269,25 @@
                 clickToClose: false,
                 progress: true,
                 progressBackground: true,
-                pauseOnHover: true
+                pauseOnHover: true,
+                // UI niceties
+                compact: false,
+                showStatus: false,
+                statusText: '',
+                autoIcon: true
             };
 
-            const settings = helpers.extend({}, defaults, options);
+            // Merge instance defaults (set via setDefaults) with per-call options
+            const mergedOptions = this.getMergedOptions
+                ? this.getMergedOptions(options || {})
+                : (options || {});
+
+            const settings = helpers.extend({}, defaults, mergedOptions);
+
+            // Compact toasts: default to click-to-close if not explicitly set
+            if (settings.compact && mergedOptions && mergedOptions.clickToClose == null) {
+                settings.clickToClose = true;
+            }
 
             const toast = this.create(settings);
             const container = this.getContainer(settings.position);
@@ -274,7 +300,7 @@
                 helpers.trigger(toast, 'ga:toast:shown');
             }, 10);
 
-            GenieAI.utils.log('Toast shown', settings);
+            logEvent('toast:shown', settings);
 
             return toast;
         },
@@ -301,6 +327,11 @@
             // Add animation class
             if (options.animation) {
                 classes.push(options.animation);
+            }
+
+            // Compact density
+            if (options.compact) {
+                classes.push('ga-toast-compact');
             }
 
             // Add modern styling classes
@@ -338,10 +369,28 @@
                 const left = document.createElement('div');
                 left.className = 'ga-toast-header-left';
                 
-                if (options.icon) {
+                console.log(options);
+                
+
+                // Auto icon support
+                let resolvedIcon = options.icon;
+                if (!resolvedIcon && options.autoIcon !== false) {
+                    const type = options.type || 'info';
+                    const iconMap = {
+                        success: '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>',
+                        error: '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>',
+                        warning: '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>',
+                        info: '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>',
+                        primary: '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4h12v12H4z" opacity="0.2"></path><path d="M5 5h10v10H5z"></path></svg>',
+                        secondary: '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="6"></circle></svg>'
+                    };
+                    resolvedIcon = iconMap[type] || null;
+                }
+
+                if (resolvedIcon) {
                     const iconDiv = document.createElement('div');
                     iconDiv.className = 'ga-toast-icon';
-                    iconDiv.innerHTML = options.icon;
+                    iconDiv.innerHTML = resolvedIcon;
                     left.appendChild(iconDiv);
                 }
                 
@@ -350,6 +399,17 @@
                     title.className = 'ga-toast-title';
                     title.textContent = options.title;
                     left.appendChild(title);
+                }
+
+                // Optional status label
+                if (options.showStatus && options.type) {
+                    const status = document.createElement('span');
+                    status.className = 'ga-toast-status';
+                    const label = (options.statusText || options.type)
+                        .toString()
+                        .replace(/^\w/, c => c.toUpperCase());
+                    status.textContent = label;
+                    header.appendChild(status);
                 }
                 
                 header.appendChild(left);
@@ -368,6 +428,8 @@
             }
 
             // Add body if message exists
+            // For compact toasts we still render the message, but keep the layout
+            // tight via CSS (see `.ga-toast-compact .ga-toast-body`).
             if (options.message) {
                 const body = document.createElement('div');
                 body.className = 'ga-toast-body';
@@ -375,8 +437,8 @@
                 content.appendChild(body);
             }
 
-            // Add actions if they exist
-            if (options.actions && options.actions.length > 0) {
+            // Add actions if they exist (skip for compact toasts)
+            if (!options.compact && options.actions && options.actions.length > 0) {
                 const actionsDiv = document.createElement('div');
                 actionsDiv.className = 'ga-toast-actions';
                 const self = this;
@@ -409,9 +471,12 @@
             toast.appendChild(content);
 
             // Add progress bar if enabled
-            if (options.progress && options.duration && options.duration > 0) {
+            if (options.progress && options.duration && options.duration > 0 && options.progressPosition !== 'none') {
                 const progress = document.createElement('div');
                 progress.className = 'ga-toast-progress ga-toast-progress-' + options.type;
+                if (options.progressPosition === 'top') {
+                    helpers.addClass(progress, 'ga-toast-progress-top');
+                }
                 progress.style.width = '100%';
                 progress.style.transform = 'scaleX(1)';
                 progress.style.transformOrigin = 'left center';
@@ -435,6 +500,25 @@
                     backgroundFill.style.transition = 'opacity ' + options.duration + 'ms linear';
                     backgroundFill.style.opacity = '0';
                 }, 10);
+            }
+
+            // Segmented steps indicator for multi-step flows
+            if (options.steps && options.steps > 1) {
+                const stepsContainer = document.createElement('div');
+                stepsContainer.className = 'ga-toast-steps';
+                const activeIndex = Math.min(
+                    options.steps,
+                    Math.max(1, options.currentStep || 1)
+                );
+                for (let i = 1; i <= options.steps; i++) {
+                    const stepEl = document.createElement('div');
+                    stepEl.className = 'ga-toast-step';
+                    if (i <= activeIndex) {
+                        helpers.addClass(stepEl, 'ga-toast-step-active');
+                    }
+                    stepsContainer.appendChild(stepEl);
+                }
+                content.appendChild(stepsContainer);
             }
 
             // Add auto-close data
@@ -470,7 +554,7 @@
                 }
             }, removeDelay);
 
-            GenieAI.utils.log('Toast closed', toast.id);
+            logEvent('toast:closed', toast.id);
         },
 
         /**
@@ -624,7 +708,7 @@
             
             const toast = helpers.qs('#' + toastId);
             if (!toast) {
-                GenieAI.utils.log('Toast not found for update: ' + toastId);
+                logEvent('toast:update:not-found', toastId);
                 return false;
             }
 
@@ -731,6 +815,13 @@
         },
 
         /**
+         * Set external logger callback
+         */
+        setLogger: function (logger) {
+            GaToastsLogger = typeof logger === 'function' ? logger : null;
+        },
+
+        /**
          * Show modern toast with enhanced styling
          */
         modern: function (message, options) {
@@ -774,13 +865,23 @@
     // Initialize when document is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
-            GenieAI.Toast.init();
+            Toast.init();
         });
     } else {
-        GenieAI.Toast.init();
+        Toast.init();
     }
 
-    // Export for global access
-    window.GenieAIToast = GenieAI.Toast;
+    // Primary global export
+    var GaToasts = Toast;
+    window.GaToasts = GaToasts;
+
+    // Framework / module support (CommonJS, AMD)
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = GaToasts;
+    } else if (typeof define === 'function' && define.amd) {
+        define([], function () {
+            return GaToasts;
+        });
+    }
 
 })();

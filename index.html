@@ -483,16 +483,16 @@
 
                 <div class="code-block">
                     <pre>// Basic toast types (title is required)
-    GenieAIToast.success('Operation completed successfully!', { title: 'Success' });
-    GenieAIToast.error('Something went wrong!', { title: 'Error' });
-    GenieAIToast.warning('Please check your input', { title: 'Warning' });
-    GenieAIToast.info('Here is some information', { title: 'Info' });
-    GenieAIToast.show({ 
+    GaToasts.success('Operation completed successfully!', { title: 'Success' });
+    GaToasts.error('Something went wrong!', { title: 'Error' });
+    GaToasts.warning('Please check your input', { title: 'Warning' });
+    GaToasts.info('Here is some information', { title: 'Info' });
+    GaToasts.show({ 
         type: 'primary', 
         title: 'Primary Notification',
         message: 'Primary notification' 
     });
-    GenieAIToast.show({ 
+    GaToasts.show({ 
         type: 'secondary', 
         title: 'Secondary Notification',
         message: 'Secondary notification' 
@@ -514,33 +514,62 @@
                 </div>
 
                 <div class="code-block">
-                    <pre>
-                        // Advanced features (title is required)
-                        GenieAIToast.show({
-                            title: 'New Message',
-                            message: 'You have received a new message from John Doe',
-                            type: 'info',
-                            duration: 5000
-                        });
+                    <pre>// Advanced features (title is required)
+GaToasts.show({
+    title: 'New Message',
+    message: 'You have received a new message from John Doe',
+    type: 'info',
+    duration: 5000
+});
 
-                        GenieAIToast.show({
-                            title: 'File Upload',
-                            message: 'File uploaded successfully',
-                            type: 'success',
-                            actions: [
-                                { text: 'View', click: () => console.log('View clicked') },
-                                { text: 'Dismiss', click: (e, toast) => GenieAIToast.close(toast) }
-                            ]
-                        });
+GaToasts.show({
+    title: 'File Upload',
+    message: 'File uploaded successfully',
+    type: 'success',
+    actions: [
+        { text: 'View', click: () => console.log('View clicked') },
+        { text: 'Dismiss', click: (e, toast) => GaToasts.close(toast) }
+    ]
+});
 
-                        GenieAIToast.confirm('Are you sure you want to delete this item?', {
-                            title: 'Confirm Deletion',
-                            onConfirm: () => console.log('Confirmed'),
-                            onCancel: () => console.log('Cancelled')
-                        });
-                    </pre>
+GaToasts.confirm('Are you sure you want to delete this item?', {
+    title: 'Confirm Deletion',
+    onConfirm: () => console.log('Confirmed'),
+    onCancel: () => console.log('Cancelled')
+});</pre>
                 </div>
             </section>
+
+            <!-- Density & Status -->
+            <div class="demo-section">
+                <h2>Density & Status</h2>
+                <div class="button-grid">
+                    <button class="demo-btn btn-primary" onclick="showCompact()">Compact Info</button>
+                    <button class="demo-btn btn-success" onclick="showWithActions()">Status Chip</button>
+                </div>
+
+                <div class="code-block">
+                    <pre>// Compact toast with status chip and inline link
+GaToasts.show({
+    title: 'New Message',
+    message: 'You have received a new message from John Doe. &lt;a href=&quot;#&quot;&gt;Open inbox&lt;/a&gt;',
+    type: 'info',
+    duration: 5000,
+    compact: true,
+    showStatus: true
+});
+
+// Success toast with explicit status text
+GaToasts.show({
+    title: 'Deployed',
+    message: 'Your changes are live.',
+    type: 'success',
+    compact: true,
+    showStatus: true,
+    statusText: 'Production'
+});</pre>
+                </div>
+            </div>
 
 
             <!-- Toast Variants -->
@@ -557,28 +586,28 @@
 
                 <div class="code-block">
                     <pre>// Variants and sizes (title is required)
-GenieAIToast.show({
+GaToasts.show({
     title: 'Filled Variant',
     message: 'Filled variant toast',
     type: 'success',
     variant: 'filled'
 });
 
-GenieAIToast.show({
+GaToasts.show({
     title: 'Light Variant',
     message: 'Light variant toast',
     type: 'info',
     variant: 'light'
 });
 
-GenieAIToast.show({
+GaToasts.show({
     title: 'Small Toast',
     message: 'Small toast',
     type: 'warning',
     size: 'sm'
 });
 
-GenieAIToast.show({
+GaToasts.show({
     title: 'Large Toast',
     message: 'Large toast with more content',
     type: 'primary',
@@ -601,21 +630,21 @@ GenieAIToast.show({
 
                 <div class="code-block">
                     <pre>// Animation effects (title is required)
-GenieAIToast.show({
+GaToasts.show({
     title: 'Fade Animation',
     message: 'Fade animation',
     type: 'info',
     animation: 'fade'
 });
 
-GenieAIToast.show({
+GaToasts.show({
     title: 'Slide Animation',
     message: 'Slide animation',
     type: 'success',
     animation: 'slide'
 });
 
-GenieAIToast.show({
+GaToasts.show({
     title: 'Bounce Animation',
     message: 'Bounce animation',
     type: 'warning',
@@ -623,7 +652,7 @@ GenieAIToast.show({
 });
 
 // Add custom effects after creation
-const toast = GenieAIToast.show({ 
+const toast = GaToasts.show({ 
     title: 'Custom Effect',
     message: 'Custom effect', 
     type: 'info' 
@@ -650,7 +679,7 @@ toast.addClass('ga-toast-shake');</pre>
 
                 <div class="code-block">
                     <pre>// Position control (title is required)
-GenieAIToast.show({
+GaToasts.show({
     title: 'Positioned Toast',
     message: 'Toast at specific position',
     type: 'info',
@@ -699,31 +728,34 @@ document.documentElement.setAttribute('data-ga-theme', 'dark');
 
                 <div class="code-block">
                     <pre>// Progress and timing options (title is required)
-GenieAIToast.show({
+GaToasts.show({
     title: 'Progress Toast',
     message: 'Toast with progress bar',
     type: 'info',
     progress: true,
-    duration: 5000
+    duration: 5000,
+    progressPosition: 'bottom'
 });
 
-GenieAIToast.show({
-    title: 'Pause on Hover',
-    message: 'Pause on hover',
-    type: 'success',
-    pauseOnHover: true,
-    duration: 3000
+GaToasts.show({
+    title: 'Top Progress',
+    message: 'Progress bar at the top edge',
+    type: 'primary',
+    progress: true,
+    duration: 4000,
+    progressPosition: 'top'
 });
 
-GenieAIToast.show({
+GaToasts.show({
     title: 'No Auto Close',
     message: 'No auto close',
     type: 'warning',
     duration: 0,
-    closable: true
+    closable: true,
+    progressPosition: 'none'
 });
 
-GenieAIToast.show({
+GaToasts.show({
     title: 'Click to Close',
     message: 'Click to close',
     type: 'info',
@@ -748,11 +780,11 @@ GenieAIToast.show({
                     <pre>// Toast management (title is required)
 // Show multiple toasts
 for (let i = 1; i <= 3; i++) {
-    GenieAIToast.info(`Toast ${i}`, { title: `Info ${i}` });
+    GaToasts.info(`Toast ${i}`, { title: `Info ${i}` });
 }
 
 // Update existing toast
-const toast = GenieAIToast.show({
+const toast = GaToasts.show({
     id: 'updateable-toast',
     title: 'Initial Toast',
     message: 'Initial message',
@@ -760,7 +792,7 @@ const toast = GenieAIToast.show({
 });
 
 setTimeout(() => {
-    GenieAIToast.update('updateable-toast', {
+    GaToasts.update('updateable-toast', {
         title: 'Updated Toast',
         message: 'Updated message!',
         type: 'success'
@@ -768,9 +800,9 @@ setTimeout(() => {
 }, 2000);
 
 // Management methods
-GenieAIToast.closeAll();
-GenieAIToast.clear('error'); // Clear only error toasts
-const count = GenieAIToast.getCount();</pre>
+GaToasts.closeAll();
+GaToasts.clear('error'); // Clear only error toasts
+const count = GaToasts.getCount();</pre>
                 </div>
             </div>
 
@@ -865,19 +897,19 @@ const count = GenieAIToast.getCount();</pre>
                         <h4>📋 Toast Implementation Checklist</h4>
                         <p>Complete checklist for implementing accessible toast notifications</p>
                         <a href="#" class="download-btn"
-                            onclick="GenieAIToast.info('Download link will be available soon!')">Download PDF</a>
+                            onclick="GaToasts.info('Download link will be available soon!')">Download PDF</a>
                     </div>
                     <div class="download-item">
                         <h4>🎨 Design System Templates</h4>
                         <p>Ready-to-use design templates for popular frameworks</p>
                         <a href="#" class="download-btn"
-                            onclick="GenieAIToast.info('Download link will be available soon!')">Download ZIP</a>
+                            onclick="GaToasts.info('Download link will be available soon!')">Download ZIP</a>
                     </div>
                     <div class="download-item">
                         <h4>⚡ Performance Benchmarks</h4>
                         <p>Detailed performance comparison with other toast libraries</p>
                         <a href="#" class="download-btn"
-                            onclick="GenieAIToast.info('Download link will be available soon!')">View Report</a>
+                            onclick="GaToasts.info('Download link will be available soon!')">View Report</a>
                     </div>
                 </div>
             </div>
@@ -955,19 +987,19 @@ const count = GenieAIToast.getCount();</pre>
 
             <div class="social-buttons">
                 <a href="https://twitter.com/intent/tweet?text=Check%20out%20GA%20Toasts%20-%20the%20best%20JavaScript%20toast%20notifications%20library%20in%202024!%20https://ga-toasts.com"
-                    target="_blank" class="social-btn twitter" onclick="GenieAIToast.success('Thanks for sharing! 🐦')">
+                    target="_blank" class="social-btn twitter" onclick="GaToasts.success('Thanks for sharing! 🐦')">
                     <span>🐦</span> Share on Twitter
                 </a>
                 <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://ga-toasts.com" target="_blank"
-                    class="social-btn linkedin" onclick="GenieAIToast.success('Thanks for sharing! 💼')">
+                    class="social-btn linkedin" onclick="GaToasts.success('Thanks for sharing! 💼')">
                     <span>💼</span> Share on LinkedIn
                 </a>
                 <a href="https://github.com/ga-toasts/ga-toasts" target="_blank" class="social-btn github"
-                    onclick="GenieAIToast.info('Star us on GitHub! ⭐')">
+                    onclick="GaToasts.info('Star us on GitHub! ⭐')">
                     <span>⭐</span> Star on GitHub
                 </a>
                 <a href="https://www.npmjs.com/package/ga-toasts" target="_blank" class="social-btn npm"
-                    onclick="GenieAIToast.info('Check us out on NPM! 📦')">
+                    onclick="GaToasts.info('Check us out on NPM! 📦')">
                     <span>📦</span> View on NPM
                 </a>
             </div>

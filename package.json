@@ -1,0 +1,23 @@
+{
+  "name": "ga-toasts",
+  "version": "1.0.0",
+  "description": "Modern, accessible vanilla JavaScript toast notifications library with 15+ types, 9 positions, and rich theming.",
+  "main": "src/toasts.js",
+  "types": "ga-toasts.d.ts",
+  "keywords": [
+    "toast",
+    "notifications",
+    "javascript",
+    "vanilla-js",
+    "ui",
+    "ga-toasts"
+  ],
+  "license": "MIT",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://harshad-pindoriya.github.io/gatoasts/"
+  }
+}
+
+

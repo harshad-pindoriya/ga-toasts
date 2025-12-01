@@ -198,6 +198,18 @@
     letter-spacing: var(--ga-tracking-tight);
 }
 
+.ga-toast-status {
+    margin-left: var(--ga-space-3);
+    padding: var(--ga-space-1) var(--ga-space-2);
+    border-radius: var(--ga-radius-full);
+    font-size: var(--ga-text-2xs);
+    text-transform: uppercase;
+    letter-spacing: var(--ga-tracking-wide);
+    background: var(--ga-bg-tertiary);
+    color: var(--ga-text-secondary);
+    flex-shrink: 0;
+}
+
 .ga-toast-time {
     font-size: var(--ga-text-xs);
     color: var(--ga-text-muted);
@@ -226,6 +238,20 @@
 
 .ga-toast-body p {
     margin: 0 0 var(--ga-space-1-5) 0;
+}
+
+.ga-toast-body p:last-child {
+    margin-bottom: 0;
+}
+
+.ga-toast-body a {
+    color: var(--ga-primary);
+    text-decoration: underline;
+    font-weight: var(--ga-font-medium);
+}
+
+.ga-toast-body a:hover {
+    text-decoration: none;
 }
 
 .ga-toast-body p:last-child {
@@ -605,7 +631,7 @@
     position: absolute;
     bottom: 0;
     /* Inset slightly from the toast edges so corners stay visually rounded */
-    left: 2px;
+    right: 2px;
     height: 3px;
     width: calc(100% - 4px);
     background: linear-gradient(90deg, 
@@ -616,13 +642,19 @@
     /* Fully rounded bar to avoid any squarish edge */
     border-radius: 999px;
     transform: scaleX(1);
-    transform-origin: left center;
+    /* Anchor the progress to the right edge so it peeks from the right when stacked */
+    transform-origin: right center;
     transition: transform linear;
     z-index: 1;
     box-shadow: 
         0 0 8px rgba(0, 115, 170, 0.4),
         0 0 4px rgba(0, 115, 170, 0.2);
     overflow: hidden;
+}
+
+.ga-toast-progress-top {
+    top: 0;
+    bottom: auto;
 }
 
 .ga-toast-progress::before {
@@ -944,8 +976,60 @@
 
 /* Toast Compact Layout */
 .ga-toast-compact {
-    padding: var(--ga-space-3) var(--ga-space-4);
+    padding: var(--ga-space-2) var(--ga-space-3);
     align-items: center;
+    min-height: auto;
+}
+
+.ga-toast-compact .ga-toast-icon {
+    display: none;
+}
+
+.ga-toast-compact .ga-toast-title,
+.ga-toast-compact .ga-toast-body {
+    color: var(--ga-text-primary);
+}
+
+.ga-toast-compact .ga-toast-close {
+    width: 24px;
+    height: 24px;
+    /* Center close button vertically for tighter compact layout */
+    top: 50%;
+    right: var(--ga-space-3);
+    transform: translateY(-50%);
+}
+
+.ga-toast-compact .ga-toast-close:hover {
+    /* Preserve hover scale while keeping vertical centering */
+    transform: translateY(-50%) scale(1.1);
+}
+
+.ga-toast-compact .ga-toast-close:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.ga-toast-compact .ga-toast-close::before {
+    /* Adjust glyph alignment to the smaller button size */
+    line-height: 24px;
+    font-size: 14px;
+}
+
+/* Segmented steps indicator */
+.ga-toast-steps {
+    display: flex;
+    gap: 4px;
+    margin-top: var(--ga-space-2);
+}
+
+.ga-toast-step {
+    flex: 1;
+    height: 3px;
+    border-radius: var(--ga-radius-full);
+    background: var(--ga-bg-tertiary);
+}
+
+.ga-toast-step-active {
+    background: var(--ga-primary);
 }
 
 .ga-toast-compact .ga-toast-header {
@@ -954,6 +1038,8 @@
 
 .ga-toast-compact .ga-toast-body {
     padding-right: var(--ga-space-8);
+    /* Ensure message text starts from the left and stays single-line friendly */
+    text-align: left;
 }
 
 .ga-toast-compact .ga-toast-icon {
